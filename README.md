@@ -1,2 +1,5 @@
-# Main
-The primary repository for Draft Bash
+# Draft Bash
+
+## Contributors:
+Brian Feddes | Github: bfeddes
+Stephen Feddes | Github: stephenfeddes
