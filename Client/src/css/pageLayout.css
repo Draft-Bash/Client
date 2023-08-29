@@ -1,0 +1,9 @@
+.page-container {
+    padding: 25px;
+    height: calc(100% - 50px);
+}
+
+.page-layout {
+    background-color: var(--coolWhite);
+    height: 100vh;
+}

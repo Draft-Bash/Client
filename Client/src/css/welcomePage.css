@@ -1,0 +1,65 @@
+.welcome-page {
+    background-color: var(--black);
+    height: 100vh;
+}
+
+.welcome-page nav {
+    border-bottom: 1px solid rgba(200,200,200,0.3);
+    padding: 20px 40px 20px 40px;
+    height: 75px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 30px
+}
+
+.welcome-page .login-btn {
+    background-color: var(--darkBlue);
+    border: none;
+    color: rgb(255, 255, 255);
+    padding: 5px 20px 5px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    border: 3px solid white;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.welcome-page .login-btn:hover {
+    opacity: 0.8;
+}
+
+.welcome-page .sign-up-btn {
+    background-color: var(--brightBlue);
+    border: none;
+    color: rgb(255, 255, 255);
+    padding: 5px 20px 5px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    border: 3px solid var(--brightBlue);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.welcome-page .sign-up-btn:hover {
+    opacity: 0.8;
+}
+
+.welcome-page main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.welcome-page main h1 {
+    color: white;
+    font-size: 40px;
+    font-weight: 500;
+    margin: 20px;
+}
+
+.mock-draft-offer {
+    color: white;
+}

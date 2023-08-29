@@ -1,0 +1,32 @@
+.user-pick-queue {
+    padding: 0px 10px 0px 10px;
+}
+
+.user-pick-queue header {
+    padding: 0px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    border-bottom: none;
+}
+
+.user-pick-queue header b {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.user-pick-queue ul {
+    text-align: center;
+    padding: 6px;
+    border-top: 2px solid var(--mediumGrey);
+}
+
+.user-pick-queue ul li {
+    font-size: 13px;
+    color: var(--darkGrey);
+    font-weight: 500;
+}
+
+.user-pick-queue .no-players-queued-message {
+    opacity: .5;
+}
