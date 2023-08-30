@@ -1,7 +1,7 @@
 # Draft Bash
 
 ### Contributors:
-Brian Feddes | Github: bfeddes
+Brian Feddes | Github: bfeddes<br>
 Stephen Feddes | Github: stephenfeddes
 
 ### Process & Team Documents
