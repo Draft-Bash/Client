@@ -7,7 +7,7 @@ The team at Draft Bash utilizes a Software Development Lifecycle (SDLC) known as
 Sprint planning will happen every first Tuesday of a sprint at 2:00 PM, online or in-person. They will be primarily online.
 Code review and demos will happen every second Thursday of the sprint at 2:00 PM, online or in-person. They will be primarily online.
 On the second Friday of the sprint, stories that are done (demoed and reviewed) will be deployed to production.
-We will also have retrospectives on Friday via Discord at 4:00 PM.
+We will also have retrospectives on Friday at 3:00 PM. This will usually be done online.
 
 ##### Sprint 1
 Scrum Master: Brian Feddes<br>
