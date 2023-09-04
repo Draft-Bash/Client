@@ -1,6 +1,6 @@
 import { Route, Navigate, Routes} from 'react-router-dom';
 import Dashboard from '../pages/Dashboard';
-import PageLayout from '../pageLayout';
+import PageLayout from '../PageLayout';
 import ConfigureMockDraft from '../MockDrafts/ConfigureMockDraft';
 import DraftsPage from '../pages/DraftsPage';
 import DraftRoomWithContext from '../pages/DraftRoom';
