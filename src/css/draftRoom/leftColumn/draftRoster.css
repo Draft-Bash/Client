@@ -1,0 +1,40 @@
+.draft-roster header {
+    border-bottom: none !important;
+    border-top: 2px solid var(--mediumGrey);
+    padding: 6px 12px 6px 12px;
+    margin: 0px;
+    font-size: 10px;
+}
+
+.draft-roster header b {
+    font-weight: 500;
+    color: var(--darkGrey);
+}
+.draft-roster table {
+    width: 100%;
+    padding: 0px 10px 0px 10px;
+}
+
+.draft-roster table thead th:first-child {
+    width: 50px;
+}
+
+.draft-roster table thead th {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--mediumGrey);
+    border-top: 2px solid var(--mediumGrey);
+}
+
+.draft-roster table tbody td {
+    font-size: 13px;
+    padding: 2px;
+    border-bottom: 1px solid var(--grey);
+    font-weight: 500;
+}
+
+.draft-roster .empty-spot {
+    color: var(--grey);
+    font-size: 13px;
+}

@@ -1,0 +1,19 @@
+.draft-header {
+    background-color: var(--brightOrange);
+    color: white;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.draft-header .chat-icon {
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.draft-header .chat-icon:hover {
+    opacity: 0.8;
+}
