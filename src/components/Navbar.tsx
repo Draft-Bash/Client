@@ -1,4 +1,5 @@
 import '../css/navbar.css';
+import React from 'react';
 import {BiUserCircle} from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import { useAuth } from './authentication/AuthContext';

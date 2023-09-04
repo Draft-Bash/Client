@@ -6,7 +6,7 @@ import DraftsPage from '../pages/DraftsPage';
 import DraftRoomWithContext from '../pages/DraftRoom';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { SocketProvider } from '../DraftRoom/DraftContext';
 
 function ProtectedRoutes() {
