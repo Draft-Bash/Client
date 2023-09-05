@@ -32,7 +32,7 @@ export function AuthProvider(props: Props) {
 
   async function checkAuthentication() {
     try {
-      const response = await fetch(API_URL + '/users/is-authenticated', {
+      const response = await fetch(API_URL + '/users/login', {
         method: 'GET',
         headers: { token: localStorage.jwtToken },
       });

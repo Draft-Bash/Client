@@ -3,8 +3,8 @@ import '../../css/signupPage.css'
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextInput from "../TextInput";
-import { API_URL } from '../../env.ts';
-import { useAuth } from '../authentication/AuthContext.tsx';
+import { API_URL } from '../../env';
+import { useAuth } from '../authentication/AuthContext';
 
 const LoginPage = () => {
     const [name, setName] = useState("");
@@ -18,8 +18,8 @@ const LoginPage = () => {
             const response = await fetch(API_URL+'/users/login', {
                 method: 'POST',
                 body: JSON.stringify({
-                    user_name: name,
-                    user_email: name,
+                    username: name,
+                    email: name,
                     password: password,
                  }),
                 headers: {
