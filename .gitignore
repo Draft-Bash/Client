@@ -1,5 +1,6 @@
 env
 env.ts
+src/env.ts
 dist
 
 # Logs
