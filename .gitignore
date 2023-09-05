@@ -1,3 +1,7 @@
+env
+env.ts
+dist
+
 # Logs
 logs
 *.log
@@ -6,9 +10,6 @@ yarn-debug.log*
 yarn-error.log*
 firebase-debug.log*
 firebase-debug.*.log*
-dist
-env.ts
-env
 
 # Firebase cache
 .firebase/
