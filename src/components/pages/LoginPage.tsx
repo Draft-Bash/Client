@@ -39,7 +39,7 @@ const LoginPage = () => {
 
     return (
         <div className="authentication-page">
-            <h3>Draft Bash</h3>
+            <h3>DraftBash</h3>
             <form className="authentication-form">
                 <h1>Login<a href="/signup">Signup</a></h1>
                 <TextInput placeholder="Username or email" onChange={setName} />

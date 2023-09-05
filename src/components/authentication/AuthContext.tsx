@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { API_URL } from '../../env.js';
+import { API_URL } from '../../env';
 
 console.log(API_URL);
 
