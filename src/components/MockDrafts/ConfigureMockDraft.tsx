@@ -36,7 +36,7 @@ const ConfigureMockDraft = () => {
     const handleOnSubmit = async () => {
         try {
             console.log(guardCount);
-            const response = await fetch(API_URL+"/drafts/mock", {
+            const response = await fetch(API_URL+"/drafts", {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json'

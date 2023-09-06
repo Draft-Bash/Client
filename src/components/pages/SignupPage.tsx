@@ -1,7 +1,7 @@
 import '../../css/signupPage.css'
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextInput from "../TextInput";
-import { API_URL } from '../../env.ts';
+import { API_URL } from '../../env';
 import { IoMdCheckmark } from 'react-icons/io';
 
 const SignupPage = () => {
@@ -39,73 +39,67 @@ const SignupPage = () => {
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
+    let isUsernameValid = true;
+    let isEmailValid = true;
+    let isPasswordValid = true;
     if (username.length < 3 || username.length > 15) {
       setInvalidUsernameMessage("Username must be between 3 and 15 characters");
-      setUsernameValidity(false);
+      isUsernameValid =false
     }
     else if (username.length > 3 && username.length < 15) {
       setInvalidUsernameMessage("");
-      setUsernameValidity(true);
-    }
-    else {
-      const response = await fetch(API_URL+`/users/unique-username/${username}`)
-      const data = await response.json();
-      if (data.unique) {
-        setInvalidUsernameMessage("");
-        setUsernameValidity(true);
-      }
-      else {
-        setInvalidUsernameMessage("Username is already taken");
-        setUsernameValidity(false);
-      }
+      isUsernameValid = true;
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setInvalidEmailMessage("Invalid email");
-      setEmailValidity(false);
+      isEmailValid = true;
     }
-
-    if (email.length == 0) {
+    else if (email.length == 0) {
       setInvalidEmailMessage("Email is required");
-      setEmailValidity(false);
+      isEmailValid = false;
     }
     else {
       setInvalidEmailMessage("");
-      setEmailValidity(true);
+      isEmailValid = true;
     }
 
     if (password != passwordConfirm) {
       setInvalidPasswordMessage("Passwords do not match");
-      setPasswordValidity(false);
+      isPasswordValid = false;
     }
-    else {
-      setInvalidPasswordMessage("");
-      setPasswordValidity(true);
-    }
-
-    if (password.length == 0) {
+    else if (password.length == 0) {
       setInvalidPasswordMessage("Password is required");
-      setPasswordValidity(false);
+      isPasswordValid = false;
     }
     else {
       setInvalidPasswordMessage("");
-      setPasswordValidity(true);
+      isPasswordValid = true;
     }
 
     if (isUsernameValid && isEmailValid && isPasswordValid) {
-      setFormValidity(true);
       try {
-        fetch(API_URL+"/users", {
+        const response = await fetch(API_URL+"/users", {
           method: "POST",
           headers: {
             "Content-type": "application/json"
           },
           body: JSON.stringify({
-            user_name: username,
-            user_email: email,
+            username: username,
+            email: email,
             password: password
           })
         })
+        
+        const signupResponse = await response.json();
+        console.log(signupResponse);
+        if (!signupResponse.isUsernameUnique) {
+          setInvalidUsernameMessage("Username must be unique");
+        }
+        if (!signupResponse.isEmailUnique) {
+          setInvalidEmailMessage("Email must be unique");
+        }
+
       } catch (error) {
         console.log(error);
     }
@@ -114,7 +108,6 @@ const SignupPage = () => {
 
   return (
     <div className="authentication-page">
-      {!isFormValid &&
         <>
           <h3>Draftbash</h3>
           <form className="authentication-form">
@@ -131,12 +124,9 @@ const SignupPage = () => {
               <p className={/[A-Z]/.test(password) ? "valid" : "invalid" }><IoMdCheckmark /> At least one capital letter</p>
               <p className={/\d/.test(password) ? "valid" : "invalid" }><IoMdCheckmark /> At least one number</p>
             </div>
-            <button onClick={onSubmit}>Continue</button>
+            <button onClick={onSubmit}>Sign up</button>
           </form>
         </>
-      }
-      {isFormValid && 
-      <p className="confirm-email">Email confirmation sent to {email}</p>}
     </div>
   );
 };

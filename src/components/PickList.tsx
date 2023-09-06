@@ -1,5 +1,5 @@
 import '../css/pickList.css';
-import { useState, useRef, useEffect, MouseEvent } from 'react';
+import React, { useState, useRef, useEffect, MouseEvent } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 
 

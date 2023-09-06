@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { addPlayer, shiftPlayer, RosterSpots, Player} from './leftColumn/DraftRoster';
-import { API_URL } from '../../env';
+import { API_URL, SERVER_URL } from '../../env';
 import { useAuth } from '../authentication/AuthContext';
 
 interface SocketContextProps {
@@ -29,7 +29,7 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
   const { userId } = useAuth();
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3000');
+    const newSocket = io(SERVER_URL);
     setSocket(newSocket);
 
     // Return a cleanup function that disconnects the socket
