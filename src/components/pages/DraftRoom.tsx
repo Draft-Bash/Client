@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 import DraftHeader from '../DraftRoom/DraftHeader';
 import { useDraft } from '../DraftRoom/DraftContext';
@@ -26,7 +26,7 @@ const DraftRoom = () => {
 
   return (
     <div className='draft-room'>
-      <DraftHeader draftId={parseInt(draftId)} />
+      <DraftHeader />
       <PicksHeader />
       <main>
         <LeftColumn />

@@ -1,5 +1,5 @@
 import '../../../css/draftRoom/center/playersTable.css';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDraft } from '../DraftContext';
 import { useAuth } from '../../authentication/AuthContext';
 import { API_URL } from '../../../env';
@@ -29,7 +29,7 @@ const PlayersTable = () => {
         const updatedRoster = {...currentRoster}; 
     
         if (addPlayer(pickedPlayer, updatedRoster)) {
-            setRoster(updatedRoster); // Set the new copy of the roster list as state
+            setRoster(updatedRoster);
             console.log(roster);
             try {
                 const response = await fetch(API_URL+"/drafts/picks", {
