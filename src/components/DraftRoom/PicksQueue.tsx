@@ -43,13 +43,13 @@ const PicksQueue = () => {
         <>
         <p className="picks-until-user-turn">
             ON THE CLOCK: PICK {userNextPick?.pick_number}
-            <br></br><b>Team {userNextPick?.user_name}</b>
+            <br></br><b>Team {userNextPick?.username}</b>
         </p>
         <ul>
             {draftOrder.map((draftSpot, index) => (
             <li key={index}>
                 PICK {draftSpot.pick_number}
-                <br></br>Team {draftSpot.user_name ? draftSpot.user_name : draftSpot.bot_number}
+                <br></br>Team {draftSpot.username ? draftSpot.username : draftSpot.bot_number}
             </li>
             ))}
         </ul>

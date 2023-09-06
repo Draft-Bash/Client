@@ -46,10 +46,10 @@ const RosterPickList = () => {
             <div className="modal-content">
                 <h5>Teams</h5>
                 <ul>
-                    <li key={`draftUser-${draftUser?.user_id}`}>{`Team ${draftUser?.user_name}`}</li>
+                    <li key={`draftUser-${draftUser?.user_id}`}>{`Team ${draftUser?.username}`}</li>
                     
                     {draftUsers.map((user, index) => (
-                        <li key={`draftUser-${user.user_id}`}>{`Team ${user.user_name}`}</li>
+                        <li key={`draftUser-${user.user_id}`}>{`Team ${user.username}`}</li>
                     ))}
 
                     {draftBots.map((botNumber, index) => (
@@ -59,7 +59,7 @@ const RosterPickList = () => {
             </div>
         </dialog>
         <div className="roster-picklist" onClick={() => {setIsModalOpen(true)}}>
-            <input type="text" readOnly placeholder={`${draftUser?.user_name}`} />
+            <input type="text" readOnly placeholder={`${draftUser?.username}`} />
             <FaChevronDown className="arrow" />
         </div>
         </>

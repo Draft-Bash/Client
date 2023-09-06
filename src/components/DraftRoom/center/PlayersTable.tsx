@@ -38,9 +38,9 @@ const PlayersTable = () => {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        user_id: userId, 
-                        player_id: pickedPlayer.player_id, 
-                        draft_id: draftRoomId
+                        userId: userId, 
+                        playerId: pickedPlayer.player_id, 
+                        draftId: draftRoomId
                     })
                 });
                 // Handle the response...
