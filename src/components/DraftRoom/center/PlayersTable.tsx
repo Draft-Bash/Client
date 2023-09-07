@@ -19,6 +19,7 @@ const PlayersTable = () => {
                 return response.json();
             })
             .then(data => {
+                console.log(data)
                 setPlayerlist(data);
             })
             .catch(error => {console.log(error)});
@@ -29,8 +30,8 @@ const PlayersTable = () => {
         const updatedRoster = {...currentRoster}; 
     
         if (addPlayer(pickedPlayer, updatedRoster)) {
-            setRoster(updatedRoster);
-            console.log(roster);
+
+            console.log(updatedRoster);
             try {
                 const response = await fetch(API_URL+"/drafts/picks", {
                     method: 'POST',
@@ -44,6 +45,7 @@ const PlayersTable = () => {
                     })
                 });
                 // Handle the response...
+                setRoster(updatedRoster);
             } catch (error) {
                 console.log(error);
             }
