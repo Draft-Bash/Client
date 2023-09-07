@@ -31,6 +31,7 @@ const PicksQueue = () => {
         // Set up the event listener first
   
         socket?.on('send-draft-order', (updatedDraftOrder: number[]) => {
+            console.log(updatedDraftOrder);
             setDraftOrder(updatedDraftOrder);
         });
     }, [socket]);

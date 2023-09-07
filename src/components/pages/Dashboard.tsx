@@ -1,7 +1,7 @@
 const Dashboard = () => {
 
   return (
-    <p>Whats up my homies</p>
+    <p>This is the dashboard. Currently a work in progress.</p>
   );
 };
 

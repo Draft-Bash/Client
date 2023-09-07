@@ -34,8 +34,8 @@ const ConfigureMockDraft = () => {
     }
 
     const handleOnSubmit = async () => {
+        console.log("Hello");
         try {
-            console.log(guardCount);
             const response = await fetch(API_URL+"/drafts", {
                 method: 'POST',
                 headers: {
@@ -61,12 +61,12 @@ const ConfigureMockDraft = () => {
             });
 
             const draftId = await response.json();
-            
-            navigate('/modules/drafts/draftroom/'+draftId);
 
+            navigate('/modules/drafts/draftroom/'+draftId);
           } catch (error) {
             console.error('Error:', error);
           }
+        
     }
 
     useEffect(() => {

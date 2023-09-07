@@ -2,10 +2,13 @@ import '../../css/signupPage.css'
 import React, { useState, useEffect } from 'react';
 import TextInput from "../TextInput";
 import { API_URL } from '../../env';
+import { useAuth } from '../authentication/AuthContext';
 import { IoMdCheckmark } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 
 const SignupPage = () => {
 
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [usernameValidationMessage, setInvalidUsernameMessage] = useState("");
   const [isUsernameValid, setUsernameValidity] = useState(false);
@@ -17,6 +20,7 @@ const SignupPage = () => {
   const [isPasswordValid, setPasswordValidity] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [isFormValid, setFormValidity] = useState(false);
+  const { setIsAuthenticated } = useAuth();
 
   useEffect(() => {
     try {
@@ -93,11 +97,19 @@ const SignupPage = () => {
         
         const signupResponse = await response.json();
         console.log(signupResponse);
-        if (!signupResponse.isUsernameUnique) {
+        if (!signupResponse.uniqueColumns.isUsernameUnique) {
           setInvalidUsernameMessage("Username must be unique");
         }
-        if (!signupResponse.isEmailUnique) {
+        if (!signupResponse.uniqueColumns.isEmailUnique) {
           setInvalidEmailMessage("Email must be unique");
+        }
+
+        if (signupResponse.uniqueColumns.isEmailUnique && signupResponse.uniqueColumns.isUsernameUnique) {
+          console.log(signupResponse.jwtToken);
+            localStorage.setItem('jwtToken', signupResponse.jwtToken);
+            setIsAuthenticated(true);
+            localStorage.setItem("previousPagePath", "/modules/dashboard");
+            navigate('/modules/dashboard');
         }
 
       } catch (error) {
