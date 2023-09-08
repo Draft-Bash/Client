@@ -1,6 +1,5 @@
-import '../../css/draftRoom/picksHeader.css';
-import { useEffect } from 'react';
-import { useDraft } from './DraftContext';
+import '../../../css/draftRoom/picksHeader.css';
+import React, { useEffect } from 'react';
 import PicksQueue from './PicksQueue';
 import DraftClock from './draftClock';
 

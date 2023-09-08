@@ -1,8 +1,9 @@
 import '../../css/draftRoom/rosterPickList.css';
 import React, { useEffect, useState, useRef } from 'react';
 import { API_URL } from '../../env';
-import { useAuth } from '../authentication/AuthContext';
+import { useAuth } from '../../authentication/AuthContext';
 import { useDraft } from './DraftContext';
+import { User } from '../../utils/users';
 import { FaChevronDown } from 'react-icons/fa';
 
 const RosterPickList = () => {
@@ -10,15 +11,11 @@ const RosterPickList = () => {
     const { userId } = useAuth();
     const modalRef = useRef(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { draftRoomId } = useDraft();
-    const [ draftUsers, setDraftUsers ] = useState([]);
+    const draftContext = useDraft();
+    const draftRoomId = draftContext?.draftRoomId;
+    const [ draftUsers, setDraftUsers ] = useState<User[]>([]);
     const [ draftBots, setDraftBots ] = useState([]);
-    const [ draftUser, setDraftUser ] = useState(null);
-
-    const getUser = () => {
-        const user = draftUsers.find(user => user.user_id == userId);
-        setDraftUser(draftUser);
-    }
+    const [ draftUser, setDraftUser ] = useState<User>();
 
     useEffect(() => {
         if (draftRoomId) {
@@ -30,7 +27,6 @@ const RosterPickList = () => {
             setDraftUsers(otherDraftUsers);
             setDraftBots(data.draftBots);
             setDraftUser(user);
-            console.log(data.draftBots);
         })
         .catch(error => {
             console.error('Error fetching data:', error);

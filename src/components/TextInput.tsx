@@ -1,4 +1,5 @@
-import '../css/textInput.css'
+import '../css/textInput.css';
+import React from 'react';
 
 interface Props {
     placeholder: string

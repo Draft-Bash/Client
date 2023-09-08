@@ -1,20 +1,22 @@
 import '../../../css/draftRoom/center/draftCenter.css';
 import React, { useEffect, useState } from 'react';
+import { DraftPick } from '../../../utils/draft';
 import { useDraft } from '../DraftContext';
-import { useAuth } from '../../authentication/AuthContext';
+import { useAuth } from '../../../authentication/AuthContext';
 
 const CenterHeader = () => {
 
     const { userId } = useAuth();
-    const {socket, draftRoomId } = useDraft();
-    const [draftOrder, setDraftOrder] = useState<Pick>([]);
+    const draftContext = useDraft();
+    const socket = draftContext?.socket;
+    const [draftOrder, setDraftOrder] = useState<DraftPick[]>();
     const [pickCountToTurn, setPickCountToTurn] = useState(0);
     const [nextPickNumber, setNextPickNumber] = useState(0);
   
     useEffect(() => {
         // Set up the event listener first
   
-        socket?.on('send-draft-order', (updatedDraftOrder: number[]) => {
+        socket?.on('send-draft-order', (updatedDraftOrder: DraftPick[]) => {
             setDraftOrder(updatedDraftOrder);
 
             for (let i = 0; i < updatedDraftOrder.length; i++) {

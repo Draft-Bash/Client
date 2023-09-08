@@ -21,3 +21,15 @@
   left: auto;
   box-shadow: 5px 0 5px rgba(0, 0, 0, 0.2); /* Shadow to the right */
 }
+
+.user-next-pick-notifier {
+  padding: 8px 8px 8px 50px;
+  border-bottom: 3px solid var(--mediumGrey);
+  margin-bottom: 20px;
+} 
+
+.user-next-pick-notifier p {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--darkGrey);
+}

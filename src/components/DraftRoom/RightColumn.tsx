@@ -1,4 +1,5 @@
 import '../../css/draftRoom/rightColumn/rightColumn.css';
+import React from 'react';
 
 const RightColumn = () => {
 

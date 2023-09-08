@@ -1,25 +1,21 @@
-import '../../css/signupPage.css'
+import '../css/signupPage.css'
 import React, { useState, useEffect } from 'react';
-import TextInput from "../TextInput";
-import { API_URL } from '../../env';
+import TextInput from "../components/TextInput";
+import { API_URL } from '../env';
 import { useAuth } from '../authentication/AuthContext';
 import { IoMdCheckmark } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 
 const SignupPage = () => {
-
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [usernameValidationMessage, setInvalidUsernameMessage] = useState("");
   const [isUsernameValid, setUsernameValidity] = useState(false);
   const [email, setEmail] = useState("");
   const [emailValidationMessage, setInvalidEmailMessage] = useState("");
-  const [isEmailValid, setEmailValidity] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordValidationMessage, setInvalidPasswordMessage] = useState("");
-  const [isPasswordValid, setPasswordValidity] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [isFormValid, setFormValidity] = useState(false);
   const { setIsAuthenticated } = useAuth();
 
   useEffect(() => {

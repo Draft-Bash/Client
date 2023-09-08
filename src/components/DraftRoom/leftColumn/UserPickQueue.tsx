@@ -1,4 +1,5 @@
 import '../../../css/draftRoom/leftColumn/userPickQueue.css';
+import React from 'react';
 
 const UserPickQueue = () => {
   

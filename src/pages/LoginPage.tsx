@@ -1,9 +1,9 @@
 // LoginPage.js
-import '../../css/signupPage.css'
+import '../css/signupPage.css'
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TextInput from "../TextInput";
-import { API_URL } from '../../env';
+import TextInput from "../components/TextInput";
+import { API_URL } from '../env';
 import { useAuth } from '../authentication/AuthContext';
 
 const LoginPage = () => {

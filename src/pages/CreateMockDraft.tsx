@@ -1,11 +1,10 @@
-import "../../css/configureMockDraft.css";
-import { useState, useEffect } from 'react';
+import "../css/configureMockDraft.css";
+import React, { useState, useEffect } from 'react';
 import { useAuth } from "../authentication/AuthContext";
-import RadioButton from "../buttons/RadioButton";
-import PickList from "../PickList";
-import OutlinedButton from "../buttons/OutlinedButton";
-import RoundedButton from "../buttons/RoundedButton";
-import { API_URL } from "../../env";
+import PickList from "../components/PickList";
+import OutlinedButton from "../components/buttons/OutlinedButton";
+import RoundedButton from "../components/buttons/RoundedButton";
+import { API_URL } from "../env";
 import { useNavigate } from 'react-router-dom';
 
 const ConfigureMockDraft = () => {
@@ -24,8 +23,8 @@ const ConfigureMockDraft = () => {
     const [forwardCount, setForwardCount] = useState(1);
     const [centerCount, setCenterCount] = useState(1);
     const [utilityPlayerCount, setUtilityPlayerCount] = useState(3);
-    const [benchSize, setBenchSize] = useState(4);
-    const [draftRange, setDraftRange] = useState([]);
+    const [benchSize, setBenchSize] = useState(1);
+    const [draftRange, setDraftRange] = useState<number[]>([]);
     const pickTimes = ["None","30 seconds", "60 seconds", "90 seconds", "120 seconds", "150 seconds"];
 
     const randomizePickPosition = () => {
@@ -70,8 +69,8 @@ const ConfigureMockDraft = () => {
     }
 
     useEffect(() => {
-        let positions = [];
-        for (let i=1; i <= teamCount; i++) {
+        let positions: number[] = [];
+        for (let i: number = 1; i <= teamCount; i++) {
             positions.push(i);
         }
         setDraftRange(positions);
@@ -128,16 +127,21 @@ const ConfigureMockDraft = () => {
                     </div>
                     <div className="settings-group">
                         <h5># of teams</h5>
-                        <PickList setValue={setTeamCount} itemList={[8,10,12,14]} defaultValue={10} width={40} />
+                        <PickList setValue={(count) => setTeamCount(count as number)} 
+                            itemList={[8,10,12,14]} defaultValue={10} width={40}
+                        />
                     </div>
                     <div className="settings-group">
                         <h5>Pick Time</h5>
-                        <PickList setValue={setPickTime} itemList={pickTimes} defaultValue={"90 seconds"} width={95} />
+                        <PickList setValue={(time) => setPickTime(time as string)} 
+                            itemList={pickTimes} defaultValue={"90 seconds"} width={95} 
+                        />
                     </div>
                     <div className="settings-group">
                         <h5>Draft Position</h5>
                         <div className="pick-position-settings">
-                            <PickList setValue={setDraftPosition} itemList={draftRange} defaultValue={draftPosition} width={40} />
+                            <PickList setValue={(position) => setDraftPosition(position as number)} 
+                                itemList={draftRange} defaultValue={draftPosition} width={40} />
                             <OutlinedButton handleOnClick={randomizePickPosition}>Randomize</OutlinedButton>
                         </div>
                     </div>
@@ -147,39 +151,57 @@ const ConfigureMockDraft = () => {
                     <div className="settings-container">
                         <div className="settings-group">
                             <label>PG</label>
-                            <PickList setValue={setPointGuardCount} itemList={[0,1]} defaultValue={pointGuardCount} width={40} />
+                            <PickList setValue={(count) => setPointGuardCount(count as number)} 
+                                itemList={[0,1]} defaultValue={pointGuardCount} width={40} 
+                            />
                         </div>
                         <div className="settings-group">
                             <label>SG</label>
-                            <PickList setValue={setShootingGuardCount} itemList={[0,1]} defaultValue={shootingGuardCount} width={40} />
+                            <PickList setValue={(count) => setShootingGuardCount(count as number)} 
+                                itemList={[0,1]} defaultValue={shootingGuardCount} width={40} 
+                            />
                         </div>
                         <div className="settings-group">
                             <label>G</label>
-                            <PickList setValue={setGuardCount} itemList={[0,1]} defaultValue={guardCount} width={40} />
+                            <PickList setValue={(count) => setGuardCount(count as number)} 
+                                itemList={[0,1]} defaultValue={guardCount} width={40} 
+                            />
                         </div>
                         <div className="settings-group">
                             <label>SF</label>
-                            <PickList setValue={setSmallforwardCount} itemList={[0,1]} defaultValue={smallforwardCount} width={40} />
+                            <PickList setValue={(count) => setSmallforwardCount(count as number)} 
+                                itemList={[0,1]} defaultValue={smallforwardCount} width={40}
+                            />
                         </div>
                         <div className="settings-group">
                             <label>PF</label>
-                            <PickList setValue={setPowerforwardCount} itemList={[0,1]} defaultValue={powerforwardCount} width={40} />
+                            <PickList setValue={(count) => setPowerforwardCount(count as number)} 
+                                itemList={[0,1]} defaultValue={powerforwardCount} width={40} 
+                            />
                         </div>
                         <div className="settings-group">
                             <label>F</label>
-                            <PickList setValue={setForwardCount} itemList={[0,1]} defaultValue={forwardCount} width={40} />
+                            <PickList setValue={(count) => setForwardCount(count as number)} 
+                                itemList={[0,1]} defaultValue={forwardCount} width={40} 
+                            />
                         </div>
                         <div className="settings-group">
                             <label>C</label>
-                            <PickList setValue={setCenterCount} itemList={[0,1]} defaultValue={centerCount} width={40} />
+                            <PickList setValue={(count) => setCenterCount(count as number)} itemList={[0,1]} 
+                                defaultValue={centerCount} width={40} 
+                            />
                         </div>
                         <div className="settings-group">
                             <label>UTIL</label>
-                            <PickList setValue={setUtilityPlayerCount} itemList={[0,1,2,3,4]} defaultValue={utilityPlayerCount} width={40} />
+                            <PickList setValue={(count) => setUtilityPlayerCount(count as number)} 
+                                itemList={[0,1,2,3,4]} defaultValue={utilityPlayerCount} width={40} 
+                            />
                         </div>
                         <div className="settings-group">
                             <label>BE</label>
-                            <PickList setValue={setBenchSize} itemList={[0,1,2,3,4]} defaultValue={benchSize} width={40} />
+                            <PickList setValue={(benchSize) => setBenchSize(benchSize as number)} 
+                                itemList={[0,1,2,3,4]} defaultValue={benchSize} width={40} 
+                            />
                         </div>
                     </div>
                 </div>

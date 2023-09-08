@@ -1,15 +1,19 @@
 import '../../../css/draftRoom/center/playersTable.css';
 import React, { useEffect, useState } from 'react';
 import { useDraft } from '../DraftContext';
-import { useAuth } from '../../authentication/AuthContext';
+import { useAuth } from '../../../authentication/AuthContext';
 import { API_URL } from '../../../env';
-import { addPlayer } from '../leftColumn/DraftRoster';
+import { addPlayer, PlayerPreviousSeasonStats } from '../../../utils/draft';
 import OutlinedRoundedButton from '../../buttons/OutlinedRoundedButton';
 
 const PlayersTable = () => {
 
-    const {socket, draftRoomId, roster, setRoster } = useDraft();
-    const [playerList, setPlayerlist] = useState();
+    const draftContext = useDraft();
+    const draftRoomId = draftContext?.draftRoomId;
+    const roster = draftContext?.roster;
+
+    
+    const [playerList, setPlayerlist] = useState<PlayerPreviousSeasonStats[]>();
     const { userId } = useAuth();
   
     useEffect(() => {
@@ -30,7 +34,6 @@ const PlayersTable = () => {
         const updatedRoster = {...currentRoster}; 
     
         if (addPlayer(pickedPlayer, updatedRoster)) {
-
             console.log(updatedRoster);
             try {
                 const response = await fetch(API_URL+"/drafts/picks", {
@@ -44,8 +47,7 @@ const PlayersTable = () => {
                         draftId: draftRoomId
                     })
                 });
-                // Handle the response...
-                setRoster(updatedRoster);
+                draftContext?.setRoster(updatedRoster);
             } catch (error) {
                 console.log(error);
             }
@@ -78,9 +80,10 @@ const PlayersTable = () => {
                         src={`/images/playerImages/${player.player_id}.png`}
                         loading="lazy"
                         onError={(event) => {
-                            event.target.src = "/images/playerImages/defaultPlayerImage.png";
-                            event.target.onerror = null; // Prevents future errors from being logged
-                        }}
+                            const imgElement = event.target as HTMLImageElement;
+                            imgElement.src = "/images/playerImages/defaultPlayerImage.png";
+                            imgElement.onerror = null; // Prevents future errors from being logged
+                          }}
                         />
                             {player.first_name+" "+player.last_name}
                             <OutlinedRoundedButton 

@@ -1,13 +1,14 @@
 import '../../css/chatRoom.css';
-import OutlinedButton from '../buttons/OutlinedButton';
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDraft } from './DraftContext';
 import TextInput from '../TextInput';
 import {BsChatFill} from 'react-icons/bs';
 
 const ChatRoom = () => {
 
-    const { socket, draftRoomId } = useDraft();
+    const draftContext = useDraft();
+    const socket = draftContext?.socket;
+    const draftRoomId = draftContext?.draftRoomId;
     const modalRef = useRef(null);
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState<string[]>([]);
