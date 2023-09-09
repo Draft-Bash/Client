@@ -3,7 +3,7 @@ import '../css/signupPage.css'
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextInput from "../components/TextInput";
-import { API_URL } from '../env';
+import { API_URL } from "../../envVariables";
 import { useAuth } from '../authentication/AuthContext';
 
 const LoginPage = () => {
@@ -14,6 +14,7 @@ const LoginPage = () => {
 
     const handleLogin = async (e: any) => {
         e.preventDefault();
+        console.log(API_URL);
         try {
             const response = await fetch(API_URL+'/users/login', {
                 method: 'POST',

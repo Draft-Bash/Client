@@ -1,7 +1,7 @@
 import '../css/signupPage.css'
 import React, { useState, useEffect } from 'react';
 import TextInput from "../components/TextInput";
-import { API_URL } from '../env';
+import { API_URL } from "../../envVariables";
 import { useAuth } from '../authentication/AuthContext';
 import { IoMdCheckmark } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
