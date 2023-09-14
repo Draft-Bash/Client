@@ -64,7 +64,6 @@ const SignupPage = () => {
       isEmailValid = true;
     }
 
-    // Checks if the passwords match.
     if (password != passwordConfirm) {
       setInvalidPasswordMessage("Passwords do not match");
       isPasswordValid = false;
