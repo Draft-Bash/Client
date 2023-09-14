@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { addPlayer, shiftPlayer, DraftRoster, Player } from '../../utils/draft';
-import { API_URL, SERVER_URL } from '../../env';
+import { API_URL, SERVER_URL } from '../../../envVariables';
 import { useAuth } from '../../authentication/AuthContext';
 
 interface SocketContextProps {
