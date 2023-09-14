@@ -3,6 +3,7 @@ env.ts
 src/env.ts
 src/env
 dist
+node_modules
 
 # Logs
 logs
