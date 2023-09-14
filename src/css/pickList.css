@@ -1,0 +1,52 @@
+.pick-list {
+    position: relative;
+}
+
+.pick-list .input {
+    display: flex;
+}
+
+.pick-list .input input {
+    border: 2px solid var(--lightGrey);
+    border-right: none;
+    height: 30px;
+    font-size: 14px;
+    padding-left: 8px;
+    outline: none;
+    cursor: pointer;
+}
+
+.pick-list ul {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    border: 1px solid var(--black);
+    max-height: 200px;
+    overflow: auto;
+    z-index: 10;
+}
+
+.pick-list ul li {
+    padding: 3px 6px 3px 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.pick-list ul li.selected {
+    background-color: var(--lightGrey);
+}
+
+.pick-list ul li:hover {
+    background-color: var(--lightGrey);
+}
+
+.pick-list .input .chevron-down {
+    background-color: white;
+    height: 30px;
+    width: 30px;
+    color: var(--darkGrey);
+    border: 2px solid var(--lightGrey);
+    padding: 8px;
+    border-left: none;
+    cursor: pointer;
+}

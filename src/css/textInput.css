@@ -1,0 +1,12 @@
+.textInput {
+    padding: 10px;
+    font-size: 15px;
+    width: 100%;
+    border: 1px solid var(--grey);
+    border-radius: 4px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+.textInput:focus {
+    outline-color: var(--brightBlue);
+}
