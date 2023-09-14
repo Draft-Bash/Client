@@ -1,34 +1,39 @@
-import '../css/navbar.css';
+import '../css/navbar.css'; // Import CSS for styling
 import React from 'react';
-import {BiUserCircle} from 'react-icons/bi';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../authentication/AuthContext';
-import { useLocation } from 'react-router-dom';
+import { BiUserCircle } from 'react-icons/bi'; // Import user icon
+import { Link } from 'react-router-dom'; // Import Link component for routing
+import { useAuth } from '../authentication/AuthContext'; // Import authentication context
+import { useLocation } from 'react-router-dom'; // Import useLocation hook for tracking the current route
 
 const Navbar = () => {
-    const location = useLocation();
+    const location = useLocation(); // Get the current route location
 
-    const { setIsAuthenticated } = useAuth()
+    const { setIsAuthenticated } = useAuth(); // Access authentication context
 
     return (
-        <nav className="main-navbar">
-            <Link className={location.pathname.includes("drafts") ? "option active" : "option"} 
-            to="/modules/drafts" 
+        <nav className="main-navbar"> {/* Main navigation container */}
+            <Link
+                className={location.pathname.includes("drafts") ? "option active" : "option"} // Add "active" class if the route includes "drafts"
+                to="/modules/drafts" // Link to the "/modules/drafts" route
             >
-                Mock Drafts
+                Mock Drafts {/* Display the "Mock Drafts" option */}
             </ Link>
-            <div className="user option">
-                <BiUserCircle className="user-icon" />
+            <div className="user option"> {/* User-related options */}
+                <BiUserCircle className="user-icon" /> {/* User icon */}
                 <ul>
-                    <li onClick={() => {
-                        localStorage.removeItem("jwtToken");
-                        setIsAuthenticated(false);
-                    }}>Logout</li>
-                    <li>Settings</li>
+                    <li
+                        onClick={() => {
+                            localStorage.removeItem("jwtToken"); // Remove JWT token from local storage on logout
+                            setIsAuthenticated(false); // Set isAuthenticated to false in the authentication context
+                        }}
+                    >
+                        Logout {/* Display the "Logout" option */}
+                    </li>
+                    <li>Settings</li> {/* Display the "Settings" option */}
                 </ul>
             </div>
         </nav>
     );
 };
-  
-export default Navbar;
+
+export default Navbar; // Export the Navbar component as the default export

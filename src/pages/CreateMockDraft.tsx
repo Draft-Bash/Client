@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 const ConfigureMockDraft = () => {
     const navigate = useNavigate();
     const { userId } = useAuth();
+
+    // State variables to store configuration settings
     const [teamCount, setTeamCount] = useState(10);
     const [pickTime, setPickTime] = useState("90 seconds");
     const [draftType, setDraftType] = useState("snake");
@@ -27,13 +29,14 @@ const ConfigureMockDraft = () => {
     const [draftRange, setDraftRange] = useState<number[]>([]);
     const pickTimes = ["None","30 seconds", "60 seconds", "90 seconds", "120 seconds", "150 seconds"];
 
+    // Function to randomize the draft position
     const randomizePickPosition = () => {
         const randomIndex = Math.floor(Math.random() * draftRange.length);
         setDraftPosition(draftRange[randomIndex]);
     }
 
+    // Function to handle form submission
     const handleOnSubmit = async () => {
-        console.log("Hello");
         try {
             const response = await fetch(API_URL+"/drafts", {
                 method: 'POST',
@@ -68,13 +71,13 @@ const ConfigureMockDraft = () => {
         
     }
 
+    // useEffect to populate the draftRange based on teamCount
     useEffect(() => {
         let positions: number[] = [];
         for (let i: number = 1; i <= teamCount; i++) {
             positions.push(i);
         }
         setDraftRange(positions);
-        console.log(userId);
     }, [teamCount]);
 
     return (
@@ -85,6 +88,7 @@ const ConfigureMockDraft = () => {
                     <p>Set your draft settings below</p>
                 </div>
                 <div className="settings-container">
+                    {/* Scoring type selection */}
                     <div className="settings-group">
                         <h5>Scoring</h5>
                         <label>
@@ -105,6 +109,7 @@ const ConfigureMockDraft = () => {
                             Category
                         </label>
                     </div>
+                    {/* Draft type selection */}
                     <div className="settings-group">
                         <h5>Draft type</h5>
                         <label>
@@ -125,18 +130,21 @@ const ConfigureMockDraft = () => {
                             Linear
                         </label>
                     </div>
+                    {/* Team count selection */}
                     <div className="settings-group">
                         <h5># of teams</h5>
                         <PickList setValue={(count) => setTeamCount(count as number)} 
                             itemList={[8,10,12,14]} defaultValue={10} width={40}
                         />
                     </div>
+                    {/* Pick time selection */}
                     <div className="settings-group">
                         <h5>Pick Time</h5>
                         <PickList setValue={(time) => setPickTime(time as string)} 
                             itemList={pickTimes} defaultValue={"90 seconds"} width={95} 
                         />
                     </div>
+                    {/* Draft position selection */}
                     <div className="settings-group">
                         <h5>Draft Position</h5>
                         <div className="pick-position-settings">
@@ -146,9 +154,11 @@ const ConfigureMockDraft = () => {
                         </div>
                     </div>
                 </div>
+                {/* Roster spots settings */}
                 <div className="roster-spots-settings">
                     <h3>Roster Spots</h3>
                     <div className="settings-container">
+                        {/* Configuration for each roster spot */}
                         <div className="settings-group">
                             <label>PG</label>
                             <PickList setValue={(count) => setPointGuardCount(count as number)} 
@@ -205,6 +215,7 @@ const ConfigureMockDraft = () => {
                         </div>
                     </div>
                 </div>
+                {/* Button to create the draft */}
                 <div className="create-draft">
                     <RoundedButton color="blue" handleOnClick={() => {handleOnSubmit()}}>Create Draft</RoundedButton>
                 </div>
@@ -212,5 +223,6 @@ const ConfigureMockDraft = () => {
         </div>
     );
 };
- 
+
 export default ConfigureMockDraft;
+                       

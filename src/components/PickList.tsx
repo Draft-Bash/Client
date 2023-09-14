@@ -10,24 +10,31 @@ interface Props {
 }
 
 const PickList: React.FC<Props> = ({ itemList, defaultValue, width = 500, setValue }) => {
+  // State for tracking whether the picklist is open
   const [isOpen, setIsOpen] = useState(false);
+
+  // State for storing the selected item (defaulted to null if not provided)
   const [selectedItem, setSelectedItem] = useState<string | number | null>(
     defaultValue !== undefined ? defaultValue : null
   );
+
+  // Reference to the <ul> element for detecting clicks outside the picklist
   const listRef = useRef<HTMLUListElement>(null);
 
+  // Function to handle clicks outside of the picklist
   const handleClickOutside = (event) => {
     if (event.target != listRef.current && event.target.tagName != "LI") {
       setIsOpen(false);
     }
   };
 
+  // Add event listener to detect clicks outside the picklist
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside as unknown as EventListener);
+    document.addEventListener('mousedown', handleClickOutside as EventListener);
 
     // Clean up the event listener on unmount
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside as unknown as EventListener);
+      document.removeEventListener('mousedown', handleClickOutside as EventListener);
     };
   }, []);
 

@@ -12,7 +12,7 @@ const ToggleButton = (props: Props) => {
     const [isOn, setIsOn] = useState(false);
 
     return (
-        <div className={isOn ? "toggle-button" : "toggle-button active"} onClick={() => setIsOn(!isOn)}>
+        <div className={isOn ? "toggle-button active" : "toggle-button"} onClick={() => setIsOn(!isOn)}>
             <label>{props.labelName}</label>
             <div className="button-container">
                 <button></button>

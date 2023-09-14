@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { API_URL } from '../env';
 
+// Define the shape of the authentication state
 interface AuthState {
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
@@ -8,11 +9,12 @@ interface AuthState {
   userId: number;
 }
 
+// Define props for the AuthProvider component
 interface Props {
   children: React.ReactNode;
 }
 
-// Create the context
+// Create the context to manage authentication state
 const AuthContext = createContext<AuthState | null>(null);
 
 // Create a custom hook to access the authentication state
@@ -26,10 +28,12 @@ export function useAuth() {
 
 // Create the AuthProvider component to wrap the App component
 export function AuthProvider(props: Props) {
+  // Initialize authentication state using useState
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
   const [userId, setUserId] = useState(-1);
 
+  // Function to check the user's authentication status
   async function checkAuthentication() {
     try {
       const response = await fetch(API_URL + '/users/login', {
@@ -39,12 +43,12 @@ export function AuthProvider(props: Props) {
 
       const user = await response.json();
 
+      // Update the authentication state based on the response
       if (user) {
         setIsAuthenticated(true);
         setUsername(user.user_name);
         setUserId(user.user_id);
-      }
-      else {
+      } else {
         setIsAuthenticated(false);
         setUsername('');
         setUserId(-1);
@@ -55,10 +59,12 @@ export function AuthProvider(props: Props) {
     }
   }
 
+  // Use useEffect to call checkAuthentication when the isAuthenticated state changes
   useEffect(() => {
     checkAuthentication();
   }, [isAuthenticated]);
 
+  // Define the authentication state object
   const authState: AuthState = {
     isAuthenticated,
     setIsAuthenticated,
@@ -66,8 +72,9 @@ export function AuthProvider(props: Props) {
     userId
   };
 
+  // Provide the authentication state to the wrapped components
   return (
-    <AuthContext.Provider value={{isAuthenticated, setIsAuthenticated, username, userId}}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, username, userId }}>
       {props.children}
     </AuthContext.Provider>
   );
