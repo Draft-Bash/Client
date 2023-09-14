@@ -2,7 +2,7 @@ import '../../../css/draftRoom/center/playersTable.css';
 import React, { useEffect, useState } from 'react';
 import { useDraft } from '../DraftContext';
 import { useAuth } from '../../../authentication/AuthContext';
-import { API_URL } from '../../../env';
+import { API_URL } from '../../../../env';
 import { addPlayer, PlayerPreviousSeasonStats } from '../../../utils/draft';
 import OutlinedRoundedButton from '../../buttons/OutlinedRoundedButton';
 

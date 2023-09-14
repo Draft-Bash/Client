@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { API_URL } from '../../../env';
+import { API_URL } from '../../../../env';
 import { useDraft } from '../DraftContext';
 import { capitalizeWords } from '../../../utils/wordCapitalizer';
 import '../../../css/draftHeader.css';

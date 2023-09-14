@@ -2,7 +2,7 @@ import '../css/mockDrafts.css';
 import RoundedButton from '../components/buttons/RoundedButton';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import React, { useState, useEffect } from 'react';
-import { API_URL } from '../env';
+import { API_URL } from '../../env';
 import { useAuth } from '../authentication/AuthContext';
 import {BsChevronDoubleLeft} from 'react-icons/bs';
 import {BsChevronDoubleRight} from 'react-icons/bs';

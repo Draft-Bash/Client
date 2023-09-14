@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { API_URL } from '../env';
+import { API_URL } from '../../env';
 
 interface AuthState {
   isAuthenticated: boolean;

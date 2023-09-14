@@ -4,7 +4,7 @@ import { useAuth } from "../authentication/AuthContext";
 import PickList from "../components/PickList";
 import OutlinedButton from "../components/buttons/OutlinedButton";
 import RoundedButton from "../components/buttons/RoundedButton";
-import { API_URL } from "../env";
+import { API_URL } from "../../env";
 import { useNavigate } from 'react-router-dom';
 
 const ConfigureMockDraft = () => {
@@ -23,7 +23,7 @@ const ConfigureMockDraft = () => {
     const [forwardCount, setForwardCount] = useState(1);
     const [centerCount, setCenterCount] = useState(1);
     const [utilityPlayerCount, setUtilityPlayerCount] = useState(3);
-    const [benchSize, setBenchSize] = useState(1);
+    const [benchSize, setBenchSize] = useState(4);
     const [draftRange, setDraftRange] = useState<number[]>([]);
     const pickTimes = ["None","30 seconds", "60 seconds", "90 seconds", "120 seconds", "150 seconds"];
 
