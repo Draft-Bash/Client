@@ -4,7 +4,7 @@ import { useAuth } from "../authentication/AuthContext";
 import PickList from "../components/PickList";
 import OutlinedButton from "../components/buttons/OutlinedButton";
 import RoundedButton from "../components/buttons/RoundedButton";
-import { API_URL } from "../../envVariables";
+import { API_URL } from "../env";
 import { useNavigate } from 'react-router-dom';
 
 const ConfigureMockDraft = () => {

@@ -3,7 +3,6 @@ env.ts
 src/env.ts
 src/env
 dist
-envVariables.ts
 
 # Logs
 logs
