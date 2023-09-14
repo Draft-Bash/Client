@@ -1,0 +1,8 @@
+.draft-clock {
+    min-width: 60px;
+    color: var(--brightOrange);
+    font-size: 20px;
+    text-align: center;
+    border-bottom: 2px solid var(--brightOrange);
+    margin: 10px;
+}

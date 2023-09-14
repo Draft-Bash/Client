@@ -1,0 +1,7 @@
+.outlined-button {
+    outline: none;
+    border: 2px solid var(--lightGrey);
+    background-color: white;
+    padding: 0px 8px 0px 8px;
+    cursor: pointer;
+}

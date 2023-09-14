@@ -1,0 +1,6 @@
+.draft-room main {
+    height: calc(100vh - 145px);
+    display: flex;
+    overflow: hidden;
+}
+
