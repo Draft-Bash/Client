@@ -1,10 +1,10 @@
 import '../../css/draftRoom/rosterPickList.css';
 import React, { useEffect, useState, useRef } from 'react';
-import { API_URL } from '../../../env';
 import { useAuth } from '../../authentication/AuthContext';
 import { useDraft } from './DraftContext';
 import { User } from '../../utils/users';
 import { FaChevronDown } from 'react-icons/fa';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const RosterPickList = () => {
 

@@ -1,10 +1,10 @@
 import '../css/signupPage.css'
 import React, { useState, useEffect } from 'react';
 import TextInput from "../components/TextInput";
-import { API_URL } from '../../env';
 import { useAuth } from '../authentication/AuthContext';
 import { IoMdCheckmark } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const SignupPage = () => {
   const navigate = useNavigate();

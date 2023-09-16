@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { API_URL } from '../../env';
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface AuthState {
   isAuthenticated: boolean;

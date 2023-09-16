@@ -3,8 +3,8 @@ import '../css/signupPage.css'
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextInput from "../components/TextInput";
-import { API_URL } from '../../env';
 import { useAuth } from '../authentication/AuthContext';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const LoginPage = () => {
     const [name, setName] = useState("");
