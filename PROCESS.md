@@ -16,6 +16,10 @@ Product Owner: Stephen Feddes<br>
 ##### Sprint 2
 Scrum Master: Stephen Feddes<br>
 Product Owner: Brian Feddes<br>
+Reflection on improvements made since Sprint 1:
+  We improved the security of the app, especially on the server side. Files with important information, such as database credentials, are 
+  listed in a .gitignore file so that they are not included in our repository/organization when changes are pushed. The environmental 
+  variables for the testing and production environments have been set.
 
 ##### Sprint 3
 Scrum Master: Brian Feddes<br>

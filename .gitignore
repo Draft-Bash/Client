@@ -4,6 +4,10 @@ src/env.ts
 src/env
 dist
 node_modules
+.firebaserc
+firebase.json
+firebaserc
+firebase
 
 # Logs
 logs
