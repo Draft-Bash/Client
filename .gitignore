@@ -8,6 +8,9 @@ node_modules
 firebase.json
 firebaserc
 firebase
+.env
+config
+config.ts
 
 # Logs
 logs
