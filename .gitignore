@@ -11,6 +11,7 @@ firebase
 .env
 config
 config.ts
+envconfig.ts
 
 # Logs
 logs
