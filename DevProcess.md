@@ -1,7 +1,7 @@
 # Individual Developer Process & Configuration
 
 ### Environment Setup
-- Code written primarily in Typescript. Must be compiled into Javascript before running locally
+- Code written primarily in Typescript.
 1. Download Postgresql
 2. Git clone the server and client repositories.
 3. (Server) run 'npm install' to download the dependencies.
