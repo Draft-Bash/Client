@@ -12,5 +12,5 @@ Stephen Feddes | Github: stephenfeddes | Email: stephenpfeddes@lewisu.edu
 [System Process](SystemProcess.md)<br>
 [Dev Process](DevProcess.md)<br>
 [PROCESS](PROCESS.md)<br>
-[MVP](MVP.md)<br>
+[DraftBash MVP](MVP.md)<br>
 [TEAM](TEAM.md)
