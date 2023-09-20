@@ -18,6 +18,7 @@ const CenterHeader = () => {
   
         socket?.on('send-draft-order', (updatedDraftOrder: DraftPick[]) => {
             setDraftOrder(updatedDraftOrder);
+            console.log(updatedDraftOrder)
 
             for (let i = 0; i < updatedDraftOrder.length; i++) {
                 if (updatedDraftOrder[i].user_id === userId && !updatedDraftOrder[i].is_picked) {
