@@ -78,7 +78,9 @@ export interface PlayerPreviousSeasonStats extends Player {
       if (
         player[`is_${position}` as keyof Player] ||
         position === 'bench' ||
-        position === 'utility'
+        position === 'utility' ||
+        ((player.is_pointguard || player.is_shootingguard) && position === 'guard') ||
+        ((player.is_smallforward || player.is_powerforward) && position === 'forward')
       ) {
         let emptyIndex = rosterSpots[position].findIndex((slot) => slot === null);
         if (emptyIndex !== -1) {
@@ -86,7 +88,8 @@ export interface PlayerPreviousSeasonStats extends Player {
           return true;
         } else {
           for (let i = 0; i < rosterSpots[position].length; i++) {
-            if (shiftPlayer(player, position, i, rosterSpots)) {
+            if (rosterSpots[position][i] && shiftPlayer(rosterSpots[position][i] as Player, position, i, rosterSpots)) {
+              rosterSpots[position][i] = player
               return true;
             }
           }
@@ -95,6 +98,3 @@ export interface PlayerPreviousSeasonStats extends Player {
     }
     return false;
   }
-  
-  
-  
