@@ -25,7 +25,7 @@ const ConfigureMockDraft = () => {
     const [utilityPlayerCount, setUtilityPlayerCount] = useState(3);
     const [benchSize, setBenchSize] = useState(4);
     const [draftRange, setDraftRange] = useState<number[]>([]);
-    const pickTimes = ["None","30 seconds", "60 seconds", "90 seconds", "120 seconds", "150 seconds"];
+    const pickTimes = ["30 seconds", "60 seconds", "90 seconds", "120 seconds", "150 seconds"];
 
     const randomizePickPosition = () => {
         const randomIndex = Math.floor(Math.random() * draftRange.length);
@@ -43,7 +43,7 @@ const ConfigureMockDraft = () => {
                 body: JSON.stringify({
                     draft_type: draftType,
                     scoring_type: scoringType,
-                    pick_time_seconds: pickTime,
+                    pick_time_seconds: Number(pickTime.split(" ")[0]),
                     team_count: teamCount,
                     pointguard_slots: pointGuardCount,
                     shootingguard_slots: shootingGuardCount,

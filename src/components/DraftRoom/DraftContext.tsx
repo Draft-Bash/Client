@@ -15,6 +15,7 @@ interface DraftContextType {
   setDraftRoomId: React.Dispatch<React.SetStateAction<string | null>>;
   setRoster: React.Dispatch<React.SetStateAction<DraftRoster| undefined>>;
   roster: DraftRoster | undefined; // Change the type
+  currentTurnUserId: number;
 }
 
 const SocketContext = createContext<DraftContextType | null>(null);
@@ -27,6 +28,7 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [draftRoomId, setDraftRoomId] = useState<string | null>(null);
   const [roster, setRoster] = useState<DraftRoster>(); // Change the type
+  const [currentTurnUserId, setCurrentTurnUserId] = useState(-1);
   const { userId } = useAuth();
 
   useEffect(() => {
@@ -41,6 +43,10 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
 
   useEffect(() => {
     socket?.emit('join-room', draftRoomId);
+    socket?.on('update-draft-turn', (userId: number) => {
+      setCurrentTurnUserId(userId);
+      console.log(userId);
+    });
   }, [draftRoomId]);
 
   async function fetchDraftedPlayers() {
@@ -86,7 +92,8 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
     draftRoomId,
     setDraftRoomId,
     setRoster,
-    roster
+    roster,
+    currentTurnUserId
   };
 
   return (

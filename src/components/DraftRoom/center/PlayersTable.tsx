@@ -15,11 +15,12 @@ const PlayersTable = () => {
     const setRoster = draftContext?.setRoster;
     const socket = draftContext?.socket;
     const [playerList, setPlayerList] = useState<PlayerPreviousSeasonStats[]>();
+    const currentTurnUserId = draftContext?.currentTurnUserId;
     const { userId } = useAuth();
+
 
     const pickPlayer = (playerId: string, userId: string, draftId: string) => {
         socket?.emit('pick-player', playerId, userId, draftId);
-
     }
   
     useEffect(() => {
