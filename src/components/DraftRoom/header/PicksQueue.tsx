@@ -21,10 +21,7 @@ const PicksQueue = () => {
     }
   
     useEffect(() => {
-        // Set up the event listener first
-  
         socket?.on('send-draft-order', (updatedDraftOrder: DraftPick[]) => {
-            console.log(updatedDraftOrder);
             setDraftOrder(updatedDraftOrder);
         });
     }, [socket]);

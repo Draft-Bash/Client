@@ -4,6 +4,7 @@ import { useDraft } from '../DraftContext';
 import { useAuth } from '../../../authentication/AuthContext';
 import { addPlayer, PlayerPreviousSeasonStats } from '../../../utils/draft';
 import OutlinedRoundedButton from '../../buttons/OutlinedRoundedButton';
+import { DraftRoster } from '../../../utils/draft';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const PlayersTable = () => {
@@ -11,50 +12,37 @@ const PlayersTable = () => {
     const draftContext = useDraft();
     const draftRoomId = draftContext?.draftRoomId;
     const roster = draftContext?.roster;
-
-    
-    const [playerList, setPlayerlist] = useState<PlayerPreviousSeasonStats[]>();
+    const setRoster = draftContext?.setRoster;
+    const socket = draftContext?.socket;
+    const [playerList, setPlayerList] = useState<PlayerPreviousSeasonStats[]>();
     const { userId } = useAuth();
+
+    const pickPlayer = (playerId: string, userId: string, draftId: string) => {
+        socket?.emit('pick-player', playerId, userId, draftId);
+
+    }
   
     useEffect(() => {
-        if (draftRoomId) {
-            fetch(API_URL+"/drafts/players?draftId="+draftRoomId)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                console.log(data)
-                setPlayerlist(data);
-            })
-            .catch(error => {console.log(error)});
-        }
-    }, [draftRoomId, roster]);
+        socket?.on('receive-available-players', (availablePlayers) => {
+            setPlayerList(availablePlayers);
+        });
+    }, [socket]);
 
     async function handleDraftClick(pickedPlayer, currentRoster) {
-        const updatedRoster = {...currentRoster}; 
-    
-        if (addPlayer(pickedPlayer, updatedRoster)) {
-            console.log(updatedRoster);
-            try {
-                const response = await fetch(API_URL+"/drafts/picks", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        userId: userId, 
-                        playerId: pickedPlayer.player_id, 
-                        draftId: draftRoomId
-                    })
-                });
-                draftContext?.setRoster(updatedRoster);
-            } catch (error) {
-                console.log(error);
+        const updatedRoster = { ...currentRoster }; 
+      
+        if (setRoster) { // Check if setRoster is defined
+            if (addPlayer(pickedPlayer, updatedRoster)) {
+                pickPlayer(pickedPlayer.player_id, String(userId), String(draftRoomId));
+                setRoster(updatedRoster);
+
+            } else {
+                console.log(roster);
+                }
+            } else {
+                console.error("setRoster is not defined.");
             }
-        } else {
-            console.log(roster);
-        }
-    }
+      }
     
     return (
         <div className="players-table">
