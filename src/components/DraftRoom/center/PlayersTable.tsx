@@ -36,7 +36,6 @@ const PlayersTable = () => {
             if (addPlayer(pickedPlayer, updatedRoster)) {
                 pickPlayer(pickedPlayer.player_id, String(userId), String(draftRoomId));
                 setRoster(updatedRoster);
-
             } else {
                 console.log(roster);
                 }
@@ -67,7 +66,6 @@ const PlayersTable = () => {
                         <td className="player-cell">
                         <img
                             src={`/images/playerImages/${player.player_id}.png`}
-                            loading="lazy"
                             onError={(event) => {
                             const imgElement = event.target as HTMLImageElement;
                             imgElement.src = "/images/playerImages/defaultPlayerImage.png";
