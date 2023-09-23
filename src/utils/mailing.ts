@@ -1,6 +1,6 @@
 import * as nodemailer from 'nodemailer';
 
-async function sendInvitationEmails() {
+export async function sendInvitationEmails() {
   const html_body = `
     <h1>XXX has invited you to join their draft!</h1>
     <h3>Draft Date & Time:</h3>
@@ -46,5 +46,3 @@ async function sendInvitationEmails() {
     console.log(error);
   }
 }
-
-sendInvitationEmails();
