@@ -23,6 +23,11 @@ const PickList: React.FC<Props> = ({ itemList, defaultValue, width = 500, setVal
   };
 
   useEffect(() => {
+    // Watch for changes in the defaultValue prop
+    setSelectedItem(defaultValue !== undefined ? defaultValue : null);
+  }, [defaultValue]); // Trigger the effect when defaultValue changes
+
+  useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside as unknown as EventListener);
 
     // Clean up the event listener on unmount

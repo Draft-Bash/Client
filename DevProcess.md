@@ -2,21 +2,29 @@
 
 ### Environment Setup
 - Code written primarily in Typescript.
-1. Download Postgresql
-2. Git clone the server and client repositories.
-3. (Server) run 'npm install' to download the dependencies.
-4. (Server) generate a .env file in the root directory and add these variables:
-  DB_HOST=localhost
-  DB_NAME=nameOfTheDatabaseYouCreatedOnYourLocaPostgresql
-  DB_USER=nameOfYourLocalPostgresUser
-  DB_PASSWORD=nameOfYourLocalPostgresUser'sPassword
-  DB_PORT=5432
-  JWT_SECRET=anyRandomSetOfCharactersWillWork
-5. (Server) Run 'npx knex migrate:latest' to run the database migrations. All changes to the database must be made through migrations, which can be created by running npx knex migrate:make. Knex.js is the package used for handling the database migrations.
-6. (Server) Only run 'npx knex seed:run' once so that the local database is filled with data like nba players, nba teams, etc.
-7. (Server) Run 'npm run dev' to host the server on your localhost's port 3000. This command will cause any updates in your code to be reflected in the running localhost server.
-8. (Client) Run 'npm install' to install the dependencies for the Client.
-9. (Client) Create a .env file in the root directory with these variables:
-    API_URL=http://localhost:3000/api/v1
-    SERVER_URL=http://localhost:3000
-10. (Client) Run 'npm run dev' to run the frontend on your localhost's port 5173. Any updates you make to the code will be instantl reflected on the running instance on localhost:5173. For the local frontend to interact with the local backend, both the server and client must be running.
+1. Before cloning the repository, make sure you have Postgresql downloaded on your local machine.
+2. After cloning, switch test branch by running 'git checkout -b test origin/test'.
+3. Run 'npm install' to install the dependencies.
+4. When developing a feature, make your own branch by running 'git checkout -b name-of-feature-branch'
+5. After cloning the repository, run 'npm install' to install the dependencies.
+6. (Server repository) Once you clone the server repository, add a .env file to the root folder with these variables:
+    DB_HOST=localhost
+    DB_NAME=yourPostgresqlDBName
+    DB_USER=yourPostgresqlUsername
+    DB_PASSWORD=yourPostgresqlPassword
+    DB_PORT=5432
+    SSL=false
+    JWT_SECRET=anyStringWillDo
+7. (Server repository) To seed the database with data, run 'npx knex seed:run' only once.
+8. Run 'npm run dev' to start the server on localhost:3000 with hot reload. It will automatically run the database migrations for you
+9. Any changes to the database schema must be through knex.js. To create a migration, run 'npx knex migrate:make migration_name'.
+   After running the command, a new file will be added to the schema folder in the migrations folder. Go to it and add the neccessary up/down migration code. Research online the syntax for doing this with knex.js
+10. (Client repository) Clone the Client repository.
+11. After cloning, switch test branch by running 'git checkout -b test origin/test'.
+12. When developing a feature, make your own branch by running 'git checkout -b name-of-feature-branch'
+13. Run 'npm install' to install the dependencies.
+14. Add a .env file to the root folder with these variables:
+    VITE_API_URL=http://localhost:3000/api/v1
+    VITE_SERVER_URL=http://localhost:3000
+15. While the server-side code is running on localhost:3000, run 'npm run dev' to start the frontend with hot reload
+16. The frontend is now on localhost:5173. To see it, add locahost:5173 in your browser's search URL.

@@ -36,7 +36,6 @@ const PlayersTable = () => {
             if (addPlayer(pickedPlayer, updatedRoster)) {
                 pickPlayer(pickedPlayer.player_id, String(userId), String(draftRoomId));
                 setRoster(updatedRoster);
-
             } else {
                 console.log(roster);
                 }
@@ -61,30 +60,31 @@ const PlayersTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {playerList?.map((player, index) => (
+                {playerList?.map((player, index) => (
                     <tr key={index}>
                         <td>{player.rank_number}</td>
                         <td className="player-cell">
                         <img
-                        src={`/images/playerImages/${player.player_id}.png`}
-                        loading="lazy"
-                        onError={(event) => {
+                            src={`/images/playerImages/${player.player_id}.png`}
+                            onError={(event) => {
                             const imgElement = event.target as HTMLImageElement;
                             imgElement.src = "/images/playerImages/defaultPlayerImage.png";
                             imgElement.onerror = null; // Prevents future errors from being logged
-                          }}
+                            }}
                         />
-                            {player.first_name+" "+player.last_name}
-                            <OutlinedRoundedButton 
-                            color="red" 
+                        {player.first_name + " " + player.last_name}
+                        {currentTurnUserId === userId && (
+                            <OutlinedRoundedButton
+                            color="red"
                             handleOnClick={() => handleDraftClick(player, roster)}
                             >
-                                DRAFT
+                            DRAFT
                             </OutlinedRoundedButton>
+                        )}
                         </td>
                         <td>{player.player_age}</td>
                         <td>{player.games_played}</td>
-                        <td>{(player.minutes_played/player.games_played).toFixed(1)}</td>
+                        <td>{(player.minutes_played / player.games_played).toFixed(1)}</td>
                         <td>{player.points_total}</td>
                         <td>{player.rebounds_total}</td>
                         <td>{player.assists_total}</td>

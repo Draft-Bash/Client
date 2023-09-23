@@ -45,11 +45,15 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
     socket?.emit('join-room', draftRoomId);
     socket?.on('update-draft-turn', (userId: number) => {
       setCurrentTurnUserId(userId);
-      console.log(userId);
+    });
+    socket?.on('update-roster', (roster) => {
+      if (roster.userId==userId) {
+        handleRoster(roster.players);
+      }
     });
   }, [draftRoomId]);
 
-  async function fetchDraftedPlayers() {
+  async function handleRoster(players) {
     try {
       const draftRulesResponse = await fetch(API_URL + "/drafts/" + draftRoomId);
       const draftRules = await draftRulesResponse.json();
@@ -66,10 +70,7 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
         bench: Array.from({ length: draftRules.bench_slots }, () => null)
       };
 
-      const draftedPlayerResponse = await fetch(API_URL + `/drafts/picks?userId=${userId}&draftId=${draftRoomId}`);
-      const draftedPlayers = await draftedPlayerResponse.json();
-
-      draftedPlayers.forEach(player => {
+      players.forEach(player => {
         addPlayer(player, rosterSpots);
       });
       setRoster(rosterSpots);
@@ -79,13 +80,15 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
 
   useEffect(() => {
     if (userId && draftRoomId) {
-      fetchDraftedPlayers();
+      fetch(API_URL + `/drafts/picks?userId=${userId}&draftId=${draftRoomId}`)
+      .then((draftedPlayerResponse) => {
+        return draftedPlayerResponse.json();
+      })
+      .then((draftedPlayers) => {
+        handleRoster(draftedPlayers);
+      });
     }
   }, [userId, draftRoomId]);
-
-  useEffect(() => {
-    console.log(roster);
-  }, [roster]);
 
   const socketContextValue: DraftContextType = {
     socket,

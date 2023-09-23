@@ -29,11 +29,10 @@ const ConfigureMockDraft = () => {
 
     const randomizePickPosition = () => {
         const randomIndex = Math.floor(Math.random() * draftRange.length);
-        setDraftPosition(draftRange[randomIndex]);
+        setDraftPosition(randomIndex+1);
     }
 
     const handleOnSubmit = async () => {
-        console.log("Hello");
         try {
             const response = await fetch(API_URL+"/drafts", {
                 method: 'POST',
@@ -74,7 +73,6 @@ const ConfigureMockDraft = () => {
             positions.push(i);
         }
         setDraftRange(positions);
-        console.log(userId);
     }, [teamCount]);
 
     return (
