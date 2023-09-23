@@ -7,7 +7,10 @@
 ### Process
 - The process for the end-users is very simple. They will be given two links:
   1. The URL to the test application where they can get first access to and test the latest features being implemented to Draftbash
+  https://draftbash-testing.web.app
   2. The URL to the production application where they can enjoy a more stable application where only the thoroughly tested features are implemented for a smoother user-experience
+  draftbashfantasy.com
+  https://draftbashfantasy.com
 
 ### Configuration
 - Our product's architecture ensures constant integration and constant development for our customers to enjoy. The moment a feature is added to either the test or production environment, our customers will then be able to enjoy and test out the new feature.
