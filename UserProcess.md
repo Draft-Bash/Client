@@ -1,8 +1,9 @@
 # User Testing, Process, & Configuration
 
 ### User Testing
-- Once a new feature is determined by the developers to be ready for public testing, that feature will be added to the test branch through a pull request, which will then be pushed to the testing application automatically through the CI/CD pipeline, where end-users can begin testing the new "Beta" feature.
-- Once the new is thoroughly tested in the test application, if it is determiend to be stable, it will then be pushed to the main branch, where it will undergo additional testing before officially being implemented as a new feature to the application
+- Once a new feature is determined by the developers to be ready for public testing, that feature will be added to the test branch through a pull request, which will then be pushed to the testing application automatically 
+  through the CI/CD pipeline, where end-users can begin testing the new "Beta" feature.
+- Once the new feature is thoroughly tested in the test application and is determined to be stable, it will then be pushed to the main branch where it will undergo additional testing before officially being implemented as a new feature to the application.
 
 ### Process
 - The process for the end-users is very simple. They will be given two links:
