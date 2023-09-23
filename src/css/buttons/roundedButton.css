@@ -1,0 +1,23 @@
+.rounded-button {
+    border: none;
+    outline: none;
+    border-radius: 25px;
+    padding: 10px 25px 10px 25px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 18px;
+}
+
+.rounded-button.blue {
+    background-color: var(--blue);
+    color: white;
+}
+
+.rounded-button.yellow {
+    background-color: var(--yellow);
+    color: white;
+}
+
+.rounded-button:hover {
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+}

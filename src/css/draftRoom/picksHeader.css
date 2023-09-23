@@ -1,0 +1,9 @@
+.picks-header {
+    background-color: var(--darkOrange);
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    gap: 3px;
+}

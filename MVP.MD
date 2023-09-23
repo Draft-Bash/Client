@@ -1,0 +1,17 @@
+# Purpose
+Draftbash will serve as a fantasy basketball mock draft simulator. In fantasy sports drafts, users take turns selecting players from a draft board to assemble their rosters. The objective is to create a team that will accumulate the highest number of fantasy points, which are earned based on the players' in-game performances. For instance, if a basketball player like Nikola Jokic achieves a triple-double during a game, users who have selected him for their fantasy team will earn a substantial number of fantasy points. Therefore, when users make player selections, the draft board should have a ranking for the most desirable basketball players. 
+
+# Rankings
+Another important feature to consider is rankings. Players on the draft board should be ranked so that users know which NBA players are projected to perform well in the season. A user should be able to see each player’s ranking, name, and statistics from the previous season so that they can make informed selections. Because there are two main scoring systems for fantasy, there will be two different rankings. 
+
+# Scoring types
+Fantasy basketball leagues commonly employ two scoring types: points-based and category-based. In a category-based league, a user aims to lead in specific statistical categories (e.g., rebounds, assists), while in a points-based league, the goal is to accumulate the highest total fantasy points. Certain basketball players may be more valuable in category-based leagues than in points-based leagues, so users must have the option to select their preferred scoring system when participating in mock drafts. 
+
+# Positions
+Additionally, positions played by players in a basketball game are a crucial consideration. For example, many centers score a significant number of fantasy points, whereas fewer point guards do so. Since fantasy basketball rosters have position requirements, users may choose a point guard that averages fewer fantasy points over a center if there is a shortage of high-scoring point guards. Users should have the ability to determine the number of positions required for each roster, the scoring type, and the number of participants in the draft. In cases where not all participants are present, the system should automatically make selections for the absent teams. 
+
+# Turns
+Finally, the mock draft simulator should incorporate turn-based mechanics, ensuring that users can only make selections when it is their turn. When a user makes a pick, they should only be able to choose players that are available on the draft board. After a user makes a pick, all other users in the draft should see that a player was selected and is no longer available. It is important for turns to have a time limit so that one user cannot bring a halt to the draft. Therefore, there should be a clock indicating how much time a user has left to make their pick. All users in the draft should see this synchronized clock. 
+
+# Summary
+In conclusion, since Draftbash is designed to function as a fantasy basketball mock draft simulator, it must offer users the capability to create drafts, invite other users to participate, and allow users to select players from a ranked draft board to fill a roster position when it is their turn.
