@@ -1,9 +1,11 @@
 import '../css/navbar.css';
 import React from 'react';
 import {BiUserCircle} from 'react-icons/bi';
+import {AiOutlineMail} from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../authentication/AuthContext';
 import { useLocation } from 'react-router-dom';
+import Invites from './Invites';
 
 const Navbar = () => {
     const location = useLocation();
@@ -17,8 +19,9 @@ const Navbar = () => {
             >
                 Mock Drafts
             </ Link>
+            <Invites />
             <div className="user option">
-                <BiUserCircle className="user-icon" />
+                <BiUserCircle className="nav-icon" />
                 <ul>
                     <li onClick={() => {
                         localStorage.removeItem("jwtToken");

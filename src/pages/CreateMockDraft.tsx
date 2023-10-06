@@ -5,12 +5,15 @@ import PickList from "../components/PickList";
 import OutlinedButton from "../components/buttons/OutlinedButton";
 import RoundedButton from "../components/buttons/RoundedButton";
 import { useNavigate } from 'react-router-dom';
+import UserInviter from "../components/UserInviter";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ConfigureMockDraft = () => {
     const navigate = useNavigate();
     const { userId } = useAuth();
+    const { username } = useAuth();
     const [teamCount, setTeamCount] = useState(10);
+    const [invitedUserIds, setInvitedUserIds] = useState<number[]>([]);
     const [pickTime, setPickTime] = useState("90 seconds");
     const [draftType, setDraftType] = useState("snake");
     const [scoringType, setScoringType] = useState("points");
@@ -34,27 +37,30 @@ const ConfigureMockDraft = () => {
 
     const handleOnSubmit = async () => {
         try {
+            console.log(username);
             const response = await fetch(API_URL+"/drafts", {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    draft_type: draftType,
-                    scoring_type: scoringType,
-                    pick_time_seconds: Number(pickTime.split(" ")[0]),
-                    team_count: teamCount,
-                    pointguard_slots: pointGuardCount,
-                    shootingguard_slots: shootingGuardCount,
-                    guard_slots: guardCount,
-                    powerforward_slots: powerforwardCount,
-                    smallforward_slots: smallforwardCount,
-                    forward_slots: forwardCount,
-                    center_slots: centerCount,
-                    utility_slots: utilityPlayerCount,
-                    bench_slots: benchSize,
-                    scheduled_by_user_id: userId,
-                    draft_position: draftPosition
+                    draftType: draftType,
+                    scoringType: scoringType,
+                    pickTimeSeconds: Number(pickTime.split(" ")[0]),
+                    teamCount: teamCount,
+                    pointguardSlots: pointGuardCount,
+                    shootingguardSlots: shootingGuardCount,
+                    guardSlots: guardCount,
+                    powerforwardSlots: powerforwardCount,
+                    smallforwardSlots: smallforwardCount,
+                    forwardSlots: forwardCount,
+                    centerSlots: centerCount,
+                    utilitySlots: utilityPlayerCount,
+                    benchSlots: benchSize,
+                    scheduledByUserId: userId,
+                    scheduledByUsername: username,
+                    draftPosition: draftPosition,
+                    draftUserIds: invitedUserIds
                 })
             });
 
@@ -79,8 +85,11 @@ const ConfigureMockDraft = () => {
         <div className="page-container">
             <div className="mock-draft-configuration">
                 <div className="configuration-header">
-                    <h2>Draft Creation</h2>
-                    <p>Set your draft settings below</p>
+                    <div>
+                        <h2>Draft Creation</h2>
+                        <p>Set your draft settings below</p>
+                    </div>
+                    <UserInviter teamsCount={teamCount} setInvitedUserIds={setInvitedUserIds}/>
                 </div>
                 <div className="settings-container">
                     <div className="settings-group">

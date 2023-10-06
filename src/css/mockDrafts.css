@@ -56,14 +56,11 @@
     border-radius: 10px;
     margin-bottom: 20px;
     padding: 10px;
-    min-height: 250px;
+    min-height: 280px;
     position: relative;
     overflow: hidden;
 }
 
-.mock-draft-menu .draft-content-container {
-
-}
 
 .draft-content-container.slide-left {
     transform: translateX(-100%);
@@ -86,6 +83,14 @@
     justify-content: space-between;
     height: calc(100% - 80px);
     padding: 10px;
+}
+
+.mock-draft-menu .mock-drafts .draft-info .started {
+    color: var(--green);
+}
+
+.mock-draft-menu .mock-drafts .draft-info .is-started {
+    color: var(--red);
 }
 
 .mock-draft-menu .mock-drafts .draft-info b {

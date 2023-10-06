@@ -8,5 +8,5 @@
 }
 
 .textInput:focus {
-    outline-color: var(--brightBlue);
+    border-color: var(--brightBlue);
 }

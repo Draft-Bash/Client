@@ -13,7 +13,7 @@ const PicksQueue = () => {
 
     function findUserNextPick(pickOrderList: DraftPick[]) {
         for (let i=0; i < pickOrderList.length; i++) {
-            if (pickOrderList[i].user_id == userId && !pickOrderList[i].is_picked) {
+            if (pickOrderList[i].user_id == userId) {
                 setUserNextPick(pickOrderList[i]);
                 break;
             }
@@ -42,7 +42,8 @@ const PicksQueue = () => {
             {draftOrder?.map((draftSpot, index) => (
             <li key={index}>
                 PICK {draftSpot.pick_number}
-                <br></br>Team {draftSpot.username ? draftSpot.username : draftSpot.bot_number}
+                <br></br>
+                Team {draftSpot.username ? draftSpot.username : draftSpot.bot_number}
             </li>
             ))}
         </ul>
