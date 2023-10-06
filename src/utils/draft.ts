@@ -11,6 +11,25 @@ export interface DraftRoster {
 	bench: (Player | null)[];
 }
 
+export interface Draft {
+	draft_id: number;
+    draft_type: string;
+    scoring_type: string;
+    pick_time_seconds: number;
+    team_count: number;
+    pointguard_slots: number;
+    shootingguard_slots: number;
+    guard_slots: number;
+    smallforward_slots: number;
+    powerforward_slots: number;
+    forward_slots: number;
+    center_slots: number;
+    utility_slots: number;
+    bench_slots: number
+    scheduled_by_user_id: number;
+	is_started: boolean
+}
+
 export interface DraftPick {
 	user_draft_order_id: number;
 	user_id: number;

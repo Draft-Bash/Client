@@ -10,6 +10,8 @@
 .mock-draft-configuration .configuration-header {
     border-bottom: 2px solid var(--lightGrey);
     padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .mock-draft-configuration .configuration-header  h2 {

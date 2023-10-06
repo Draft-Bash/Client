@@ -49,8 +49,8 @@ const ChatRoom = () => {
             </ul>
             <div className="send-text">
               <label>Message</label>
-              <TextInput placeholder="Enter message" onChange={setMessage} />
-              <button onClick={() => sendMessage(message)}>Send</button>
+              <TextInput value={message} placeholder="Enter message" onChange={setMessage} />
+              <button onClick={() => {setMessage(""); sendMessage(message)}}>Send</button>
             </div>
           </div>
         </dialog>

@@ -26,5 +26,8 @@
     line-height: 2.1;
     text-align: center;
     box-shadow: -3px 3px 6px rgba(0, 0, 0, .3);
-    min-width: 100px;
+    min-width: 115px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
