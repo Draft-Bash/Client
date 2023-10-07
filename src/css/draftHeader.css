@@ -3,8 +3,8 @@
     color: white;
     padding: 5px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 20px;
 }
 
 .draft-header .chat-icon {
@@ -12,6 +12,7 @@
     width: 25px;
     cursor: pointer;
     transition: 0.3s;
+    margin-left: auto;
 }
 
 .draft-header .chat-icon:hover {

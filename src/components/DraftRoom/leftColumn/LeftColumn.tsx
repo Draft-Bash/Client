@@ -5,28 +5,55 @@ import UserPickQueue from './UserPickQueue';
 import DraftRoster from './DraftRoster';
 import { useDraft } from '../DraftContext';
 import { useAuth } from '../../../authentication/AuthContext';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const LeftColumn = () => {
 
   const draftContext = useDraft();
   const draftId = draftContext?.draftRoomId;
-  const [isAutopickOn, setAutopickStatus] = useState(false);
+  const [isAutodraftOn, setAutodraft] = useState(false);
   const { userId } = useAuth();
   const socket = draftContext?.socket;
 
   useEffect(() => {
     if (userId && draftId) {
-      socket?.on('autodraft-enabled', (autodrafterId) => {
-        if (autodrafterId==userId) {
-          setAutopickStatus(true);
+      fetch(API_URL+`/drafts/autodraft?userId=${userId}&draftId=${draftId}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setAutodraft(data.is_autodraft_on);
+      });
+
+      socket?.on('autodraft-enabled', (autodrafterId, currentDraftId) => {
+        if (autodrafterId==userId && draftId==currentDraftId) {
+          setAutodraft(true);
+          console.log(draftId);
+          console.log(currentDraftId);
+          console.log("");
         };
     });
     }
   }, [userId, draftId]);
 
   async function toggleAutodraft() {
-    socket?.emit('update-autodraft', !isAutopickOn);
-    setAutopickStatus(!isAutopickOn);
+    try {
+      const response = await fetch(API_URL+"/drafts/autodraft", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // You can add additional headers here if needed
+        },
+        body: JSON.stringify({
+          userId: userId,
+          draftId: draftId,
+          isAutodraftOn: !isAutodraftOn
+        })
+      })
+    } catch (error) {console.log(error)}
+
+    socket?.emit('update-autodraft', !isAutodraftOn, userId, draftId);
+    setAutodraft(!isAutodraftOn);
   }
 
   return (
@@ -36,7 +63,7 @@ const LeftColumn = () => {
           <ToggleButton 
             labelName="Autodraft"
             handleOnClick={toggleAutodraft}
-            defaultToggleState={isAutopickOn}
+            defaultToggleState={isAutodraftOn}
           />
         </header>
         <UserPickQueue />
