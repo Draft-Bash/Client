@@ -30,12 +30,11 @@ const DraftHeader = () => {
         body: null
       });
       setStarted(true);
-      if (setIsDraftStarted) {
-        setIsDraftStarted(true);
-      }
       socket?.emit('start-draft');
+
     } catch (error) {console.log(error)}
   }
+
 
   useEffect(() => {
     if (draftRoomId) {
@@ -53,6 +52,13 @@ const DraftHeader = () => {
       }
   
       fetchDraftData();
+
+      socket?.on('show-start', () => {
+        if (setIsDraftStarted) {
+          setIsDraftStarted(true);
+          console.log("Hi there");
+        }
+    });
     }
     }, [draftRoomId]);
 
