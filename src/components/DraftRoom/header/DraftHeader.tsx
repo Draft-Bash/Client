@@ -14,6 +14,7 @@ const DraftHeader = () => {
   const [scoringType, setScoringType] = useState("points");
   const [isStarted, setStarted] = useState(true);
   const draftContext = useDraft();
+  const setIsDraftStarted = draftContext?.setIsDraftStarted;
   const draftRoomId = draftContext?.draftRoomId;
   const draftDetails = draftContext?.draftDetails;
   const {userId} = useAuth();
@@ -29,6 +30,9 @@ const DraftHeader = () => {
         body: null
       });
       setStarted(true);
+      if (setIsDraftStarted) {
+        setIsDraftStarted(true);
+      }
       socket?.emit('start-draft');
     } catch (error) {console.log(error)}
   }

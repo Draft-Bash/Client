@@ -8,8 +8,15 @@ const PicksQueue = () => {
     const draftContext = useDraft();
     const socket = draftContext?.socket;
     const { userId } = useAuth();
-    const [draftOrder, setDraftOrder] = useState<DraftPick[]>();
+    const [draftOrder, setDraftOrder] = useState<DraftPick[]>([]);
     const [userNextPick, setUserNextPick] = useState<null | DraftPick>(null);
+    const [time, setTime] = useState(90);
+
+    useEffect(() => {
+            socket?.on('update-clock', (remainingTime: number) => {
+                setTime(remainingTime);
+            });
+    }, [socket]);
 
     function findUserNextPick(pickOrderList: DraftPick[]) {
         for (let i=0; i < pickOrderList.length; i++) {
@@ -34,10 +41,18 @@ const PicksQueue = () => {
   
     return (
         <>
-        <p className="picks-until-user-turn">
-            ON THE CLOCK: PICK {userNextPick?.pick_number}
-            <br></br><b>Team {userNextPick?.username}</b>
-        </p>
+        <div className="picks-until-user-turn">
+            {(draftOrder?.length>1) && (
+                <p className={`picks-until-user-turn
+                    ${time<=10 ? " turn-expiring" : ""}
+                    ${(draftOrder[0].user_id==userId && time>10) ? " is-turn" : ""}`
+                }>
+                ON THE CLOCK: PICK {userNextPick?.pick_number}
+                <br></br>
+                <b>Team {draftOrder[0].username ? draftOrder[0].username : draftOrder[0].bot_number}</b>
+            </p>
+            )}
+        </div>
         <ul>
             {draftOrder?.map((draftSpot, index) => (
             <li key={index}>

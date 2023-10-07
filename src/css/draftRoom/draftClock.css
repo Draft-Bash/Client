@@ -6,3 +6,8 @@
     border-bottom: 2px solid var(--brightOrange);
     margin: 10px;
 }
+
+.draft-clock.turn-expiring {
+    color: var(--red);
+    border-bottom: 2px solid var(--grey);
+}

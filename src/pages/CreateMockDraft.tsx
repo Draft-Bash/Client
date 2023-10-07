@@ -6,12 +6,14 @@ import OutlinedButton from "../components/buttons/OutlinedButton";
 import RoundedButton from "../components/buttons/RoundedButton";
 import { useNavigate } from 'react-router-dom';
 import UserInviter from "../components/UserInviter";
+import LoadingScreen from "../components/LoadingScreen";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ConfigureMockDraft = () => {
     const navigate = useNavigate();
     const { userId } = useAuth();
     const { username } = useAuth();
+    const [isLoadingScreen, setIsLoadingScreen] = useState(false);
     const [teamCount, setTeamCount] = useState(10);
     const [invitedUserIds, setInvitedUserIds] = useState<number[]>([]);
     const [pickTime, setPickTime] = useState("90 seconds");
@@ -36,8 +38,8 @@ const ConfigureMockDraft = () => {
     }
 
     const handleOnSubmit = async () => {
+        setIsLoadingScreen(true);
         try {
-            console.log(username);
             const response = await fetch(API_URL+"/drafts", {
                 method: 'POST',
                 headers: {
@@ -82,6 +84,8 @@ const ConfigureMockDraft = () => {
     }, [teamCount]);
 
     return (
+        <>
+        {isLoadingScreen && <LoadingScreen />}
         <div className="page-container">
             <div className="mock-draft-configuration">
                 <div className="configuration-header">
@@ -217,6 +221,7 @@ const ConfigureMockDraft = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
  
