@@ -7,6 +7,19 @@ import LoadingScreen from '../components/LoadingScreen';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const LoginPage = () => {
+
+    // This will ping the server to wake it up and prepare it to handle requests
+    useEffect(() => {
+        fetch('https://draftbash-test.azurewebsites.net/ping')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);  // Just for logging, can be removed
+            })
+            .catch(error => {
+                console.error('Error pinging the server:', error);
+            });
+    }, []);
+    
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [isCredentialsFalse, setIsCredentialsFalse] = useState(false)
