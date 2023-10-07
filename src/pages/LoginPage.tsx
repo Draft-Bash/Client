@@ -10,7 +10,7 @@ const LoginPage = () => {
 
     // This will ping the server to wake it up and prepare it to handle requests
     useEffect(() => {
-        fetch('http://localhost:3000/ping')
+        fetch('https://draftbash-test.azurewebsites.net/ping')
             .then(response => response.json())
             .then(data => {
                 console.log(data);  // Just for logging, can be removed
