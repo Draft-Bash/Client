@@ -92,7 +92,6 @@ const SignupPage = () => {
         })
         
         const signupResponse = await response.json();
-        console.log(signupResponse);
         if (!signupResponse.uniqueColumns.isUsernameUnique) {
           setInvalidUsernameMessage("Username must be unique");
         }
@@ -101,7 +100,6 @@ const SignupPage = () => {
         }
 
         if (signupResponse.uniqueColumns.isEmailUnique && signupResponse.uniqueColumns.isUsernameUnique) {
-          console.log(signupResponse.jwtToken);
             localStorage.setItem('jwtToken', signupResponse.jwtToken);
             setIsAuthenticated(true);
             localStorage.setItem("previousPagePath", "/modules/dashboard");

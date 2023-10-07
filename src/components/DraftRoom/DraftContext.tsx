@@ -17,6 +17,8 @@ interface DraftContextType {
   roster: DraftRoster | undefined; // Change the type
   currentTurnUserId: number;
   draftDetails: Draft | undefined;
+  isDraftStarted: boolean;
+  setIsDraftStarted: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const SocketContext = createContext<DraftContextType | null>(null);
@@ -31,6 +33,7 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
   const [roster, setRoster] = useState<DraftRoster>(); // Change the type
   const [currentTurnUserId, setCurrentTurnUserId] = useState(-1);
   const [draftDetails, setDraftDetails] = useState<Draft>();
+  const [isDraftStarted, setIsDraftStarted] = useState(false);
   const { userId } = useAuth();
 
   useEffect(() => {
@@ -96,6 +99,7 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
       })
       .then((draftData) => {
         setDraftDetails(draftData);
+        setIsDraftStarted(draftData.is_started);
       });
     }
   }, [userId, draftRoomId]);
@@ -107,7 +111,9 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
     setRoster,
     roster,
     currentTurnUserId,
-    draftDetails
+    draftDetails,
+    isDraftStarted,
+    setIsDraftStarted
   };
 
   return (

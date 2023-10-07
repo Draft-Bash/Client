@@ -28,10 +28,6 @@ const ChatRoom = () => {
                 messages.push(message);
                 setMessages(messageList);
             });
-    
-            socket?.on('connect', () => {
-                console.log("so");
-            });
         }
     }, [draftRoomId]);
 

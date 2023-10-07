@@ -33,7 +33,6 @@ const DraftsPage = () => {
         const response = await fetch(API_URL+"/drafts?userId="+userId);
         const draftsInfo = await response.json();
         setUserDrafts(draftsInfo);
-        console.log(draftsInfo);
         if (draftsInfo.length > 0) {
           setDraftId(draftsInfo[0].draft_id);
         }

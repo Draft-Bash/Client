@@ -32,7 +32,6 @@ const LoginPage = () => {
             setIsAuthenticated(true);
             localStorage.setItem("previousPagePath", "/modules/dashboard");
         } catch (error) {
-            console.log("Invalid username or password");
             setIsCredentialsFalse(true);
         }
     }

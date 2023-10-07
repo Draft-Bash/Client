@@ -24,9 +24,6 @@ const Invites = () => {
     const navigate = useNavigate();
 
     const updateInvite = async (isAccepted: boolean, draftId: number) => {
-        console.log(isAccepted);
-        console.log(draftId);
-        console.log(userId);
         await fetch(API_URL+"/drafts/members", {
             method: "PUT",
             headers: {

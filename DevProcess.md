@@ -16,6 +16,7 @@
     SSL=false
     JWT_SECRET=anyStringWillDo
     API_URL=http://localhost:3000/api/v1
+    CLIENT_URL=http://localhost:5173
 7. (Server repository) To seed the database with data, run 'npx knex seed:run' only once.
 8. Run 'npm run dev' to start the server on localhost:3000 with hot reload. It will automatically run the database migrations for you
 9. Any changes to the database schema must be through knex.js. To create a migration, run 'npx knex migrate:make migration_name'.
