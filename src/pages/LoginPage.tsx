@@ -5,12 +5,13 @@ import TextInput from "../components/TextInput";
 import { useAuth } from '../authentication/AuthContext';
 import LoadingScreen from '../components/LoadingScreen';
 const API_URL = import.meta.env.VITE_API_URL;
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const LoginPage = () => {
 
     // This will ping the server to wake it up and prepare it to handle requests
     useEffect(() => {
-        fetch('https://draftbash-test.azurewebsites.net/ping')
+        fetch(SERVER_URL+'/ping')
             .then(response => response.json())
             .then(data => {
                 console.log(data);  // Just for logging, can be removed
