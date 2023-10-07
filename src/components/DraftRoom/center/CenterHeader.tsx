@@ -16,12 +16,13 @@ const CenterHeader = () => {
     
   
     useEffect(() => {
-        // Set up the event listener first
+        console.log(isDraftStarted);
+    }, [isDraftStarted]);
+
+    useEffect(() => {
   
         socket?.on('send-draft-order', (updatedDraftOrder: DraftPick[]) => {
             setDraftOrder(updatedDraftOrder);
-
-            console.log(updatedDraftOrder);
 
             for (let i = 0; i < updatedDraftOrder.length; i++) {
                 if (updatedDraftOrder[i].user_id === userId) {
@@ -35,13 +36,13 @@ const CenterHeader = () => {
 
   return (
     <header className="user-next-pick-notifier">
-        {(pickCountToTurn>1 && isDraftStarted) && (
+        {(pickCountToTurn>0 && isDraftStarted) && (
             <b>{`You're on the clock in: ${pickCountToTurn} picks`}</b>
         )}
         {(!isDraftStarted) && (
             <b>Waiting for the owner to start the draft</b>
         )}
-        {(pickCountToTurn<1 && isDraftStarted && draftOrder?.some((user) => user.user_id === userId)) && (
+        {(isDraftStarted && pickCountToTurn<1 && draftOrder?.some((user) => user.user_id === userId)) && (
             <b>{`You are on the clock`}</b>
         )}
         {(!draftOrder?.some((user) => user.user_id === userId)) && (
