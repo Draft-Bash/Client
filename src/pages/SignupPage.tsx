@@ -4,6 +4,7 @@ import TextInput from "../components/TextInput";
 import { useAuth } from '../authentication/AuthContext';
 import { IoMdCheckmark } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import LoadingScreen from '../components/LoadingScreen';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const SignupPage = () => {
@@ -11,6 +12,7 @@ const SignupPage = () => {
   const [username, setUsername] = useState("");
   const [usernameValidationMessage, setInvalidUsernameMessage] = useState("");
   const [isUsernameValid, setUsernameValidity] = useState(false);
+  const [isLoadingScreen, setIsLoadingScreen] = useState(false);
   const [email, setEmail] = useState("");
   const [emailValidationMessage, setInvalidEmailMessage] = useState("");
   const [password, setPassword] = useState("");
@@ -78,6 +80,7 @@ const SignupPage = () => {
     }
 
     if (isUsernameValid && isEmailValid && isPasswordValid) {
+      setIsLoadingScreen(true);
       try {
         const response = await fetch(API_URL+"/users", {
           method: "POST",
@@ -94,9 +97,11 @@ const SignupPage = () => {
         const signupResponse = await response.json();
         if (!signupResponse.uniqueColumns.isUsernameUnique) {
           setInvalidUsernameMessage("Username must be unique");
+          setIsLoadingScreen(false);
         }
         if (!signupResponse.uniqueColumns.isEmailUnique) {
           setInvalidEmailMessage("Email must be unique");
+          setIsLoadingScreen(false);
         }
 
         if (signupResponse.uniqueColumns.isEmailUnique && signupResponse.uniqueColumns.isUsernameUnique) {
@@ -113,27 +118,28 @@ const SignupPage = () => {
 }
 
   return (
+    <>
+    {isLoadingScreen && <LoadingScreen />}
     <div className="authentication-page">
-        <>
-          <h3>Draftbash</h3>
-          <form className="authentication-form">
-            <h1>Signup<a href="/login">Login</a></h1>
-            <TextInput placeholder="Username" onChange={setUsername} />
-            <p className="invalid">{usernameValidationMessage}</p>
-            <TextInput placeholder="Email" onChange={setEmail} />
-            <p className="invalid">{emailValidationMessage}</p>
-            <TextInput placeholder="Password" isPassword={true} onChange={setPassword} />
-            <p className="invalid">{passwordValidationMessage}</p>
-            <TextInput placeholder="Confirm password" isPassword={true} onChange={setPasswordConfirm} />
-            <div className="password-rules">
-              <p className={(password.length > 8) ? "valid" : "invalid" }><IoMdCheckmark /> Minimum of 8 characters</p>
-              <p className={/[A-Z]/.test(password) ? "valid" : "invalid" }><IoMdCheckmark /> At least one capital letter</p>
-              <p className={/\d/.test(password) ? "valid" : "invalid" }><IoMdCheckmark /> At least one number</p>
-            </div>
-            <button onClick={onSubmit}>Sign up</button>
-          </form>
-        </>
+        <h3>Draftbash</h3>
+        <form className="authentication-form">
+          <h1>Signup<a href="/login">Login</a></h1>
+          <TextInput placeholder="Username" onChange={setUsername} />
+          <p className="invalid">{usernameValidationMessage}</p>
+          <TextInput placeholder="Email" onChange={setEmail} />
+          <p className="invalid">{emailValidationMessage}</p>
+          <TextInput placeholder="Password" isPassword={true} onChange={setPassword} />
+          <p className="invalid">{passwordValidationMessage}</p>
+          <TextInput placeholder="Confirm password" isPassword={true} onChange={setPasswordConfirm} />
+          <div className="password-rules">
+            <p className={(password.length > 8) ? "valid" : "invalid" }><IoMdCheckmark /> Minimum of 8 characters</p>
+            <p className={/[A-Z]/.test(password) ? "valid" : "invalid" }><IoMdCheckmark /> At least one capital letter</p>
+            <p className={/\d/.test(password) ? "valid" : "invalid" }><IoMdCheckmark /> At least one number</p>
+          </div>
+          <button onClick={onSubmit}>Sign up</button>
+        </form>
     </div>
+    </>
   );
 };
   
