@@ -12,16 +12,16 @@ const CenterHeader = () => {
     const [draftOrder, setDraftOrder] = useState<DraftPick[]>();
     const [pickCountToTurn, setPickCountToTurn] = useState(0);
     const [nextPickNumber, setNextPickNumber] = useState(0);
+    
   
     useEffect(() => {
         // Set up the event listener first
   
         socket?.on('send-draft-order', (updatedDraftOrder: DraftPick[]) => {
             setDraftOrder(updatedDraftOrder);
-            console.log(updatedDraftOrder)
 
             for (let i = 0; i < updatedDraftOrder.length; i++) {
-                if (updatedDraftOrder[i].user_id === userId && !updatedDraftOrder[i].is_picked) {
+                if (updatedDraftOrder[i].user_id === userId) {
                     setPickCountToTurn(i);
                     setNextPickNumber(updatedDraftOrder[i].pick_number);
                     break;

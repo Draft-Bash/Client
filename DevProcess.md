@@ -15,10 +15,10 @@
     DB_PORT=5432
     SSL=false
     JWT_SECRET=anyStringWillDo
-    EMAIL_PASSWORD=passwordForNodeMailer
-8. (Server repository) To seed the database with data, run 'npx knex seed:run' only once.
-9. Run 'npm run dev' to start the server on localhost:3000 with hot reload. It will automatically run the database migrations for you
-10. Any changes to the database schema must be through knex.js. To create a migration, run 'npx knex migrate:make migration_name'.
+    API_URL=http://localhost:3000/api/v1
+7. (Server repository) To seed the database with data, run 'npx knex seed:run' only once.
+8. Run 'npm run dev' to start the server on localhost:3000 with hot reload. It will automatically run the database migrations for you
+9. Any changes to the database schema must be through knex.js. To create a migration, run 'npx knex migrate:make migration_name'.
    After running the command, a new file will be added to the schema folder in the migrations folder. Go to it and add the neccessary up/down migration code. Research online the syntax for doing this with knex.js
 11. (Client repository) Clone the Client repository.
 12. After cloning, switch test branch by running 'git checkout -b test origin/test'.

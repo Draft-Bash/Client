@@ -11,7 +11,7 @@ const LeftColumn = () => {
 
   const draftContext = useDraft();
   const draftId = draftContext?.draftRoomId;
-  const [isAutopickOn, setAutopickStatus] = useState(false);
+  const [isAutodraftOn, setAutodraft] = useState(false);
   const { userId } = useAuth();
   const socket = draftContext?.socket;
 
@@ -19,48 +19,41 @@ const LeftColumn = () => {
     if (userId && draftId) {
       fetch(API_URL+`/drafts/autodraft?userId=${userId}&draftId=${draftId}`)
       .then(response => {
-        return response.json(); // Parse the response as JSON
+        return response.json();
       })
       .then(data => {
-        console.log(data)
-        setAutopickStatus(data);
-      })
-      .catch(error => {
-        // Handle any errors that occurred during the fetch
-        console.error('Fetch error:', error);
+        setAutodraft(data.is_autodraft_on);
       });
 
-      socket?.on('autodraft-enabled', (autodrafterId) => {
-        if (autodrafterId==userId) {
-          setAutopickStatus(true);
+      socket?.on('autodraft-enabled', (autodrafterId, currentDraftId) => {
+        if (autodrafterId==userId && draftId==currentDraftId) {
+          setAutodraft(true);
+          console.log(draftId);
+          console.log(currentDraftId);
+          console.log("");
         };
     });
     }
   }, [userId, draftId]);
 
   async function toggleAutodraft() {
-    socket?.emit('update-autodraft', !isAutopickOn);
-    fetch(API_URL+`/drafts/autodraft`, {
-      method: 'POST', // HTTP request method
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        isAutopickOn: !isAutopickOn,
-        userId: userId,
-        draftId: draftId
+    try {
+      const response = await fetch(API_URL+"/drafts/autodraft", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // You can add additional headers here if needed
+        },
+        body: JSON.stringify({
+          userId: userId,
+          draftId: draftId,
+          isAutodraftOn: !isAutodraftOn
+        })
       })
-    })
-      .then(response => {
-        return response.json(); // Parse the response as JSON
-      })
-      .then(data => {
-        console.log(!isAutopickOn);
-        setAutopickStatus(!isAutopickOn);
-      })
-      .catch(error => {
-        console.error('Fetch error:', error);
-      });
+    } catch (error) {console.log(error)}
+
+    socket?.emit('update-autodraft', !isAutodraftOn, userId, draftId);
+    setAutodraft(!isAutodraftOn);
   }
 
   return (
@@ -68,9 +61,9 @@ const LeftColumn = () => {
         <header>
           <h4>Pick Queue</h4>
           <ToggleButton 
-            labelName="Autopick"
+            labelName="Autodraft"
             handleOnClick={toggleAutodraft}
-            defaultToggleState={isAutopickOn}
+            defaultToggleState={isAutodraftOn}
           />
         </header>
         <UserPickQueue />

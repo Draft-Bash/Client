@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { addPlayer, shiftPlayer, DraftRoster, Player } from '../../utils/draft';
+import { addPlayer, shiftPlayer, DraftRoster, Player, Draft } from '../../utils/draft';
 import { useAuth } from '../../authentication/AuthContext';
 const API_URL = import.meta.env.VITE_API_URL;
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
@@ -16,6 +16,7 @@ interface DraftContextType {
   setRoster: React.Dispatch<React.SetStateAction<DraftRoster| undefined>>;
   roster: DraftRoster | undefined; // Change the type
   currentTurnUserId: number;
+  draftDetails: Draft | undefined;
 }
 
 const SocketContext = createContext<DraftContextType | null>(null);
@@ -29,6 +30,7 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
   const [draftRoomId, setDraftRoomId] = useState<string | null>(null);
   const [roster, setRoster] = useState<DraftRoster>(); // Change the type
   const [currentTurnUserId, setCurrentTurnUserId] = useState(-1);
+  const [draftDetails, setDraftDetails] = useState<Draft>();
   const { userId } = useAuth();
 
   useEffect(() => {
@@ -42,7 +44,7 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    socket?.emit('join-room', draftRoomId);
+    socket?.emit('join-room', draftRoomId, userId);
     socket?.on('update-draft-turn', (userId: number) => {
       setCurrentTurnUserId(userId);
     });
@@ -87,6 +89,14 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
       .then((draftedPlayers) => {
         handleRoster(draftedPlayers);
       });
+
+      fetch(API_URL + `/drafts/${draftRoomId}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((draftData) => {
+        setDraftDetails(draftData);
+      });
     }
   }, [userId, draftRoomId]);
 
@@ -96,7 +106,8 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
     setDraftRoomId,
     setRoster,
     roster,
-    currentTurnUserId
+    currentTurnUserId,
+    draftDetails
   };
 
   return (
