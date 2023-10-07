@@ -2,9 +2,8 @@ import '../../../css/draftRoom/center/playersTable.css';
 import React, { useEffect, useState } from 'react';
 import { useDraft } from '../DraftContext';
 import { useAuth } from '../../../authentication/AuthContext';
-import { addPlayer, PlayerPreviousSeasonStats } from '../../../utils/draft';
+import { addPlayer, PlayerPreviousSeasonStats, formatPlayerPositions } from '../../../utils/draft';
 import OutlinedRoundedButton from '../../buttons/OutlinedRoundedButton';
-import { DraftRoster } from '../../../utils/draft';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const PlayersTable = () => {
@@ -36,12 +35,11 @@ const PlayersTable = () => {
             if (addPlayer(pickedPlayer, updatedRoster)) {
                 pickPlayer(pickedPlayer.player_id, String(userId), String(draftRoomId));
                 setRoster(updatedRoster);
-            } else {
-                console.log(roster);
-                }
-            } else {
-                console.error("setRoster is not defined.");
-            }
+            } 
+
+        } else {
+            console.error("setRoster is not defined.");
+        }
       }
     
     return (
@@ -64,23 +62,32 @@ const PlayersTable = () => {
                     <tr key={index}>
                         <td>{player.rank_number}</td>
                         <td className="player-cell">
-                        <img
-                            src={`/images/playerImages/${player.player_id}.png`}
-                            onError={(event) => {
-                            const imgElement = event.target as HTMLImageElement;
-                            imgElement.src = "/images/playerImages/defaultPlayerImage.png";
-                            imgElement.onerror = null; // Prevents future errors from being logged
-                            }}
-                        />
-                        {player.first_name + " " + player.last_name}
-                        {currentTurnUserId === userId && (
-                            <OutlinedRoundedButton
-                            color="red"
-                            handleOnClick={() => handleDraftClick(player, roster)}
-                            >
-                            DRAFT
-                            </OutlinedRoundedButton>
-                        )}
+                            <img
+                                src={`/images/playerImages/${player.player_id}.png`}
+                                onError={(event) => {
+                                const imgElement = event.target as HTMLImageElement;
+                                imgElement.src = "/images/playerImages/defaultPlayerImage.png";
+                                imgElement.onerror = null; // Prevents future errors from being logged
+                                }}
+                            />
+                            <div className="player-details">
+                                {player.first_name + " " + player.last_name}
+                                <p>
+                                    {player.team_abbreviation}&nbsp;
+                                    <b> 
+                                        {formatPlayerPositions(player.is_pointguard, player.is_shootingguard, player.is_smallforward, 
+                                        player.is_powerforward, player.is_center, "/")}
+                                    </b>
+                                </p>
+                            </div>
+                            {currentTurnUserId === userId && (
+                                <OutlinedRoundedButton
+                                color="red"
+                                handleOnClick={() => handleDraftClick(player, roster)}
+                                >
+                                DRAFT
+                                </OutlinedRoundedButton>
+                            )}
                         </td>
                         <td>{player.player_age}</td>
                         <td>{player.games_played}</td>

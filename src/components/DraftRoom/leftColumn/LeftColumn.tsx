@@ -28,9 +28,6 @@ const LeftColumn = () => {
       socket?.on('autodraft-enabled', (autodrafterId, currentDraftId) => {
         if (autodrafterId==userId && draftId==currentDraftId) {
           setAutodraft(true);
-          console.log(draftId);
-          console.log(currentDraftId);
-          console.log("");
         };
     });
     }

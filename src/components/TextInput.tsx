@@ -5,7 +5,7 @@ interface Props {
   placeholder: string
   isPassword?: boolean
   onChange(inputValue: string): void
-  value: string
+  value?: string
 }
 
 const TextInput = (props: Props) => {

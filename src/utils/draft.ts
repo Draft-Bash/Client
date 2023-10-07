@@ -31,6 +31,16 @@ export interface Draft {
 }
 
 export interface DraftPick {
+	picked_by_bot_number: number;
+	is_center: boolean;
+	is_powerforward: boolean;
+	is_smallforward: boolean;
+	is_shootingguard: boolean;
+	is_pointguard: boolean;
+	team_abbreviation: string;
+	last_name: any;
+	first_name: any;
+	player_id: any;
 	user_draft_order_id: number;
 	user_id: number;
 	draft_id: number;
@@ -64,6 +74,7 @@ export interface PlayerPreviousSeasonStats extends Player {
 	points_total: number;
 	rebounds_total: number;
 	assists_total: number;
+	team_abbreviation: string;
 }
 
 // Define the function to shift a player
@@ -147,4 +158,47 @@ function isPlayerInDraftRoster(playerId: number, draftRoster: DraftRoster) {
 		}
 	}
 	return false; // Player with playerId not found in any roster
+}
+
+export function formatPlayerPositions(
+	isPointGuard: boolean, isShootingguard: boolean, isSmallforward: boolean,
+	isPowerforward: boolean, isCenter: boolean, delimiter: string)
+{
+	let eligiblePositions = "";
+	if (isPointGuard) {
+		eligiblePositions+="PG";
+	}
+	if (isShootingguard) {
+		if (eligiblePositions.length > 0) {
+			eligiblePositions+=delimiter+'SG'
+		}
+		else {
+			eligiblePositions+='SG'
+		}
+	}
+	if (isSmallforward) {
+		if (eligiblePositions.length > 0) {
+			eligiblePositions+=delimiter+'SF'
+		}
+		else {
+			eligiblePositions+='SF'
+		}
+	}
+	if (isPowerforward) {
+		if (eligiblePositions.length > 0) {
+			eligiblePositions+=delimiter+'PF'
+		}
+		else {
+			eligiblePositions+='PF'
+		}
+	}
+	if (isCenter) {
+		if (eligiblePositions.length > 0) {
+			eligiblePositions+=delimiter+'C'
+		}
+		else {
+			eligiblePositions+='C'
+		}
+	}
+	return eligiblePositions;
 }

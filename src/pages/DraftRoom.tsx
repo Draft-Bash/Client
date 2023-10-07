@@ -6,7 +6,7 @@ import { useDraft } from '../components/DraftRoom/DraftContext';
 import PicksHeader from '../components/DraftRoom/header/PicksHeader';
 import LeftColumn from '../components/DraftRoom/leftColumn/LeftColumn';
 import DraftCenter from '../components/DraftRoom/center/DraftCenter';
-import RightColumn from '../components/DraftRoom/RightColumn';
+import RightColumn from '../components/DraftRoom/rightColumn/RightColumn';
 import '../css/draftRoom/draftRoom.css';
 import { SocketProvider } from '../components/DraftRoom/DraftContext';
 
