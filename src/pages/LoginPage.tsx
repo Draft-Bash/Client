@@ -7,6 +7,19 @@ import { useAuth } from '../authentication/AuthContext';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const LoginPage = () => {
+
+    // This will ping the server to wake it up and prepare it to handle requests
+    useEffect(() => {
+        fetch('http://localhost:3000/ping')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);  // Just for logging, can be removed
+            })
+            .catch(error => {
+                console.error('Error pinging the server:', error);
+            });
+    }, []);
+    
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [isCredentialsFalse, setIsCredentialsFalse] = useState(false)
@@ -38,6 +51,7 @@ const LoginPage = () => {
     }
 
     return (
+        
         <div className="authentication-page">
             <h3>DraftBash</h3>
             <form className="authentication-form">
