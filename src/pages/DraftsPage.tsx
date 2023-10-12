@@ -1,10 +1,12 @@
-import '../css/mockDrafts.css';
+import '../css/draftsPage.css';
 import RoundedButton from '../components/buttons/RoundedButton';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../authentication/AuthContext';
 import {BsChevronDoubleLeft} from 'react-icons/bs';
 import {BsChevronDoubleRight} from 'react-icons/bs';
+import {BiCog} from 'react-icons/bi';
+import {RiDeleteBin5Line} from 'react-icons/ri';
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface DraftInfo {
@@ -26,6 +28,26 @@ const DraftsPage = () => {
   const [userDrafts, setUserDrafts] = useState<DraftInfo[]>([]);
   const [draftIndex, setDraftIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState("");
+
+  const deleteDraft = async (draftId: number) => {
+    if (window.confirm("Are you sure you want to delete this draft?")) {
+      const response = await fetch(API_URL+"/drafts?draftId="+draftId, {
+        method: 'DELETE',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: null
+      });
+      const isDeleted = await response.json();
+      if (!isDeleted){
+        alert("Cannot delete a draft that has begun.");
+      }
+      else {
+        const currentDrafts = userDrafts.filter(userDraft => userDraft.draft_id != draftId);
+        setUserDrafts(currentDrafts);
+      }
+    }
+  }
 
   useEffect(() => {
     async function fetchDraftData() {
@@ -89,8 +111,12 @@ const DraftsPage = () => {
                 <>
                 <div className={`draft-content-container ${slideDirection}`}>
                   <h4>
+                    <RiDeleteBin5Line className="delete" 
+                      onClick={() => deleteDraft(userDrafts[draftIndex].draft_id)} 
+                    />
                     {userDrafts[draftIndex].scheduled_by_user_id == userId
                     ? "Your Mock Draft" : `${userDrafts[draftIndex].username}'s Mock Draft`}
+                    <BiCog className="update"/>
                   </h4>
                   <div className="draft-info">
                     <p>
@@ -121,7 +147,7 @@ const DraftsPage = () => {
                   <RoundedButton
                     color="yellow"
                     handleOnClick={() => {
-                      navigate("/modules/drafts/draftroom/"+draftId);
+                      navigate("/modules/drafts/draftroom/"+userDrafts[draftIndex].draft_id);
                     }}
                   >
                     Join Draft

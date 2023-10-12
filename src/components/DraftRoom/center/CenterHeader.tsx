@@ -13,11 +13,6 @@ const CenterHeader = () => {
     const [draftOrder, setDraftOrder] = useState<DraftPick[]>();
     const [pickCountToTurn, setPickCountToTurn] = useState(0);
     const [nextPickNumber, setNextPickNumber] = useState(0);
-    
-  
-    useEffect(() => {
-        console.log(isDraftStarted);
-    }, [isDraftStarted]);
 
     useEffect(() => {
   
