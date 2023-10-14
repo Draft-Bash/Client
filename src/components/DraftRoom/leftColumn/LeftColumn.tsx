@@ -1,14 +1,19 @@
 import '../../../css/draftRoom/leftColumn/leftColumn.css';
 import React,{ useEffect, useState } from 'react';
 import ToggleButton from '../../buttons/ToggleButton';
-import UserPickQueue from './UserPickQueue';
 import DraftRoster from './DraftRoster';
 import { useDraft } from '../DraftContext';
+import { Player } from '../../../utils/draft';
 import { useAuth } from '../../../authentication/AuthContext';
+import { PickQueue } from '../../../utils/drafts/pickQueue';
+import UserPickQueue from './UserPickQueue';
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const LeftColumn = () => {
 
+  let pickQueue = new PickQueue();
+  const [queuedPicks, setQueuedPicks] = useState<Player[]>()
   const draftContext = useDraft();
   const draftId = draftContext?.draftRoomId;
   const [isAutodraftOn, setAutodraft] = useState(false);

@@ -1,5 +1,5 @@
 // LoginPage.js
-import '../css/signupPage.css'
+import '../css/authenticationPage.css'
 import React, { useState, useEffect } from 'react';
 import TextInput from "../components/TextInput";
 import { useAuth } from '../authentication/AuthContext';
@@ -67,6 +67,7 @@ const LoginPage = () => {
                 )}
                 <TextInput placeholder="Password" isPassword={true} onChange={setPassword} />
                 <button onClick={handleLogin}>Continue</button>
+                <a className="google-auth" href={SERVER_URL+"/auth/google"}>Login With Google</a>
             </form>
         </div>
         </>
