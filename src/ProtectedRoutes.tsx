@@ -2,6 +2,7 @@ import { Route, Navigate, Routes} from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import PageLayout from './components/PageLayout';
 import CreateMockDraft from './pages/CreateMockDraft';
+import UpdateMockDraft from './pages/UpdateMockDraft';
 import DraftsPage from './pages/DraftsPage';
 import DraftRoomWithContext from './pages/DraftRoom';
 import { useLocation } from 'react-router-dom';
@@ -23,6 +24,7 @@ function ProtectedRoutes() {
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="drafts" element={<DraftsPage />} />
                 <Route path="mock-drafts/configure" element={<CreateMockDraft />} />
+                <Route path="mock-drafts/update/:draftId" element={<UpdateMockDraft />} />
                 <Route path="drafts/draftroom/:draftId" element={<DraftRoomWithContext />} />
             </Route>
         </Routes>
