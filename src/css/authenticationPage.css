@@ -77,3 +77,18 @@
 .authentication-form button:hover {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
+
+.authentication-page .authentication-form .google-auth {
+    background-color: var(--darkBlue);
+    color: var(--brightYellow);
+    font-size: 16px;
+    padding: 10px 7px 10px 7px;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.authentication-page .authentication-form .google-auth:hover {
+    background-color: var(--blue);
+}

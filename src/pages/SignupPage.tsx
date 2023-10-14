@@ -1,4 +1,4 @@
-import '../css/signupPage.css'
+import '../css/authenticationPage.css'
 import React, { useState, useEffect } from 'react';
 import TextInput from "../components/TextInput";
 import { useAuth } from '../authentication/AuthContext';
