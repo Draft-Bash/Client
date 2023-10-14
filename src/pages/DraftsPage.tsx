@@ -116,7 +116,13 @@ const DraftsPage = () => {
                     />
                     {userDrafts[draftIndex].scheduled_by_user_id == userId
                     ? "Your Mock Draft" : `${userDrafts[draftIndex].username}'s Mock Draft`}
-                    <BiCog className="update"/>
+                    <BiCog className="update" 
+                      onClick={() => {if (!userDrafts[draftIndex].is_started) {
+                        navigate("/modules/mock-drafts/update/"+userDrafts[draftIndex].draft_id)
+                      } else {
+                        alert("Cannot update a draft in progress.")
+                      }}}
+                    />
                   </h4>
                   <div className="draft-info">
                     <p>
