@@ -9,6 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 interface Props {
 	setInvitedUserIds(invitedUserIds: number[]): void;
     teamsCount: number;
+    invitedUsers?: User[];
 }
 
 const UserInviter = (props: Props) => {
@@ -25,6 +26,12 @@ const UserInviter = (props: Props) => {
             props.setInvitedUserIds(userList.map(user => user.user_id));
         }
     }, [props.teamsCount])
+
+    useEffect(() => {
+        if (props.invitedUsers) {
+            setUsers(props.invitedUsers);
+        }
+    }, [props.invitedUsers]);
 
     const removeUser = (username: string) => {
         const userList = users.filter(user => user.username !== username);
