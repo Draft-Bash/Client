@@ -7,7 +7,7 @@ export class PickQueue {
         this.players = [];
     }
 
-    public swapUsers(first_player_id: number, second_player_id: nub) {
+    public swapUsers(first_player_id: number, second_player_id: number) {
         const index1 = this.players.findIndex(player => player.player_id === first_player_id);
         const index2 = this.players.findIndex(player => player.player_id === second_player_id);
     
