@@ -77,3 +77,30 @@
 .authentication-form button:hover {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
+
+.authentication-form .forgot-password{
+    cursor: pointer;
+}
+
+.authentication-form .forgot-password:hover {
+    font-weight: 600;
+}
+
+.reset-password-modal {
+    background-color: var(--coolWhite);
+    min-height: 300px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+    width: 500px;
+    height: 200px;
+    min-width: 500px;
+    overflow: auto;
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    margin-top: 10%;
+}

@@ -1,9 +1,10 @@
 // LoginPage.js
 import '../css/signupPage.css'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TextInput from "../components/TextInput";
 import { useAuth } from '../authentication/AuthContext';
 import LoadingScreen from '../components/LoadingScreen';
+import RoundedButton from '../components/buttons/RoundedButton';
 const API_URL = import.meta.env.VITE_API_URL;
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -24,8 +25,19 @@ const LoginPage = () => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [isCredentialsFalse, setIsCredentialsFalse] = useState(false)
+    const [emailForPasswordChange, setEmailForPasswordChange] = useState("");
     const [isLoadingScreen, setIsLoadingScreen] = useState(false);
     const { setIsAuthenticated } = useAuth();
+    const [isChangePasswordModalOpen, setIschangePasswordModalOpen] = useState(false);
+    const modalRef = useRef(null);
+
+    const handlePasswordReset = () => {
+        if (emailForPasswordChange.length > 5) {
+            alert("This email received a message to change the password");
+        }
+        setEmailForPasswordChange("");
+        setIschangePasswordModalOpen(false);
+    }
 
     const handleLogin = async (e: any) => {
         e.preventDefault();
@@ -56,6 +68,22 @@ const LoginPage = () => {
 
     return (
         <>
+        <dialog
+            open={isChangePasswordModalOpen}
+            ref={modalRef}
+            onClick={(e) => {
+                if (e.target == modalRef.current) {
+                    setIschangePasswordModalOpen(false);
+                }
+            }}
+            className="modal"
+        >
+            <div className="reset-password-modal">
+                <p>Please the type email address associated with the account you are attempting to access.</p>
+                <TextInput placeholder="Email" value={emailForPasswordChange} onChange={setEmailForPasswordChange} />
+                <RoundedButton color='blue' handleOnClick={() => handlePasswordReset()}>Send Email</RoundedButton>
+            </div>
+        </dialog>
         {isLoadingScreen && <LoadingScreen />}
         <div className="authentication-page">
             <h3>DraftBash</h3>
@@ -66,6 +94,11 @@ const LoginPage = () => {
                     <p className="invalid">Invalid username or password</p>
                 )}
                 <TextInput placeholder="Password" isPassword={true} onChange={setPassword} />
+                <p className="forgot-password" 
+                onClick={() => setIschangePasswordModalOpen(true)}
+                >
+                    Forgot Password?
+                </p>
                 <button onClick={handleLogin}>Continue</button>
             </form>
         </div>

@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from "./authentication/AuthContext";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ProtectedRoutes from "./ProtectedRoutes";
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 function LoginRedirect() {
   const { isAuthenticated } = useAuth();
@@ -21,6 +22,7 @@ function App() {
   return (
     <AuthProvider>
       <Routes>
+        <Route path="reset-password" element={<ResetPasswordPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginRedirect />} />
         <Route path="/" element={<LoginRedirect />} />
