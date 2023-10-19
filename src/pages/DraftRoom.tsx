@@ -22,7 +22,7 @@ const DraftRoom = () => {
 
   useEffect(() => {
     if (draftId) {
-      draftContext?.setDraftRoomId(draftId);
+      draftContext?.setDraftId(draftId);
     }
   }, []);
 

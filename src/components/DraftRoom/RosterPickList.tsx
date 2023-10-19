@@ -12,14 +12,14 @@ const RosterPickList = () => {
     const modalRef = useRef(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const draftContext = useDraft();
-    const draftRoomId = draftContext?.draftRoomId;
+    const draftId = draftContext?.draftId;
     const [ draftUsers, setDraftUsers ] = useState<User[]>([]);
     const [ draftBots, setDraftBots ] = useState([]);
     const [ draftUser, setDraftUser ] = useState<User>();
 
     useEffect(() => {
-        if (draftRoomId) {
-            fetch(API_URL+"/drafts/members?draftId="+draftRoomId)
+        if (draftId) {
+            fetch(API_URL+"/drafts/members?draftId="+draftId)
         .then(response => response.json())
         .then(data => {
             const user = data.draftUsers.find(user => user.user_id == userId);
@@ -32,7 +32,7 @@ const RosterPickList = () => {
             console.error('Error fetching data:', error);
         });
         }
-    }, [draftRoomId]);
+    }, [draftId]);
 
     return (
         <>

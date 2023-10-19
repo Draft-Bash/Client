@@ -12,7 +12,7 @@ const UserPickQueue = () => {
   const setPlayerQueue = draftContext?.setPlayerQueue;
   const queueRef = useRef<HTMLTableElement>(null);
   const socket = draftContext?.socket;
-  const draftId = draftContext?.draftRoomId
+  const draftId = draftContext?.draftId
   const {userId} = useAuth();
 
   useEffect(() => {

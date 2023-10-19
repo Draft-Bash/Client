@@ -5,9 +5,7 @@ import "../../../css/draftRoom/draftClock.css";
 const DraftClock = () => {
 	const draftContext = useDraft();
 	const socket = draftContext?.socket;
-	const draftDetails = draftContext?.draftDetails;
-	const draftRoomId = draftContext?.draftRoomId;
-	const setIsDraftStarted = draftContext?.setIsDraftStarted;
+	const draftId = draftContext?.draftId
 	const [time, setTime] = useState(0);
 
 	const audio = new Audio("/clockTick.mp3");
@@ -24,7 +22,7 @@ const DraftClock = () => {
 			document.addEventListener("click", handleUserInteraction);
 		}
 
-		if (draftRoomId) {
+		if (draftId) {
 			socket?.on("update-clock", (remainingTime: number) => {
 				setTime(remainingTime);
 
@@ -40,7 +38,7 @@ const DraftClock = () => {
 			// Cleanup: Remove the event listener when the component unmounts.
 			document.removeEventListener("click", handleUserInteraction);
 		};
-	}, [draftRoomId, userInteracted]);
+	}, [draftId, userInteracted]);
 
 	function formatTime(seconds: number) {
 		const minutes = Math.floor(seconds / 60);
