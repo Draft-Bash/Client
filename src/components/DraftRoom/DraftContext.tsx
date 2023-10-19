@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { addPlayer, shiftPlayer, DraftRoster, Player, Draft } from '../../utils/draft';
 import { useAuth } from '../../authentication/AuthContext';
+import {PickQueue} from '../../utils/drafts/pickQueue';
 const API_URL = import.meta.env.VITE_API_URL;
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -18,7 +19,9 @@ interface DraftContextType {
   currentTurnUserId: number;
   draftDetails: Draft | undefined;
   isDraftStarted: boolean;
-  setIsDraftStarted: React.Dispatch<React.SetStateAction<boolean>>
+  setIsDraftStarted: React.Dispatch<React.SetStateAction<boolean>>;
+  playerQueue: Player[];
+  setPlayerQueue: React.Dispatch<React.SetStateAction<Player[]> | undefined>;
 }
 
 const SocketContext = createContext<DraftContextType | null>(null);
@@ -34,6 +37,7 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
   const [currentTurnUserId, setCurrentTurnUserId] = useState(-1);
   const [draftDetails, setDraftDetails] = useState<Draft>();
   const [isDraftStarted, setIsDraftStarted] = useState(false);
+  const [playerQueue, setPlayerQueue] = useState<Player[]>([]);
   const { userId } = useAuth();
 
   useEffect(() => {
@@ -113,7 +117,9 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
     currentTurnUserId,
     draftDetails,
     isDraftStarted,
-    setIsDraftStarted
+    setIsDraftStarted,
+    playerQueue,
+    setPlayerQueue
   };
 
   return (

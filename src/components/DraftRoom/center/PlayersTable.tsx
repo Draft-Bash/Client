@@ -2,7 +2,7 @@ import '../../../css/draftRoom/center/playersTable.css';
 import React, { useEffect, useState } from 'react';
 import { useDraft } from '../DraftContext';
 import { useAuth } from '../../../authentication/AuthContext';
-import { addPlayer, PlayerPreviousSeasonStats, formatPlayerPositions } from '../../../utils/draft';
+import { addPlayer, PlayerPreviousSeasonStats, formatPlayerPositions, Player} from '../../../utils/draft';
 import OutlinedRoundedButton from '../../buttons/OutlinedRoundedButton';
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -10,13 +10,28 @@ const PlayersTable = () => {
 
     const draftContext = useDraft();
     const draftRoomId = draftContext?.draftRoomId;
-    const roster = draftContext?.roster;
+    let roster = draftContext?.roster;
+    const setPlayerQueue = draftContext?.setPlayerQueue;
+    const playerQueue = draftContext?.playerQueue;
+    const draftId = draftContext?.draftRoomId;
     const setRoster = draftContext?.setRoster;
     const socket = draftContext?.socket;
     const [playerList, setPlayerList] = useState<PlayerPreviousSeasonStats[]>();
     const currentTurnUserId = draftContext?.currentTurnUserId;
     const { userId } = useAuth();
 
+    const handleQueueClick = (player: Player) => {
+        const tempRoster = JSON.parse(JSON.stringify(roster));
+
+        if (setPlayerQueue && tempRoster && addPlayer(player, tempRoster)) {
+            if (!playerQueue?.some((queuedPlayer: Player) => queuedPlayer.player_id==player.player_id)) {
+                const newPlayerQueue = playerQueue?.slice();
+                newPlayerQueue?.push(player);
+                setPlayerQueue(newPlayerQueue);
+                socket?.emit('enqueue-pick', userId, draftId, player.player_id, newPlayerQueue?.length);
+            }
+        }
+    }
 
     const pickPlayer = (playerId: string, userId: string, draftId: string) => {
         socket?.emit('pick-player', playerId, userId, draftId);
@@ -25,6 +40,11 @@ const PlayersTable = () => {
     useEffect(() => {
         socket?.on('receive-available-players', (availablePlayers) => {
             setPlayerList(availablePlayers);
+        });
+        socket?.on('queued-picks', (queuedPicks) => {
+            if (setPlayerQueue) {
+                setPlayerQueue(queuedPicks.filter(pick => pick.user_id == userId));
+            }
         });
     }, [socket]);
 
@@ -80,12 +100,20 @@ const PlayersTable = () => {
                                     </b>
                                 </p>
                             </div>
-                            {currentTurnUserId === userId && (
+                            {currentTurnUserId == userId && (
                                 <OutlinedRoundedButton
                                 color="red"
                                 handleOnClick={() => handleDraftClick(player, roster)}
                                 >
                                 DRAFT
+                                </OutlinedRoundedButton>
+                            )}
+                            {currentTurnUserId != userId && (
+                                <OutlinedRoundedButton
+                                color="black"
+                                handleOnClick={() => handleQueueClick(player)}
+                                >
+                                QUEUE
                                 </OutlinedRoundedButton>
                             )}
                         </td>
