@@ -21,3 +21,13 @@
     background-color: var(--red);
     color: var(--white);
 }
+
+.outlined-rounded-button.black {
+    border-color: var(--darkGrey);
+    color: var(--darkGrey);
+}
+
+.outlined-rounded-button.black:hover {
+    border-color: black;
+    color: black;
+}
