@@ -9,11 +9,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 const PlayersTable = () => {
 
     const draftContext = useDraft();
-    const draftRoomId = draftContext?.draftRoomId;
+    const draftId = draftContext?.draftId;
     let roster = draftContext?.roster;
     const setPlayerQueue = draftContext?.setPlayerQueue;
     const playerQueue = draftContext?.playerQueue;
-    const draftId = draftContext?.draftRoomId;
     const setRoster = draftContext?.setRoster;
     const socket = draftContext?.socket;
     const [playerList, setPlayerList] = useState<PlayerPreviousSeasonStats[]>();
@@ -23,9 +22,9 @@ const PlayersTable = () => {
     const handleQueueClick = (player: Player) => {
         const tempRoster = JSON.parse(JSON.stringify(roster));
 
-        if (setPlayerQueue && tempRoster && addPlayer(player, tempRoster)) {
+        if (setPlayerQueue && playerQueue && tempRoster && addPlayer(player, tempRoster)) {
             if (!playerQueue?.some((queuedPlayer: Player) => queuedPlayer.player_id==player.player_id)) {
-                const newPlayerQueue = playerQueue?.slice();
+                const newPlayerQueue = playerQueue.slice();
                 newPlayerQueue?.push(player);
                 setPlayerQueue(newPlayerQueue);
                 socket?.emit('enqueue-pick', userId, draftId, player.player_id, newPlayerQueue?.length);
@@ -53,7 +52,7 @@ const PlayersTable = () => {
       
         if (setRoster) { // Check if setRoster is defined
             if (addPlayer(pickedPlayer, updatedRoster)) {
-                pickPlayer(pickedPlayer.player_id, String(userId), String(draftRoomId));
+                pickPlayer(pickedPlayer.player_id, String(userId), String(draftId));
                 setRoster(updatedRoster);
             } 
 

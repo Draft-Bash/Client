@@ -11,7 +11,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 const LeftColumn = () => {
 
   const draftContext = useDraft();
-  const draftId = draftContext?.draftRoomId;
+  const draftId = draftContext?.draftId;
   const [isAutodraftOn, setAutodraft] = useState(false);
   const { userId } = useAuth();
   const socket = draftContext?.socket;

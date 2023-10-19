@@ -12,16 +12,16 @@ interface SocketContextProps {
 
 interface DraftContextType {
   socket: Socket | null;
-  draftRoomId: string | null;
-  setDraftRoomId: React.Dispatch<React.SetStateAction<string | null>>;
-  setRoster: React.Dispatch<React.SetStateAction<DraftRoster| undefined>>;
-  roster: DraftRoster | undefined; // Change the type
+  draftId: string | null;
+  setDraftId: React.Dispatch<React.SetStateAction<string | null>>;
+  setRoster: React.Dispatch<React.SetStateAction<DraftRoster | undefined>>;
+  roster: DraftRoster | undefined;
   currentTurnUserId: number;
   draftDetails: Draft | undefined;
   isDraftStarted: boolean;
   setIsDraftStarted: React.Dispatch<React.SetStateAction<boolean>>;
   playerQueue: Player[];
-  setPlayerQueue: React.Dispatch<React.SetStateAction<Player[]> | undefined>;
+  setPlayerQueue: React.Dispatch<React.SetStateAction<Player[]>>;
 }
 
 const SocketContext = createContext<DraftContextType | null>(null);
@@ -32,8 +32,8 @@ export const useDraft = (): DraftContextType | null => {
 
 export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [draftRoomId, setDraftRoomId] = useState<string | null>(null);
-  const [roster, setRoster] = useState<DraftRoster>(); // Change the type
+  const [draftId, setDraftId] = useState<string | null>(null);
+  const [roster, setRoster] = useState<DraftRoster>();
   const [currentTurnUserId, setCurrentTurnUserId] = useState(-1);
   const [draftDetails, setDraftDetails] = useState<Draft>();
   const [isDraftStarted, setIsDraftStarted] = useState(false);
@@ -44,27 +44,26 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
     const newSocket = io(SERVER_URL);
     setSocket(newSocket);
 
-    // Return a cleanup function that disconnects the socket
     return () => {
       newSocket.disconnect();
     };
   }, []);
 
   useEffect(() => {
-    socket?.emit('join-room', draftRoomId, userId);
+    socket?.emit('join-room', draftId, userId);
     socket?.on('update-draft-turn', (userId: number) => {
       setCurrentTurnUserId(userId);
     });
     socket?.on('update-roster', (roster) => {
-      if (roster.userId==userId) {
+      if (roster.userId == userId) {
         handleRoster(roster.players);
       }
     });
-  }, [draftRoomId]);
+  }, [draftId]);
 
   async function handleRoster(players) {
     try {
-      const draftRulesResponse = await fetch(API_URL + "/drafts/" + draftRoomId);
+      const draftRulesResponse = await fetch(API_URL + "/drafts/" + draftId);
       const draftRules = await draftRulesResponse.json();
 
       const rosterSpots: DraftRoster = {
@@ -88,8 +87,8 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
   }
 
   useEffect(() => {
-    if (userId && draftRoomId) {
-      fetch(API_URL + `/drafts/picks?userId=${userId}&draftId=${draftRoomId}`)
+    if (userId && draftId) {
+      fetch(API_URL + `/drafts/picks?userId=${userId}&draftId=${draftId}`)
       .then((draftedPlayerResponse) => {
         return draftedPlayerResponse.json();
       })
@@ -97,7 +96,7 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
         handleRoster(draftedPlayers);
       });
 
-      fetch(API_URL + `/drafts/${draftRoomId}`)
+      fetch(API_URL + `/drafts/${draftId}`)
       .then((response) => {
         return response.json();
       })
@@ -106,12 +105,12 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
         setIsDraftStarted(draftData.is_started);
       });
     }
-  }, [userId, draftRoomId]);
+  }, [userId, draftId]);
 
   const socketContextValue: DraftContextType = {
     socket,
-    draftRoomId,
-    setDraftRoomId,
+    draftId,
+    setDraftId,
     setRoster,
     roster,
     currentTurnUserId,
