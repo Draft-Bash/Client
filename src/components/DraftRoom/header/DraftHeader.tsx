@@ -15,14 +15,14 @@ const DraftHeader = () => {
   const [isStarted, setStarted] = useState(true);
   const draftContext = useDraft();
   const setIsDraftStarted = draftContext?.setIsDraftStarted;
-  const draftRoomId = draftContext?.draftRoomId;
+  const draftId = draftContext?.draftId;
   const draftDetails = draftContext?.draftDetails;
   const {userId} = useAuth();
   const socket = draftContext?.socket;
 
   const startDraft = async () => {
     try {
-      await fetch(API_URL+"/drafts/start/"+draftRoomId,{
+      await fetch(API_URL+"/drafts/start/"+draftId,{
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -37,10 +37,10 @@ const DraftHeader = () => {
 
 
   useEffect(() => {
-    if (draftRoomId) {
+    if (draftId) {
       async function fetchDraftData() {
         try {
-          const response = await fetch(API_URL+"/drafts/"+draftRoomId);
+          const response = await fetch(API_URL+"/drafts/"+draftId);
           const draftData = await response.json();
 
           setDraftType(draftData.draft_type);
@@ -60,7 +60,7 @@ const DraftHeader = () => {
         }
     });
     }
-    }, [draftRoomId]);
+    }, [draftId]);
 
   return (
       <header className="draft-header">
