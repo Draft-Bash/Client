@@ -62,7 +62,7 @@ const LeftColumn = () => {
         <header>
           <h4>Pick Queue</h4>
           <ToggleButton 
-            labelName="Autodraft"
+            labelName="Autopick"
             handleOnClick={toggleAutodraft}
             defaultToggleState={isAutodraftOn}
           />
