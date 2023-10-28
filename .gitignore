@@ -10,7 +10,6 @@ firebaserc
 firebase
 conf
 conf.ts
-.env
 
 # Logs
 logs
