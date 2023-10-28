@@ -1,32 +1,72 @@
 .user-pick-queue {
     padding: 0px 10px 0px 10px;
+    width: 100%;
 }
 
-.user-pick-queue header {
-    padding: 0px;
-    display: flex;
-    justify-content: flex-start;
-    gap: 20px;
-    border-bottom: none;
-}
-
-.user-pick-queue header b {
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.user-pick-queue ul {
+.user-pick-queue thead th {
     text-align: center;
-    padding: 6px;
-    border-top: 2px solid var(--mediumGrey);
+    padding: 2px;
+    border-bottom: 2px solid var(--mediumGrey);
+    font-size: 13px;
 }
 
-.user-pick-queue ul li {
+.user-pick-queue tbody td {
     font-size: 13px;
-    color: var(--darkGrey);
+    color: var--(black);
+    font-weight: 600;
+    text-align: center;
+}
+
+.user-pick-queue tbody tr:hover {
+    background-color: var(--lightGrey);
+}
+
+.user-pick-queue .queued-player {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+}
+
+.user-pick-queue .queued-player {
     font-weight: 500;
+    font-size: 13px;
+    color: var--(black);
+    text-align: center;
 }
 
 .user-pick-queue .no-players-queued-message {
     opacity: .5;
+}
+
+.user-pick-queue .update-queue-btns {
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.user-pick-queue .arrow {
+    color: var(--darkGrey);
+    transition: 0.3s;
+}
+
+.user-pick-queue .arrow:hover {
+    color: var(--red);
+}
+
+.user-pick-queue .delete {
+    color: var(--darkGrey);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.user-pick-queue .delete:hover {
+    color: var(--red);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.user-pick-queue .is-swapping {
+    background-color: var(--brightBlue);
 }

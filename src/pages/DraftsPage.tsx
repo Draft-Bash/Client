@@ -1,21 +1,24 @@
-import '../css/mockDrafts.css';
+import '../css/draftsPage.css';
 import RoundedButton from '../components/buttons/RoundedButton';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../authentication/AuthContext';
 import {BsChevronDoubleLeft} from 'react-icons/bs';
 import {BsChevronDoubleRight} from 'react-icons/bs';
+import {BiCog} from 'react-icons/bi';
+import {RiDeleteBin5Line} from 'react-icons/ri';
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface DraftInfo {
   user_id: number,
   draft_id: number,
   draft_type: string,
-  user_name: string,
+  username: string,
   team_count: number,
   scheduled_by_user_id: number,
   scoring_type: string,
-  pick_time_seconds: number
+  pick_time_seconds: number,
+  is_started: number
 }
 
 const DraftsPage = () => {
@@ -26,10 +29,30 @@ const DraftsPage = () => {
   const [draftIndex, setDraftIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState("");
 
+  const deleteDraft = async (draftId: number) => {
+    if (window.confirm("Are you sure you want to delete this draft?")) {
+      const response = await fetch(API_URL+"/drafts?draftId="+draftId, {
+        method: 'DELETE',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: null
+      });
+      const isDeleted = await response.json();
+      if (!isDeleted){
+        alert("Cannot delete a draft that has begun.");
+      }
+      else {
+        const currentDrafts = userDrafts.filter(userDraft => userDraft.draft_id != draftId);
+        setUserDrafts(currentDrafts);
+      }
+    }
+  }
+
   useEffect(() => {
     async function fetchDraftData() {
       try {
-        const response = await fetch(API_URL+"/drafts?user_id="+userId);
+        const response = await fetch(API_URL+"/drafts?userId="+userId);
         const draftsInfo = await response.json();
         setUserDrafts(draftsInfo);
         if (draftsInfo.length > 0) {
@@ -88,8 +111,18 @@ const DraftsPage = () => {
                 <>
                 <div className={`draft-content-container ${slideDirection}`}>
                   <h4>
-                    {userDrafts[draftIndex].scheduled_by_user_id == userDrafts[draftIndex].user_id
-                    ? "Your Mock Draft" : `${userDrafts[draftIndex].user_name}'s Mock Draft`}
+                    <RiDeleteBin5Line className="delete" 
+                      onClick={() => deleteDraft(userDrafts[draftIndex].draft_id)} 
+                    />
+                    {userDrafts[draftIndex].scheduled_by_user_id == userId
+                    ? "Your Mock Draft" : `${userDrafts[draftIndex].username}'s Mock Draft`}
+                    <BiCog className="update" 
+                      onClick={() => {if (!userDrafts[draftIndex].is_started) {
+                        navigate("/modules/mock-drafts/update/"+userDrafts[draftIndex].draft_id)
+                      } else {
+                        alert("Cannot update a draft in progress.")
+                      }}}
+                    />
                   </h4>
                   <div className="draft-info">
                     <p>
@@ -106,7 +139,13 @@ const DraftsPage = () => {
                     </p>
                     <p>
                       <b>Pick time: </b>
-                      {userDrafts[draftIndex].pick_time_seconds}
+                      {userDrafts[draftIndex].pick_time_seconds} Seconds
+                    </p>
+                    <p>
+                      <b>Status: </b>
+                      <b className={userDrafts[draftIndex].is_started ? "is-started" : "started"}>
+                        {userDrafts[draftIndex].is_started ? "In Progress" : "Not Started"}
+                      </b>
                     </p>
                   </div>
                 </div>
@@ -114,7 +153,7 @@ const DraftsPage = () => {
                   <RoundedButton
                     color="yellow"
                     handleOnClick={() => {
-                      navigate("/modules/drafts/draftroom/"+draftId);
+                      navigate("/modules/drafts/draftroom/"+userDrafts[draftIndex].draft_id);
                     }}
                   >
                     Join Draft

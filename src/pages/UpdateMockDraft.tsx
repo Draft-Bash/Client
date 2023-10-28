@@ -7,13 +7,17 @@ import RoundedButton from "../components/buttons/RoundedButton";
 import { useNavigate } from 'react-router-dom';
 import UserInviter from "../components/UserInviter";
 import LoadingScreen from "../components/LoadingScreen";
+import { useParams } from "react-router-dom";
+import { User } from "../utils/users";
 const API_URL = import.meta.env.VITE_API_URL;
 
-const ConfigureMockDraft = () => {
+const UpdateMockDraft = () => {
     const navigate = useNavigate();
+    const { draftId } = useParams();
     const { userId } = useAuth();
     const { username } = useAuth();
     const [isLoadingScreen, setIsLoadingScreen] = useState(false);
+    const [invitedUsers, setInvitedUsers] = useState<User[]>();
     const [teamCount, setTeamCount] = useState(10);
     const [invitedUserIds, setInvitedUserIds] = useState<number[]>([]);
     const [pickTime, setPickTime] = useState("90 seconds");
@@ -41,7 +45,7 @@ const ConfigureMockDraft = () => {
         setIsLoadingScreen(true);
         try {
             const response = await fetch(API_URL+"/drafts", {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                 'Content-Type': 'application/json'
                 },
@@ -62,18 +66,45 @@ const ConfigureMockDraft = () => {
                     scheduledByUserId: userId,
                     scheduledByUsername: username,
                     draftPosition: draftPosition,
-                    draftUserIds: invitedUserIds
+                    draftUserIds: invitedUserIds,
+                    draftId: draftId
                 })
             });
 
-            const draftId = await response.json();
+            const updatedDraftId = await response.json();
 
-            navigate('/modules/drafts/draftroom/'+draftId);
+            navigate('/modules/drafts/draftroom/'+updatedDraftId);
           } catch (error) {
             console.error('Error:', error);
           }
         
     }
+
+    useEffect(() => {
+        fetch(API_URL+"/drafts/"+draftId)
+        .then(response => {
+            return response.json();
+        })
+        .then(draftSettings => {
+            const userIds = draftSettings.draft_members.map(draftMember => draftMember.user_id);
+            setInvitedUserIds(userIds);
+            setInvitedUsers(draftSettings.draft_members);
+            setTeamCount(draftSettings.team_count);
+            setPickTime(draftSettings.pick_time_seconds+" seconds");
+            setDraftType(draftSettings.draft_type);
+            setScoringType(draftSettings.scoring_type);
+            setDraftPosition(draftSettings.draft_owner_start_pick);
+            setPointGuardCount(draftSettings.pointguard_slots);
+            setShootingGuardCount(draftSettings.shootingguard_slots);
+            setGuardCount(draftSettings.guard_slots);
+            setSmallforwardCount(draftSettings.smallforward_slots);
+            setPowerforwardCount(draftSettings.powerforward_slots);
+            setForwardCount(draftSettings.forward_slots);
+            setCenterCount(draftSettings.center_slots);
+            setUtilityPlayerCount(draftSettings.utility_slots);
+            setBenchSize(draftSettings.bench_slots);
+        })
+    }, [draftId]);
 
     useEffect(() => {
         let positions: number[] = [];
@@ -93,7 +124,10 @@ const ConfigureMockDraft = () => {
                         <h2>Draft Creation</h2>
                         <p>Set your draft settings below</p>
                     </div>
-                    <UserInviter teamsCount={teamCount} setInvitedUserIds={setInvitedUserIds}/>
+                    <UserInviter teamsCount={teamCount} 
+                        setInvitedUserIds={setInvitedUserIds}
+                        invitedUsers={invitedUsers}
+                    />
                 </div>
                 <div className="settings-container">
                     <div className="settings-group">
@@ -103,7 +137,7 @@ const ConfigureMockDraft = () => {
                                 value="points" 
                                 name="mock-draft-scoring-config" 
                                 onChange={(event) => {setScoringType(event.target.value)}}
-                                defaultChecked 
+                                checked={scoringType=="points"}
                             />
                             Points
                         </label>
@@ -112,6 +146,7 @@ const ConfigureMockDraft = () => {
                                 value="category" 
                                 name="mock-draft-scoring-config" 
                                 onChange={(event) => {setScoringType(event.target.value)}}
+                                checked={scoringType=="category"}
                             />
                             Category
                         </label>
@@ -123,7 +158,7 @@ const ConfigureMockDraft = () => {
                                 value="snake" 
                                 name="mock-draft-type-config" 
                                 onChange={(event) => {setDraftType(event.target.value)}}
-                                defaultChecked
+                                checked={draftType=="snake"}
                             />
                             Snake
                         </label>
@@ -132,6 +167,7 @@ const ConfigureMockDraft = () => {
                                 value="linear" 
                                 name="mock-draft-type-config" 
                                 onChange={(event) => {setDraftType(event.target.value)}}
+                                checked={draftType=="linear"}
                             />
                             Linear
                         </label>
@@ -139,13 +175,13 @@ const ConfigureMockDraft = () => {
                     <div className="settings-group">
                         <h5># of teams</h5>
                         <PickList setValue={(count) => setTeamCount(count as number)} 
-                            itemList={[8,10,12,14]} defaultValue={10} width={40}
+                            itemList={[8,10,12,14]} defaultValue={teamCount} width={40}
                         />
                     </div>
                     <div className="settings-group">
                         <h5>Pick Time</h5>
                         <PickList setValue={(time) => setPickTime(time as string)} 
-                            itemList={pickTimes} defaultValue={"90 seconds"} width={95} 
+                            itemList={pickTimes} defaultValue={pickTime} width={95} 
                         />
                     </div>
                     <div className="settings-group">
@@ -217,7 +253,7 @@ const ConfigureMockDraft = () => {
                     </div>
                 </div>
                 <div className="create-draft">
-                    <RoundedButton color="blue" handleOnClick={() => {handleOnSubmit()}}>Create Draft</RoundedButton>
+                    <RoundedButton color="blue" handleOnClick={() => {handleOnSubmit()}}>Update Draft</RoundedButton>
                 </div>
             </div>
         </div>
@@ -225,4 +261,4 @@ const ConfigureMockDraft = () => {
     );
 };
  
-export default ConfigureMockDraft;
+export default UpdateMockDraft;

@@ -56,3 +56,7 @@
     margin-left: auto;
     margin-right: 10px;
 }
+
+.players-table .player-details p, .players-table .player-details b {
+    font-size: 12px;
+}

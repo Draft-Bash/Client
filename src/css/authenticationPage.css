@@ -1,7 +1,7 @@
 .authentication-page {
     background-color: var(--black);
-    height: 100vh;
     display: flex;
+    height: 100vh;
 }
 
 .authentication-page .confirm-email {
@@ -31,7 +31,7 @@
     gap: 10px;
     background-color: var(--coolWhite);
     flex-direction: column;
-    padding: 100px;
+    padding: 50px 60px 50px 60px;
     height: 100vh;
     overflow-y: auto;
 }
@@ -62,13 +62,13 @@
 }
 
 .authentication-form button {
-    background-color: var(--brightBlue);
+    background-color: var(--blue);
     border: none;
     color: rgb(255, 255, 255);
     padding: 5px 20px 5px 20px;
     border-radius: 20px;
     font-weight: 500;
-    border: 3px solid var(--brightBlue);
+    border: 3px solid var(--blue);
     transition: 0.3s;
     cursor: pointer;
     margin-top: 30px;
@@ -76,4 +76,62 @@
 
 .authentication-form button:hover {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.authentication-page .forgot-password-btn {
+    cursor: pointer;
+    width: 145px;
+}
+
+.authentication-page .forgot-password-btn:hover {
+    font-weight: 600;
+}
+
+.forgot-password-modal {
+    background-color: var(--coolWhite);
+    min-height: 250px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+    width: 500px;
+    height: 250px;
+    min-width: 500px;
+    overflow: auto;
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    margin-top: 50px;
+}
+
+.authentication-page .google-auth {
+    border-radius: 2px;
+    padding: 1px;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 250px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.authentication-page .google-auth a {
+    color: white;
+    margin: auto;
+}
+
+.authentication-page .google-auth img {
+    height: 42px;
+    width: 42px;
+    padding: 0px;
+    margin: 0px;
+    outline: 2px solid var(--coolWhite);
+    background-color: var(--coolWhite);
+}
+
+.authentication-page .google-auth:hover {
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
 }

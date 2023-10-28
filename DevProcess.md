@@ -15,16 +15,18 @@
     DB_PORT=5432
     SSL=false
     JWT_SECRET=anyStringWillDo
+    API_URL=http://localhost:3000/api/v1
+    CLIENT_URL=http://localhost:5173
 7. (Server repository) To seed the database with data, run 'npx knex seed:run' only once.
 8. Run 'npm run dev' to start the server on localhost:3000 with hot reload. It will automatically run the database migrations for you
 9. Any changes to the database schema must be through knex.js. To create a migration, run 'npx knex migrate:make migration_name'.
    After running the command, a new file will be added to the schema folder in the migrations folder. Go to it and add the neccessary up/down migration code. Research online the syntax for doing this with knex.js
-10. (Client repository) Clone the Client repository.
-11. After cloning, switch test branch by running 'git checkout -b test origin/test'.
-12. When developing a feature, make your own branch by running 'git checkout -b name-of-feature-branch'
-13. Run 'npm install' to install the dependencies.
-14. Add a .env file to the root folder with these variables:
+11. (Client repository) Clone the Client repository.
+12. After cloning, switch test branch by running 'git checkout -b test origin/test'.
+13. When developing a feature, make your own branch by running 'git checkout -b name-of-feature-branch'
+14. Run 'npm install' to install the dependencies.
+15. Add a .env file to the root folder with these variables:
     VITE_API_URL=http://localhost:3000/api/v1
     VITE_SERVER_URL=http://localhost:3000
-15. While the server-side code is running on localhost:3000, run 'npm run dev' to start the frontend with hot reload
-16. The frontend is now on localhost:5173. To see it, add locahost:5173 in your browser's search URL.
+16. While the server-side code is running on localhost:3000, run 'npm run dev' to start the frontend with hot reload
+17. The frontend is now on localhost:5173. To see it, add locahost:5173 in your browser's search URL.

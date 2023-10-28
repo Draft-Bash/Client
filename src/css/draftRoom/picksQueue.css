@@ -1,12 +1,26 @@
 .picks-until-user-turn {
     background-color: var(--orange);
     height: 100%;
-    font-size: 13px;
     color: white;
-    padding: 12px 30px 12px 30px;
-    line-height: 1.1;
     text-align: center;
-    min-width: 230px;
+    min-width: 215px;
+    line-height: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: 0.3s;
+}
+
+.picks-until-user-turn p {
+    font-size: 13px;
+}
+
+.picks-until-user-turn .is-turn {
+    background-color: var(--brightOrange);
+}
+
+.picks-until-user-turn .turn-expiring {
+    background-color: var(--red) !important;
 }
 
 .picks-header ul {
@@ -23,8 +37,11 @@
     font-size: 13px;
     color: white;
     padding: 0px 10px 0px 10px;
-    line-height: 2.1;
+    line-height: 1.95;
     text-align: center;
     box-shadow: -3px 3px 6px rgba(0, 0, 0, .3);
     min-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

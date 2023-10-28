@@ -13,6 +13,7 @@
   --darkBlue: rgb(50, 60, 120);
   --green: rgb(80, 200, 115);
   --yellow: rgb(220, 150, 20);
+  --brightYellow: rgb(255, 255, 0);
   --red: rgb(240, 0, 0);
   --brightOrange: rgb(200, 100, 0);
   --orange: rgb(175, 90, 0);
@@ -28,6 +29,7 @@
     border-spacing: 0px;
     font-size: 16px;
     user-select: none;
+    outline: none;
 }
 
 a {

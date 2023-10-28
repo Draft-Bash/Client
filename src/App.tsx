@@ -4,6 +4,8 @@ import { AuthProvider, useAuth } from "./authentication/AuthContext";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ProtectedRoutes from "./ProtectedRoutes";
+import GoogleAuth from "./authentication/GoogleAuth";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 function LoginRedirect() {
   const { isAuthenticated } = useAuth();
@@ -23,6 +25,8 @@ function App() {
       <Routes>
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginRedirect />} />
+        <Route path="/google-auth" element={<GoogleAuth />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/" element={<LoginRedirect />} />
         <Route path="/*" element={<ProtectedRoutes />} />
       </Routes>

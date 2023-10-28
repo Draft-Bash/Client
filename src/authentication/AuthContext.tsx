@@ -41,7 +41,7 @@ export function AuthProvider(props: Props) {
 
       if (user) {
         setIsAuthenticated(true);
-        setUsername(user.user_name);
+        setUsername(user.username);
         setUserId(user.user_id);
       }
       else {

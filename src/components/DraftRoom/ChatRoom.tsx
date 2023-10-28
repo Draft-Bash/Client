@@ -8,32 +8,28 @@ const ChatRoom = () => {
 
     const draftContext = useDraft();
     const socket = draftContext?.socket;
-    const draftRoomId = draftContext?.draftRoomId;
+    const draftId = draftContext?.draftId;
     const modalRef = useRef(null);
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState<string[]>([]);
     const [isOpen, setIsOpen] = useState(false);
 
     const sendMessage = (message: string) => {
-        socket?.emit('send-message', message, draftRoomId);
+        socket?.emit('send-message', message, draftId);
         let messageList = [...messages, message];
         messages.push(message);
         setMessages(messageList);
     }
   
     useEffect(() => {
-        if (draftRoomId) {
+        if (draftId) {
             socket?.on('receive-message', (message: string) => {
                 let messageList = [...messages, message];
                 messages.push(message);
                 setMessages(messageList);
             });
-    
-            socket?.on('connect', () => {
-                console.log("so");
-            });
         }
-    }, [draftRoomId]);
+    }, [draftId]);
 
     return (
         <>
@@ -49,8 +45,8 @@ const ChatRoom = () => {
             </ul>
             <div className="send-text">
               <label>Message</label>
-              <TextInput placeholder="Enter message" onChange={setMessage} />
-              <button onClick={() => sendMessage(message)}>Send</button>
+              <TextInput value={message} placeholder="Enter message" onChange={setMessage} />
+              <button onClick={() => {setMessage(""); sendMessage(message)}}>Send</button>
             </div>
           </div>
         </dialog>
