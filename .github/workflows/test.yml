@@ -14,7 +14,6 @@ jobs:
         run: |
           echo "VITE_API_URL=https://draftbash-test.azurewebsites.net/api/v1" > .env
           echo "VITE_SERVER_URL=https://draftbash-test.azurewebsites.net" >> .env
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
