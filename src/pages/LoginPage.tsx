@@ -117,9 +117,11 @@ const LoginPage = () => {
                     Forgot Password?
                 </p>
                 <button onClick={handleLogin}>Login</button>
-                <button className="google-auth">
+                <button className="google-auth" onClick={() => setIsLoadingScreen(true)}>
                     <img src="images/google-icon.png" alt="google-signin"></img>
-                    <a href={SERVER_URL+"/auth/google"}>Sign in with Google</a>
+                    <a href={SERVER_URL+"/auth/google"}>
+                        Sign in with Google
+                    </a>
                 </button>
             </form>
         </div>
