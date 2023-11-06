@@ -4,6 +4,7 @@ import { useAuth } from '../../authentication/AuthContext';
 import { useDraft } from './DraftContext';
 import { User } from '../../utils/users';
 import { FaChevronDown } from 'react-icons/fa';
+import {RxCross1} from 'react-icons/rx';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const RosterPickList = () => {
@@ -40,7 +41,11 @@ const RosterPickList = () => {
         onClick={(e) => {if (e.target==modalRef.current) {setIsModalOpen(false)}}}
         >
             <div className="modal-content">
-                <h5>Teams</h5>
+                <h4>
+                    <RxCross1 className='close'
+                    onClick={() => setIsModalOpen(false)}/>
+                    Teams
+                </h4>
                 <ul>
                     <li key={`draftUser-${draftUser?.user_id}`}>{`Team ${draftUser?.username}`}</li>
                     

@@ -4,7 +4,7 @@ import { useDraft } from '../DraftContext';
 import { useAuth } from '../../../authentication/AuthContext';
 import { addPlayer, PlayerPreviousSeasonStats, formatPlayerPositions, Player} from '../../../utils/draft';
 import OutlinedRoundedButton from '../../buttons/OutlinedRoundedButton';
-const API_URL = import.meta.env.VITE_API_URL;
+import PlayerDraftPopup from '../../PlayerDraftPopup';
 
 const PlayersTable = () => {
 

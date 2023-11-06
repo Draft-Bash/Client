@@ -7,6 +7,7 @@ import {BsChevronDoubleLeft} from 'react-icons/bs';
 import {BsChevronDoubleRight} from 'react-icons/bs';
 import {BiCog} from 'react-icons/bi';
 import {RiDeleteBin5Line} from 'react-icons/ri';
+import TranslucentButton from '../components/buttons/TranslucentButton';
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface DraftInfo {
@@ -111,18 +112,22 @@ const DraftsPage = () => {
                 <>
                 <div className={`draft-content-container ${slideDirection}`}>
                   <h4>
-                    <RiDeleteBin5Line className="delete" 
-                      onClick={() => deleteDraft(userDrafts[draftIndex].draft_id)} 
-                    />
+                    {userDrafts[draftIndex].scheduled_by_user_id == userId && (
+                      <RiDeleteBin5Line className="delete" 
+                        onClick={() => deleteDraft(userDrafts[draftIndex].draft_id)} 
+                      />
+                    )}
                     {userDrafts[draftIndex].scheduled_by_user_id == userId
                     ? "Your Mock Draft" : `${userDrafts[draftIndex].username}'s Mock Draft`}
-                    <BiCog className="update" 
-                      onClick={() => {if (!userDrafts[draftIndex].is_started) {
-                        navigate("/modules/mock-drafts/update/"+userDrafts[draftIndex].draft_id)
-                      } else {
-                        alert("Cannot update a draft in progress.")
-                      }}}
-                    />
+                    {userDrafts[draftIndex].scheduled_by_user_id == userId && (
+                      <BiCog className="update" 
+                        onClick={() => {if (!userDrafts[draftIndex].is_started) {
+                          navigate("/modules/mock-drafts/update/"+userDrafts[draftIndex].draft_id)
+                        } else {
+                          alert("Cannot update a draft in progress.")
+                        }}}
+                      />
+                    )}
                   </h4>
                   <div className="draft-info">
                     <p>
@@ -150,14 +155,13 @@ const DraftsPage = () => {
                   </div>
                 </div>
                 <div className="join-button">
-                  <RoundedButton
-                    color="yellow"
+                  <TranslucentButton
                     handleOnClick={() => {
                       navigate("/modules/drafts/draftroom/"+userDrafts[draftIndex].draft_id);
                     }}
                   >
                     Join Draft
-                  </RoundedButton>
+                  </TranslucentButton>
                 </div>
                 </>
               )
@@ -165,7 +169,7 @@ const DraftsPage = () => {
             </div>
             <BsChevronDoubleRight className="arrow" onClick={() => incrementDraftIndex()} />
           </div>
-          <p>No drafts? Make your own</p>
+          <p className='recommend-draft-creation'>No drafts? Make your own</p>
           <RoundedButton
             color="blue"
             handleOnClick={() => {

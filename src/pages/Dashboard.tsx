@@ -4,7 +4,7 @@ const Dashboard = () => {
 
   // Work in progress
   return (
-    <p>This is the dashboard. Currently a work in progress.</p>
+    <p style={{color:"white"}}>This is the dashboard. Currently a work in progress.</p>
   );
 };
 

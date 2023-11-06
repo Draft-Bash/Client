@@ -7,7 +7,7 @@
     padding: 0px 50px 0px 50px;
     gap: 30px;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, .3);
-    border-bottom: 1px solid var(--grey);
+    border-bottom: 1px solid var(--mediumDarkGrey);
 }
 
 .main-navbar .user {
@@ -17,10 +17,11 @@
 }
 
 .main-navbar .nav-icon {
-    color: white;
+    color: var(--coolWhite);
     height: 35px;
     width: 50px;
     cursor: pointer;
+    border-radius: 8px;
 }
 
 .main-navbar .user ul {
@@ -34,7 +35,7 @@
 }
 
 .main-navbar .nav-icon:hover {
-    opacity: 0.9;
+    background-color: rgba(100, 100, 125, 0.2);
 }
 
 .main-navbar .user:hover ul {
@@ -53,12 +54,16 @@
 
 .main-navbar .option {
     color: white;
+    height: 35px;
+    line-height: 35px;
+    padding: 0px 10px 0px 10px;
+    border-radius: 8px;
 }
 
 .main-navbar .option:hover {
-    opacity: .9;
+    background-color: rgba(100, 100, 125, 0.2);
 }
 
 .main-navbar .option.active {
-    opacity: .9;
+    background-color: rgba(100, 100, 125, 0.2);
 }
