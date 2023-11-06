@@ -5,7 +5,7 @@ import {RxCross1} from 'react-icons/rx';
 import { DraftPick } from '../../../utils/draft';
 import { useDraft } from '../DraftContext';
 import { useAuth } from '../../../authentication/AuthContext';
-import DraftGrade from '../draftGrade';
+import DraftGrade from '../DraftGrade';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const CenterHeader = () => {
