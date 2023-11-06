@@ -20,7 +20,7 @@ const Navbar = () => {
                 Mock Drafts
             </ Link>
             <Invites />
-            <div className="user option">
+            <div className="user">
                 <BiUserCircle className="nav-icon" />
                 <ul>
                     <li onClick={() => {

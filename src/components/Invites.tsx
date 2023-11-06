@@ -3,6 +3,7 @@ import "../css/invites.css";
 import { useAuth } from "../authentication/AuthContext";
 import {AiOutlineMail} from 'react-icons/ai';
 import { useNavigate } from "react-router-dom";
+import {RxCross1} from 'react-icons/rx';
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface Invite {
@@ -24,13 +25,12 @@ const Invites = () => {
     const navigate = useNavigate();
 
     const updateInvite = async (isAccepted: boolean, draftId: number) => {
-        await fetch(API_URL+"/drafts/members", {
+        await fetch(API_URL+"/draft-invites", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                isInviteAccepted: isAccepted,
                 userId: userId,
                 draftId: draftId
             }),
@@ -43,7 +43,7 @@ const Invites = () => {
     }
 
     const openInvites = async () => {
-        await fetch(API_URL+"/drafts/invites?userId="+userId, {
+        await fetch(API_URL+"/draft-invites/read?userId="+userId, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -55,9 +55,9 @@ const Invites = () => {
     }
     
     useEffect(() => {
-        fetch(API_URL+'/drafts/invites?userId='+userId)
+        fetch(API_URL+'/draft-invites?userId='+userId)
         .then(response => {
-            return response.json(); // This returns a promise that resolves to the JSON data
+            return response.json();
         })
         .then(inviteList => {
             setUnreadInviteCount(inviteList.filter((invite) => !invite.is_invite_read).length);
@@ -68,7 +68,9 @@ const Invites = () => {
 	return (
 		<>
             <div className="open-invites">
-                <AiOutlineMail className="open-invite-icon" onClick={() => openInvites()}/>
+                <AiOutlineMail className={isOpen ? 'open-invite-icon active' : 'open-invite-icon'}
+                onClick={() => openInvites()}
+                />
                 <i>{(unreadInviteCount>0) ? unreadInviteCount: ""}</i>
             </div>
 			<dialog
@@ -82,7 +84,11 @@ const Invites = () => {
 				className="modal" 
 			>
                 <div className="invites">
-                    <header>Invites</header>
+                    <h4>
+                        <RxCross1 className='close'
+                        onClick={() => setIsOpen(false)}/>
+                        Invites
+                    </h4>
                     <ul>
                         {invites?.map((invite) => (
                         <li key={invite.draft_id}>
