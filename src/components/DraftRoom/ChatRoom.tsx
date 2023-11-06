@@ -20,7 +20,7 @@ const ChatRoom = () => {
     const modalRef = useRef(null);
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState<Message[]>([]);
-    const [unreadMessageCount, setUnreadMessageCount] = useState(0);
+    const [unreadMessageCount, setUnreadMessageCount] = useState(-1);
     const [isOpen, setIsOpen] = useState(false);
 
     const sendMessage = (message: string) => {
@@ -31,22 +31,23 @@ const ChatRoom = () => {
         if (draftId) {
             socket?.on('receive-message', (message: Message) => {
                 let messageList = [...messages, message];
-                console.log(message);
                 messages.push({message: message.message, username: username});
                 setMessages(messageList);
-                setUnreadMessageCount(unreadMessageCount+1);
-                if (isOpen) {
-                  setUnreadMessageCount(0)
-                } else{
-                  setUnreadMessageCount(unreadMessageCount+1);
-                }
             });
         }
     }, [draftId]);
 
+    useEffect(() => {
+      if (!isOpen) {
+        setUnreadMessageCount(unreadMessageCount+1);
+      } else {
+        setUnreadMessageCount(0);
+      }
+    }, [messages])
+
     return (
         <>
-        <BsChatFill onClick={() => {setIsOpen(true); setUnreadMessageCount(0)}} className="chat-icon" />
+        <BsChatFill onClick={() => {setIsOpen(true); setUnreadMessageCount(0);}} className="chat-icon" />
         {unreadMessageCount > 0 && (
           <b className='chat-message-count'>
             {unreadMessageCount}
