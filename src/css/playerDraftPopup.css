@@ -1,0 +1,102 @@
+.player-draft-popup {
+    color: var(--brightBlue);
+    cursor: pointer;
+}
+
+.player-draft-popup:hover {
+    color: var(--blue);
+}
+
+.player-info-box-header {
+    display: flex;
+    justify-content: flex-start;
+    background-color: var(--coolWhite);
+    border-right: none;
+}
+
+.fantasy-outlook-area {
+    height: 200px;
+    background-color: var(--coolWhite);
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--darkGrey);
+}
+
+.fantasy-outlook-area b {
+    font-size: 15px !important;
+}
+
+.player-info-box-header-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    flex: 1;
+    height: 75px;
+    border: 1px solid var(--grey);
+}
+
+.player-info-box-header img {
+    width: 75px;
+    height: 75px;
+    padding: 10px;
+}
+
+.player-info-box-header img:first-child {
+    background-color: var(--darkBlue);
+    padding: 0px;
+}
+
+.player-info-box1 b {
+    height: 35px;
+    font-size: 30px;
+    color: var(--black);
+    text-align: left;
+}
+
+.player-info-box1 p {
+    color: var(--darkGrey);
+}
+
+.player-info-box1 {
+    background-color: var(--black);
+    min-height: 250px;
+    margin: auto;
+    display: flex;
+    align-items: flex-start;
+    padding: 40px 10px 10px 10px;
+    width: 750px;
+    height: 250px;
+    min-width: 350px;
+    border-radius: 10px 10px 0px 0px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.player-info-box-header .rank {
+    position: absolute;
+    color: var(--white);
+    top: 10px;
+    height: 30px;
+    background-color: var(--darkBlue);
+    border-radius: 3px 0px 0px 0px;
+    width: 395px;
+}
+
+.player-info-box2 {
+    background-color: var(--grey);
+    min-height: 250px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding: 10px;
+    width: 750px;
+    height: 250px;
+    min-width: 350px;
+    overflow: auto;
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}

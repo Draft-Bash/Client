@@ -9,6 +9,7 @@ import UserInviter from "../components/UserInviter";
 import LoadingScreen from "../components/LoadingScreen";
 import { useParams } from "react-router-dom";
 import { User } from "../utils/users";
+import TranslucentButton from "../components/buttons/TranslucentButton";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const UpdateMockDraft = () => {
@@ -86,6 +87,7 @@ const UpdateMockDraft = () => {
             return response.json();
         })
         .then(draftSettings => {
+            console.log(draftSettings);
             const userIds = draftSettings.draft_members.map(draftMember => draftMember.user_id);
             setInvitedUserIds(userIds);
             setInvitedUsers(draftSettings.draft_members);
@@ -93,7 +95,7 @@ const UpdateMockDraft = () => {
             setPickTime(draftSettings.pick_time_seconds+" seconds");
             setDraftType(draftSettings.draft_type);
             setScoringType(draftSettings.scoring_type);
-            setDraftPosition(draftSettings.draft_owner_start_pick);
+            setDraftPosition(draftSettings.owner_first_pick);
             setPointGuardCount(draftSettings.pointguard_slots);
             setShootingGuardCount(draftSettings.shootingguard_slots);
             setGuardCount(draftSettings.guard_slots);

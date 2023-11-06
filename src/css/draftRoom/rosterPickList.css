@@ -35,7 +35,7 @@
 }
 
 .roster-list-modal .modal-content {
-    background-color: var(--coolWhite);
+    background-color: var(--black);
     min-height: 450px;
     height: 450px;
     margin: auto;
@@ -50,13 +50,50 @@
     z-index: 100;
     margin-top: 50px;
     overflow: auto;
+    border: 1px solid var(--mediumDarkGrey);
 }
 
-.roster-list-modal .modal-content h5 {
-    border-bottom: 2px solid var(--mediumGrey);
+.roster-list-modal .modal-content h4 {
+    color: var(--coolWhite);
+    background-color: var(--veryDarkGrey);
+    font-size: 20px;
+    font-weight: 500;
     width: 100%;
+    height: 50px;
     text-align: center;
-    padding: 5px;
+    border-bottom: 1px solid var(--mediumDarkGrey);
+    position: relative;
+    padding-top: 3px;
+}
+
+.roster-list-modal .modal-content .close {
+    position: absolute;
+    left: 10px;
+    cursor: pointer;
+    top: 10px;
+    height: 20px;
+    width: 20px;
+    padding: 2px;
+}
+
+.roster-list-modal .close {
+    position: absolute;
+    left: 10px;
+    cursor: pointer;
+    top: 10px;
+    height: 20px;
+    width: 20px;
+    padding: 2px;
+}
+
+.roster-list-modal .close:hover {
+    background-color: rgba(200,200,200,.5);
+    border-radius: 10px;
+}
+
+.roster-list-modal .modal-content .close:hover {
+    background-color: rgba(200,200,200,.5);
+    border-radius: 10px;
 }
 
 .roster-list-modal .modal-content ul {
@@ -64,17 +101,22 @@
 }
 
 .roster-list-modal .modal-content li {
-    border-bottom: 1px solid var(--grey);
+    border-bottom: 1px solid var(--mediumDarkGrey);
     width: 100%;
     cursor: pointer;
     transition: .3s;
     padding: 0px 5px 0px 5px;
+    color: var(--coolWhite);
 }
 
 .roster-list-modal .modal-content li:nth-child(even) {
-    background-color: var(--coolWhite);
+    background-color: var(--veryDarkGrey);
+}
+
+.roster-list-modal .modal-content li:nth-child(odd) {
+    background-color: var(--black);
 }
 
 .roster-list-modal .modal-content li:hover {
-    background-color: var(--lightGrey);
+    background-color: var(--black);
 }

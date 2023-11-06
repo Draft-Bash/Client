@@ -10,8 +10,15 @@
     overflow: auto;
 }
 
+.chat-message-count {
+    position: absolute;
+    left: calc(100% - 45px);
+    top: 65px;
+    color: var(--black);
+}
+
 .chat-room {
-    background-color: var(--white);
+    background-color: var(--black);
     width: 75%;
     min-height: 350px;
     margin: auto;
@@ -26,12 +33,32 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
     z-index: 100;
     margin-top: 50px;
+    border: 1px solid var(--mediumDarkGrey);
 }
 
 .chat-room .messages {
-    border: 2px solid var(--grey);
+    border: 1px solid var(--mediumDarkGrey);
     width: 100%;
     height: 100%;
+    padding: 5px;
+    overflow: auto;
+}
+
+.chat-room .messages .sent-by-other {
+    background-color: var(--transparentOrange);
+    border-radius: 3px;
+    padding: 0px 5px 0px 5px;
+    margin: 5px;
+    color: var(--coolWhite);
+}
+
+.chat-room .messages .sent-by-self {
+    background-color: rgba(0, 200, 255, 0.15);
+    border-radius: 3px;
+    padding: 0px 5px 0px 5px;
+    text-align: right;
+    margin: 5px;
+    color: var(--coolWhite);
 }
 
 .chat-room .send-text {
@@ -42,22 +69,10 @@
     align-items: center;
 }
 
+.chat-room .send-text label {
+    color: var(--mediumGrey);
+}
+
 .chat-room .send-text input:focus {
     outline-color: var(--blue);
 }
-
-.chat-room .send-text button {
-    padding: 5px 15px 5px 15px;
-    border: none;
-    background-color: var(--lightGrey);
-    border: 1px solid var(--darkGrey);
-    cursor: pointer;
-    transition: 0.3s;
-    height: 100%;
-}
-
-.chat-room .send-text button:hover {
-    background-color: var(--darkGrey);
-    color: white;
-}
-
