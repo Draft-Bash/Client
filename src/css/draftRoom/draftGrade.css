@@ -15,15 +15,6 @@
     margin-top: 50px;
     padding-bottom: 50px;
     border: solid 1px var(--mediumDarkGrey);
-    transition: top 0.5s;
-    position: absolute;
-    left: calc(50% - 175px);
-    top: -535px;
-    transition: 0.5s;
-}
-
-.draft-grade-area.active {
-    transform: translate(0, 535px);
 }
 
 .draft-grade-area h4 {
@@ -62,7 +53,7 @@
 }
 
 .draft-grade-area .summary {
-    color: var(--);
+    color: var(--coolWhite);
     margin-left: 20px;
 }
 

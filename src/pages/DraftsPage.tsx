@@ -154,7 +154,7 @@ const DraftsPage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="join-button">
+                <div className="join-btn">
                   <TranslucentButton
                     handleOnClick={() => {
                       navigate("/modules/drafts/draftroom/"+userDrafts[draftIndex].draft_id);
@@ -176,7 +176,7 @@ const DraftsPage = () => {
               navigate('/modules/mock-drafts/configure');
             }}
           >
-            Create draft
+            Create Draft
           </RoundedButton>
         </div>
       </div>

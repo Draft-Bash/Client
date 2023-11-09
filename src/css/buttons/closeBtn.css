@@ -1,0 +1,12 @@
+.close-btn {
+    border-radius: 10px;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    padding: 2px;
+    color: var(--white);
+}
+
+.close-btn:hover {
+    background-color: rgba(200,200,200,.5);
+}

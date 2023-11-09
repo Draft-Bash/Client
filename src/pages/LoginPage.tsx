@@ -73,11 +73,16 @@ const LoginPage = () => {
             });
 
             const jwtToken = await response.json();
-            localStorage.setItem('jwtToken', jwtToken);
-            setIsAuthenticated(true);
-            localStorage.setItem("previousPagePath", "/modules/dashboard");
+            if (jwtToken) {
+                localStorage.setItem('jwtToken', jwtToken);
+                setIsAuthenticated(true);
+                localStorage.setItem("previousPagePath", "/modules/dashboard");
+            }
+            else {
+                setIsCredentialsFalse(true);
+                setIsLoadingScreen(false);
+            }
         } catch (error) {
-            console.log(error);
             setIsCredentialsFalse(true);
             setIsLoadingScreen(false);
         }

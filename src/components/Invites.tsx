@@ -4,6 +4,7 @@ import { useAuth } from "../authentication/AuthContext";
 import {AiOutlineMail} from 'react-icons/ai';
 import { useNavigate } from "react-router-dom";
 import {RxCross1} from 'react-icons/rx';
+import CloseButton from "./buttons/CloseButton";
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface Invite {
@@ -85,8 +86,7 @@ const Invites = () => {
 			>
                 <div className="invites">
                     <h4>
-                        <RxCross1 className='close'
-                        onClick={() => setIsOpen(false)}/>
+                        <CloseButton handleOnClick={() => setIsOpen(false)} />
                         Invites
                     </h4>
                     <ul>

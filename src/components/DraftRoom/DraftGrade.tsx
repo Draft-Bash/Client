@@ -38,6 +38,8 @@ const DraftGrade = (props: Props) => {
                 draftGrade: props.draftGrade
             }),
         });
+		alert('Email Sent!');
+		setIsDraftGradeOpen(false);
     }
 
 	return (
