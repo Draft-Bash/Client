@@ -5,6 +5,7 @@ import { User } from "../utils/users";
 import {RxCross1} from 'react-icons/rx';
 import { useAuth } from "../authentication/AuthContext";
 import TranslucentButton from "./buttons/TranslucentButton";
+import CloseButton from "./buttons/CloseButton";
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface Props {
@@ -113,6 +114,7 @@ const UserInviter = (props: Props) => {
         >
             <div className="user-inviter">
                 <div className="invite-user">
+                    <CloseButton handleOnClick={() => {setIsOpen(false)}} />
                     <TextInput
                         value={searchValue}
                         placeholder="Invite user by username"

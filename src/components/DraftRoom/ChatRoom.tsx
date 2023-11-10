@@ -25,6 +25,9 @@ const ChatRoom = () => {
 
     const sendMessage = (message: string) => {
         socket?.emit('send-message', message, username);
+        let messageList: Message[] = [...messages, {message: message, username: username}];
+        messages.push({message: message, username: username});
+        setMessages(messageList);
     }
   
     useEffect(() => {

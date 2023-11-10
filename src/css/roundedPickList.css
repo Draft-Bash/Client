@@ -1,0 +1,53 @@
+.rounded-pick-list {
+    position: relative;
+}
+
+.rounded-pick-list .input {
+    display: flex;
+}
+
+.rounded-pick-list .input input {
+    border: 1px solid var(--grey);
+    border-right: none;
+    font-size: 14px;
+    padding-left: 15px;
+    border-radius: 15px 0px 0px 15px;
+    outline: none;
+    cursor: pointer;
+}
+
+.rounded-pick-list ul {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    border: 1px solid var(--black);
+    max-height: 200px;
+    overflow: auto;
+    z-index: 10;
+}
+
+.rounded-pick-list ul li {
+    padding: 3px 6px 3px 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.rounded-pick-list ul li.selected {
+    background-color: var(--lightGrey);
+}
+
+.rounded-pick-list ul li:hover {
+    background-color: var(--lightGrey);
+}
+
+.rounded-pick-list .input .chevron-down {
+    background-color: white;
+    width: 30px;
+    color: var(--darkGrey);
+    padding: 7px;
+    border-left: none;
+    cursor: pointer;
+    border: 1px solid var(--grey);
+    border-left: none;
+    border-radius: 0px 15px 15px 0px;
+}
