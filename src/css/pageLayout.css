@@ -6,4 +6,5 @@
 .page-layout {
     background-color: var(--black);
     height: 100vh;
+    overflow-y: hidden;
 }

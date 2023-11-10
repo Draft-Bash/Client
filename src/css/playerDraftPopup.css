@@ -1,12 +1,3 @@
-.player-draft-popup {
-    color: var(--brightBlue);
-    cursor: pointer;
-}
-
-.player-draft-popup:hover {
-    color: var(--blue);
-}
-
 .player-info-box-header {
     display: flex;
     justify-content: flex-start;
@@ -20,30 +11,47 @@
     flex: 1;
     padding: 10px;
     border: 1px solid var(--darkGrey);
+    overflow-y: auto;
 }
 
 .fantasy-outlook-area b {
     font-size: 15px !important;
 }
 
+.fantasy-outlook-area p {
+    font-size: 12px;
+    color: black;
+}
+
 .player-info-box-header-center {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 10px;
+    padding: 0px 0px 10px 10px;
     flex: 1;
     height: 75px;
-    border: 1px solid var(--grey);
+    border: 1px solid var(--veryDarkGrey);
+    border-right: none;
+    width: 300px;
+}
+
+.player-info-box-header-center .player-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .player-info-box-header img {
     width: 75px;
     height: 75px;
     padding: 10px;
+    border: 1px solid var(--veryDarkGrey);
+    border-left: none;
+    border-right: none;
 }
 
 .player-info-box-header img:first-child {
-    background-color: var(--darkBlue);
+    background-color: var(--veryDarkGrey);
     padding: 0px;
 }
 
@@ -61,32 +69,109 @@
 .player-info-box1 {
     background-color: var(--black);
     min-height: 250px;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
     display: flex;
     align-items: flex-start;
     padding: 40px 10px 10px 10px;
     width: 750px;
     height: 250px;
     min-width: 350px;
+    border: 1px solid var(--veryDarkGrey);
     border-radius: 10px 10px 0px 0px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
     z-index: 100;
 }
 
+.player-info-box1 .injury-status {
+    height: 35px;
+    display: flex;
+    padding: 6px 0px 0px 10px;
+}
+
+.player-info-box1 .injury-status {
+    background-color: var(--transparentGreen);
+    border: 1px solid var(--green);
+}
+
+.player-info-box1 .injury-status b {
+    background-color: var(--green);
+}
+
+.player-info-box1 .injury-status.out {
+    background-color: var(--transparentRed);
+    border: 1px solid var(--red);
+}
+
+.player-info-box1 .injury-status.dtd, .player-info-box1 .injury-status.gtd {
+    background-color: var(--transparentOrange);
+    border: 1px solid var(--brightOrange);
+}
+
+.player-info-box1 .injury-status.dtd b, .player-info-box1 .injury-status.gtd b{
+    background-color: var(--brightOrange);
+}
+
+.player-info-box1 .injury-status.out b {
+    background-color: var(--red);
+}
+
+.player-info-box1 .injury-status b {
+    font-weight: 500;
+    font-size: 15px;
+    padding: 0px 5px 0px 5px;
+    line-height: 22px;
+    color: var(--white);
+    border-radius: 3px;
+    text-align: center;
+    height: 22px;
+}
+
 .player-info-box-header .rank {
     position: absolute;
+    display: flex;
+    justify-content: space-between;
     color: var(--white);
-    top: 10px;
+    top: 61px;
     height: 30px;
-    background-color: var(--darkBlue);
-    border-radius: 3px 0px 0px 0px;
-    width: 395px;
+    background-color: var(--veryDarkGrey);
+    border-radius: 5px 5px 0px 0px;
+    width: 450px;
+    padding: 3px 5px 10px 10px;
+}
+
+.player-info-box-header .rank b {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 0px;
+}
+
+.player-info-box-header .rank .pointguard {
+    color: var(--roseRed);
+}
+
+.player-info-box-header .rank .shootingguard {
+    color: var(--brightOrange);
+}
+
+.player-info-box-header .rank .smallforward {
+    color: var(--green);
+}
+
+.player-info-box-header .rank .powerforward {
+    color: var(--lightBlueGrey);
+}
+
+.player-info-box-header .rank .center {
+    color: var(--purple);
 }
 
 .player-info-box2 {
-    background-color: var(--grey);
+    background-color: var(--veryDarkGrey);
     min-height: 250px;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -95,8 +180,78 @@
     width: 750px;
     height: 250px;
     min-width: 350px;
-    overflow: auto;
     border-radius: 0px 0px 10px 10px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
-    z-index: 100;
+}
+
+.player-stats-tables {
+    display: flex;
+    width: 100%;
+    background-color: var(--veryDarkGrey);
+}
+
+.player-stats-tables p {
+    color: var(--coolWhite);
+    text-align: center;
+    height: 30px;
+    padding-top: 3px;
+}
+
+.player-stats-tables table {
+    width: 225px;
+}
+
+.player-stats-tables .projected-stats table {
+    border-left: 2px solid var(--veryDarkGrey);
+}
+
+.player-stats-tables table th {
+    background-color: var(--darkGrey);
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--lightBlueGrey);
+}
+
+.player-stats-tables table td {
+    background-color: var(--lightBlueGrey);
+    text-align: center;
+    height: 38px;
+    font-weight: 500;
+}
+
+.player-info-box2 .player-news {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--coolWhite);
+    padding: 15px 20px 15px 20px;
+    height: 230px;
+    border: 2px solid var(--mediumDarkGrey);
+    overflow-y: auto;
+}
+
+.player-info-box2 .player-news .title {
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: var(--black);
+}
+
+.player-info-box2 .player-news .date {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mediumDarkGrey);
+}
+
+.player-info-box2 .player-news .date {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mediumDarkGrey);
+}
+
+.player-info-box2 .player-news p {
+    color: black;
+}
+
+.player-info-box2 .player-news .analysis {
+    color: var(--black);
+    margin-top: 10px;
 }

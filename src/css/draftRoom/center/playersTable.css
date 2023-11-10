@@ -1,22 +1,47 @@
 .players-table {
     width: 100%;
-    padding: 0px 10px 10px 10px;
-    overflow-y: auto;
     max-height: calc(100vh - 195px);
     position: relative;
+    border-left: 10px solid white;
+    border-right: 10px solid white;
+    overflow-y: auto;
+}
+
+.players-table::-webkit-scrollbar {
+    height: 0px;
 }
 
 .players-table table {
     width: 100%;
+    background-color: white;
+    z-index: 20;
 }
 
 .players-table table tbody {
     width: 100%;
 }
 
-.players-table table th:nth-child(2) {
+.players-table table thead th:first-child {
+    min-width: 400px;
+    position: sticky;
+    left: 0;
+    background-color: white;
+    z-index: 3;
+}
+
+.players-table table thead th {
+    min-width: 60px;
+    background-color: white;
+    z-index: 2
+}
+
+.players-table table tbody td:nth-child(1) {
+    position: sticky;
+    left: 0;
+    background-color: white;
     min-width: 300px;
 }
+
 
 .players-table table td {
     font-size: 14px;
@@ -25,9 +50,10 @@
 
 .players-table table tbody tr {
     height: 35px;
+    position: relative;
 }
 
-.players-table table tbody tr:nth-child(even) {
+.players-table table tbody tr:nth-child(even) td {
     background-color: var(--coolWhite);
 }
 
@@ -49,6 +75,7 @@
 
 .players-table table .player-cell img {
     height: 35px;
+    margin-left: 30px;
     width: 50px;
 }
 
@@ -57,6 +84,28 @@
     margin-right: 10px;
 }
 
+.players-table .player-details {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+}
+
 .players-table .player-details p, .players-table .player-details b {
     font-size: 12px;
 }
+
+.player-table-filters  {
+    padding: 5px 10px 5px 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.player-table-filters .search-player {
+    border: 2px solid var(--mediumGrey);
+    padding: 2px 5px 2px 5px;
+    height: 30px;
+    margin-left: auto;
+}
+

@@ -38,3 +38,12 @@
     color: var(--grey);
     font-size: 13px;
 }
+
+.draft-roster span {
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.draft-roster span:hover {
+    font-weight: 600;
+}

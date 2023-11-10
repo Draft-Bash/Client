@@ -72,9 +72,29 @@ export interface PlayerPreviousSeasonStats extends Player {
 	games_played: number;
 	minutes_played: number;
 	points_total: number;
+	blocks_total: number;
+	steals_total: number;
+	turnovers_total: number;
 	rebounds_total: number;
 	assists_total: number;
 	team_abbreviation: string;
+	fieldgoals_made: number;
+	fieldgoals_attempted: number;
+	threes_made: number;
+	threes_attempted: number;
+}
+
+export interface ProjectedSeasonStats extends Player {
+	projected_games_played: number;
+	projected_minutes_played: number;
+	projected_points: number;
+	projected_blocks: number;
+	projected_steals: number;
+	projected_turnovers: number;
+	projected_rebounds: number;
+	projected_assists: number;
+	projected_fieldgoal_percentage: number;
+	projected_threepointers: number;
 }
 
 // Define the function to shift a player

@@ -53,7 +53,7 @@
 }
 
 .chat-room .messages .sent-by-self {
-    background-color: rgba(0, 200, 255, 0.15);
+    background-color: var(--transparentBlue);
     border-radius: 3px;
     padding: 0px 5px 0px 5px;
     text-align: right;
