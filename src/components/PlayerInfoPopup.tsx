@@ -186,11 +186,11 @@ const PlayerInfoPopup = (props: Props) => {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{(player.projected_points/player.games_played).toFixed(1)}</td>
-                        <td>{(player.projected_rebounds/player.games_played).toFixed(1)}</td>
-                        <td>{(player.projected_assists/player.games_played).toFixed(1)}</td>
-                        <td>{(player.projected_steals/player.games_played).toFixed(1)}</td>
-                        <td>{(player.projected_blocks/player.games_played).toFixed(1)}</td>
+                        <td>{(player.projected_points/player.projected_games_played).toFixed(1)}</td>
+                        <td>{(player.projected_rebounds/player.projected_games_played).toFixed(1)}</td>
+                        <td>{(player.projected_assists/player.projected_games_played).toFixed(1)}</td>
+                        <td>{(player.projected_steals/player.projected_games_played).toFixed(1)}</td>
+                        <td>{(player.projected_blocks/player.projected_games_played).toFixed(1)}</td>
                       </tr>
                     </tbody>
                 </table>

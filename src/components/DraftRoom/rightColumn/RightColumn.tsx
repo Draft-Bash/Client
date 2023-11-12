@@ -14,6 +14,7 @@ const RightColumn = () => {
   useEffect(() => {
     socket?.on('update-total-draftpicks', (allPicks) => {
         setPicks(allPicks);
+        console.log(allPicks);
     });
 }, [socket]);
 

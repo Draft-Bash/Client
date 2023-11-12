@@ -19,7 +19,7 @@ const PlayerInfoPopupButton = (props: Props) => {
     return (
         <span className="player-popup-btn" onClick={() => props.setPlayer(props.player)}>
             {props.player.first_name+" "+props.player.last_name} <b>{props.player.injury_status}</b>
-            {props.player.team_id && daysDiff > 8 && (
+            {props.player.team_id && daysDiff < 7 && (
                 <img
                     src={`/images/news.svg`}
                     onError={(event) => {
