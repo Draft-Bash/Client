@@ -2,27 +2,58 @@ import '../../../css/draftRoom/rightColumn/rightColumn.css';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDraft } from '../DraftContext';
-import { DraftPick } from '../../../utils/draft';
+import { DraftPick, addPlayer, DraftRoster, Player } from '../../../utils/draft';
 import { formatPlayerPositions } from '../../../utils/draft';
 
 
 const RightColumn = () => {
 
   const draftContext = useDraft();
+  const selectedTeam = draftContext?.selectedTeam;
   const socket = draftContext?.socket;
+  const setRoster = draftContext?.setRoster;
+  const draftRules = draftContext?.draftDetails;
   const [picks, setPicks] = useState<DraftPick[]>([]);
+
   useEffect(() => {
-    socket?.on('update-total-draftpicks', (allPicks) => {
+    if (draftRules) {
+      const selectedTeamPicks = picks.filter(pick => 
+        (pick.username == selectedTeam)||(pick.picked_by_bot_number == Number(selectedTeam))
+      );
+  
+      const rosterSpots: DraftRoster = {
+        pointguard: Array.from({ length: draftRules.pointguard_slots }, () => null),
+        shootingguard: Array.from({ length: draftRules.shootingguard_slots }, () => null),
+        guard: Array.from({ length: draftRules.guard_slots }, () => null),
+        smallforward: Array.from({ length: draftRules.smallforward_slots }, () => null),
+        powerforward: Array.from({ length: draftRules.powerforward_slots }, () => null),
+        forward: Array.from({ length: draftRules.forward_slots }, () => null),
+        center: Array.from({ length: draftRules.center_slots }, () => null),
+        utility: Array.from({ length: draftRules.utility_slots }, () => null),
+        bench: Array.from({ length: draftRules.bench_slots }, () => null)
+      };
+  
+      selectedTeamPicks.forEach((player: unknown) => {
+        addPlayer(player as Player, rosterSpots);
+      });
+      if (setRoster) {
+        setRoster(rosterSpots);
+      }
+    }
+  }, [picks, selectedTeam]);
+
+
+  useEffect(() => {
+      socket?.on('update-total-draftpicks', async (allPicks) => {
         setPicks(allPicks);
-        console.log(allPicks);
-    });
-}, [socket]);
+      });
+  }, [socket]);
 
   return (
     <div className="right-column">
         <header>Picks</header>
         <ul>
-        {picks?.map((pick, index) => (
+        {picks.reverse()?.map((pick, index) => (
           <li key={index}>
             <img
                 src={`/images/playerImages/${pick.player_id}.png`}

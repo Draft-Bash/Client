@@ -22,6 +22,8 @@ interface DraftContextType {
   setIsDraftStarted: React.Dispatch<React.SetStateAction<boolean>>;
   playerQueue: Player[];
   setPlayerQueue: React.Dispatch<React.SetStateAction<Player[]>>;
+  setSelectedTeam: React.Dispatch<React.SetStateAction<string>>;
+  selectedTeam: string;
 }
 
 const SocketContext = createContext<DraftContextType | null>(null);
@@ -38,7 +40,8 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
   const [draftDetails, setDraftDetails] = useState<Draft>();
   const [isDraftStarted, setIsDraftStarted] = useState(false);
   const [playerQueue, setPlayerQueue] = useState<Player[]>([]);
-  const { userId } = useAuth();
+  const { userId, username } = useAuth();
+  const [selectedTeam, setSelectedTeam] = useState(username);
 
   useEffect(() => {
     const newSocket = io(SERVER_URL);
@@ -55,8 +58,8 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
       setCurrentTurnUserId(userId);
     });
     socket?.on('update-roster', (roster) => {
-      if (roster.userId == userId) {
-        handleRoster(roster.players);
+      if (roster.user_id == userId) {
+        //handleRoster(roster.players);
       }
     });
   }, [draftId]);
@@ -118,7 +121,9 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
     isDraftStarted,
     setIsDraftStarted,
     playerQueue,
-    setPlayerQueue
+    setPlayerQueue,
+    setSelectedTeam,
+    selectedTeam
   };
 
   return (

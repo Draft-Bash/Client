@@ -11,11 +11,12 @@ const DraftRoster = () => {
 
   const draftContext = useDraft();
   const draftId = draftContext?.draftId;
+  const setSelectedTeam = draftContext?.setSelectedTeam
   const {username} = useAuth();
   const [selectedPlayerInfo, setSelectedPlayerInfo] = useState<PlayerInfo | undefined | null >();
   const [teams, setTeams] = useState<string[]>([]);
-  const [selectedTeam, setSelectedTeam] = useState('');
   const roster = draftContext?.roster;
+  const draftDetails = draftContext?.draftDetails;
 
   const positionAbbreviation = {
     "pointguard": "PG", "shootingguard": "SG",
@@ -24,24 +25,26 @@ const DraftRoster = () => {
   }
 
   useEffect(() => {
-    if (draftId) {
+    if (draftId && draftDetails) {
         fetch(API_URL+"/drafts/members?draftId="+draftId)
     .then(response => response.json())
     .then(data => {
       let teamNames: string[] = [];
-      data.draftBots.forEach((bot: number) => {
-        teamNames.push(`Team ${bot}`);
-      });
+      const totalTeamCount = draftDetails?.team_count;
       data.draftUsers.forEach((user) => {
         teamNames.push(user.username);
       });
+
+      for (let i=data.draftUsers.length+1; i <= totalTeamCount; i++) {
+        teamNames.push(`Team ${i}`);
+      }
       setTeams(teamNames);
     })
     .catch(error => {
         console.error('Error fetching data:', error);
     });
     }
-}, [draftId]);
+}, [draftId, draftDetails]);
 
   return (
     <>
@@ -49,12 +52,14 @@ const DraftRoster = () => {
     <div className="draft-roster">
         <header>
             <b>Roster</b>
-            <RoundedPickList itemList={teams} 
-              defaultValue={username}
-              setValue={(team) => setSelectedTeam(team as string)}
-              width={100} 
-              height={25}
-            />
+            {setSelectedTeam && (
+              <RoundedPickList itemList={teams} 
+                defaultValue={username}
+                setValue={(team) => setSelectedTeam((team as string).replace('Team ', ''))}
+                width={100} 
+                height={25}
+              />
+            )}
         </header>
         <table>
           <thead>

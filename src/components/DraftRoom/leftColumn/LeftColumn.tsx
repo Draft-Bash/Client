@@ -35,9 +35,6 @@ const LeftColumn = () => {
   }, [userId, draftId]);
 
   async function toggleAutodraft() {
-    if (!isAutodraftOn) {
-      console.log(userId);
-    }
     try {
       const response = await fetch(API_URL+"/drafts/autodraft", {
         method: 'POST',
