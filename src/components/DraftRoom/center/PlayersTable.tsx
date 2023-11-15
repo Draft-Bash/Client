@@ -87,17 +87,11 @@ const PlayersTable = () => {
     }, [socket]);
 
     async function handleDraftClick(pickedPlayer, currentRoster) {
-        const updatedRoster = { ...currentRoster }; 
+        const updatedRoster = JSON.parse(JSON.stringify(currentRoster));
       
-        if (setRoster) { // Check if setRoster is defined
-            if (addPlayer(pickedPlayer, updatedRoster)) {
-                pickPlayer(pickedPlayer.player_id, String(userId), String(draftId));
-                setRoster(updatedRoster);
-            } 
-
-        } else {
-            console.error("setRoster is not defined.");
-        }
+        if (addPlayer(pickedPlayer, updatedRoster)) {
+            pickPlayer(pickedPlayer.player_id, String(userId), String(draftId));
+        } 
       }
     
     return (
