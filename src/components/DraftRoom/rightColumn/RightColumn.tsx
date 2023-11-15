@@ -53,7 +53,7 @@ const RightColumn = () => {
     <div className="right-column">
         <header>Picks</header>
         <ul>
-        {picks.reverse()?.map((pick, index) => (
+        {picks?.slice().reverse().map((pick, index) => (
           <li key={index}>
             <img
                 src={`/images/playerImages/${pick.player_id}.png`}
