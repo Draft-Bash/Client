@@ -127,7 +127,7 @@
 .authentication-page .google-auth img {
     height: 42px;
     width: 42px;
-    padding: 0px;
+    padding: 1px;
     margin: 0px;
     margin-left: 3px;
     outline: 2px solid var(--coolWhite);
