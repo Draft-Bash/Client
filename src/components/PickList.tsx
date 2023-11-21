@@ -14,36 +14,46 @@ const PickList: React.FC<Props> = ({ itemList, defaultValue, width = 500, setVal
   const [selectedItem, setSelectedItem] = useState<string | number | null>(
     defaultValue !== undefined ? defaultValue : null
   );
-  const listRef = useRef<HTMLUListElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const arrowRef = useRef<HTMLDivElement>(null);
 
+  // Specify the MouseEvent type for the event parameter
   const handleClickOutside = (event) => {
-    if (event.target != listRef.current && event.target.tagName != "LI") {
+    if (
+      listRef.current &&
+      !listRef.current.contains(event.target as Node) &&
+      inputRef.current &&
+      !inputRef.current.contains(event.target as Node) &&
+      arrowRef.current &&
+      !arrowRef.current.contains(event.target as Node)
+    ) {
       setIsOpen(false);
     }
   };
 
   useEffect(() => {
-    // Watch for changes in the defaultValue prop
-    setSelectedItem(defaultValue !== undefined ? defaultValue : null);
-  }, [defaultValue]); // Trigger the effect when defaultValue changes
+    document.addEventListener('mousedown', handleClickOutside);
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside as unknown as EventListener);
-
-    // Clean up the event listener on unmount
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside as unknown as EventListener);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   return (
-    <div className="pick-list">
+    <div ref={listRef} className="pick-list">
       <div onClick={() => setIsOpen(!isOpen)} className="input">
-        <input readOnly style={{ width: `${width}px` }} type="text" value={selectedItem as string} />
-        <FaChevronDown className="chevron-down" />
+        <input readOnly 
+        style={{ width: `${width}px` }} 
+        type="text" value={selectedItem as string} 
+        ref={inputRef}
+        />
+        <div ref={arrowRef}>
+          <FaChevronDown className="chevron-down" />
+        </div>
       </div>
       {isOpen && (
-        <ul ref={listRef} style={{ width: `${width + 30}px` }}>
+        <ul style={{ width: `${width + 30}px` }}>
           {itemList.map((item, index) => (
             <li
               className={item === selectedItem ? 'selected' : ''}
