@@ -7,10 +7,12 @@ import {BsChevronDoubleLeft} from 'react-icons/bs';
 import {BsChevronDoubleRight} from 'react-icons/bs';
 import {BiCog} from 'react-icons/bi';
 import {RiDeleteBin5Line} from 'react-icons/ri';
+import RoundedPickList from "../components/RoundedPickList"
 import TranslucentButton from '../components/buttons/TranslucentButton';
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface DraftInfo {
+  order_count: any;
   user_id: number,
   draft_id: number,
   draft_type: string,
@@ -27,8 +29,10 @@ const DraftsPage = () => {
   const { userId } = useAuth();
   const [draftId, setDraftId] = useState(-1);
   const [userDrafts, setUserDrafts] = useState<DraftInfo[]>([]);
+  const [filteredUserDrafts, setFilteredUserDrafts] = useState<DraftInfo[]>([]);
   const [draftIndex, setDraftIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState("");
+  const [draftFilter, setDraftFilter] = useState("Not Started");
 
   const deleteDraft = async (draftId: number) => {
     if (window.confirm("Are you sure you want to delete this draft?")) {
@@ -39,16 +43,32 @@ const DraftsPage = () => {
         },
         body: null
       });
-      const isDeleted = await response.json();
-      if (!isDeleted){
-        alert("Cannot delete a draft that has begun.");
-      }
-      else {
-        const currentDrafts = userDrafts.filter(userDraft => userDraft.draft_id != draftId);
-        setUserDrafts(currentDrafts);
-      }
+
+      const currentDrafts = userDrafts.filter(userDraft => userDraft.draft_id != draftId);
+      const filtered = filteredUserDrafts.filter(userDraft => userDraft.draft_id != draftId);
+      setUserDrafts(currentDrafts);
+      setFilteredUserDrafts(filtered);
     }
   }
+
+  useEffect(() => {
+    setDraftIndex(0);
+    if (draftFilter=="All Drafts") {
+      setFilteredUserDrafts(userDrafts);
+    }
+    else if (draftFilter=="Not Started") {
+      const filtered = userDrafts.filter(draft => !draft.is_started)
+      setFilteredUserDrafts(filtered);
+    }
+    else if (draftFilter=="In-Progress") {
+      const filtered = userDrafts.filter(draft => draft.is_started && draft.order_count != 0);
+      setFilteredUserDrafts(filtered);
+    }
+    else if (draftFilter=="Complete") {
+      const filtered = userDrafts.filter(draft => draft.is_started && draft.order_count == 0);
+      setFilteredUserDrafts(filtered);
+    }
+  }, [draftFilter]);
 
   useEffect(() => {
     async function fetchDraftData() {
@@ -56,6 +76,8 @@ const DraftsPage = () => {
         const response = await fetch(API_URL+"/drafts?userId="+userId);
         const draftsInfo = await response.json();
         setUserDrafts(draftsInfo);
+        const filtered = draftsInfo.filter(draft => !draft.is_started);
+        setFilteredUserDrafts(filtered);
         if (draftsInfo.length > 0) {
           setDraftId(draftsInfo[0].draft_id);
         }
@@ -68,14 +90,14 @@ const DraftsPage = () => {
 
   useEffect(() => {
     
-    if (userDrafts.length > 0) {
-      setDraftId(userDrafts[draftIndex].draft_id);
+    if (filteredUserDrafts.length > 0) {
+      setDraftId(filteredUserDrafts[draftIndex].draft_id);
     }
 
   }, [draftIndex]);
 
   const incrementDraftIndex = () => {
-    if (draftIndex != (userDrafts.length - 1)) {
+    if (draftIndex != (filteredUserDrafts.length - 1)) {
       setDraftIndex(draftIndex+1);
     }
     else {
@@ -92,7 +114,7 @@ const DraftsPage = () => {
       setDraftIndex(draftIndex-1);
     }
     else {
-      setDraftIndex(userDrafts.length - 1);
+      setDraftIndex(filteredUserDrafts.length - 1);
     }
     setSlideDirection("slide-left");
     setTimeout(() => {
@@ -103,26 +125,33 @@ const DraftsPage = () => {
   return (
     <div className="mock-draft-menu-container">
       <div className="mock-draft-menu">
+        <div className="draft-filters">
+          <RoundedPickList itemList={['All Drafts', 'Not Started', 'In-Progress', 'Complete']}
+          setValue={(filter) => setDraftFilter(filter as string)}
+          defaultValue={'Not Started'}
+          width={100}
+          />
+        </div>
         <div className="open-drafts">
           <h1>Drafts</h1>
           <div className="panel">
             <BsChevronDoubleLeft className="arrow" onClick={() => decrementDraftIndex()} />
             <div className="mock-drafts">
-              {userDrafts.length > 0 && (
+              {filteredUserDrafts.length > 0 && (
                 <>
                 <div className={`draft-content-container ${slideDirection}`}>
                   <h4>
-                    {userDrafts[draftIndex].scheduled_by_user_id == userId && (
+                    {filteredUserDrafts[draftIndex].scheduled_by_user_id == userId && (
                       <RiDeleteBin5Line className="delete" 
-                        onClick={() => deleteDraft(userDrafts[draftIndex].draft_id)} 
+                        onClick={() => deleteDraft(filteredUserDrafts[draftIndex].draft_id)} 
                       />
                     )}
-                    {userDrafts[draftIndex].scheduled_by_user_id == userId
-                    ? "Your Mock Draft" : `${userDrafts[draftIndex].username}'s Mock Draft`}
-                    {userDrafts[draftIndex].scheduled_by_user_id == userId && (
+                    {filteredUserDrafts[draftIndex].scheduled_by_user_id == userId
+                    ? "Your Mock Draft" : `${filteredUserDrafts[draftIndex].username}'s Mock Draft`}
+                    {filteredUserDrafts[draftIndex].scheduled_by_user_id == userId && (
                       <BiCog className="update" 
-                        onClick={() => {if (!userDrafts[draftIndex].is_started) {
-                          navigate("/modules/mock-drafts/update/"+userDrafts[draftIndex].draft_id)
+                        onClick={() => {if (!filteredUserDrafts[draftIndex].is_started) {
+                          navigate("/modules/mock-drafts/update/"+filteredUserDrafts[draftIndex].draft_id)
                         } else {
                           alert("Cannot update a draft in progress.")
                         }}}
@@ -132,24 +161,28 @@ const DraftsPage = () => {
                   <div className="draft-info">
                     <p>
                       <b>Format: </b>
-                      {userDrafts[draftIndex].draft_type}
+                      {filteredUserDrafts[draftIndex].draft_type}
                     </p>
                     <p>
                       <b>Scoring: </b>
-                      {userDrafts[draftIndex].scoring_type}
+                      {filteredUserDrafts[draftIndex].scoring_type}
                     </p>
                     <p>
                       <b>Teams: </b>
-                      {userDrafts[draftIndex].team_count}
+                      {filteredUserDrafts[draftIndex].team_count}
                     </p>
                     <p>
                       <b>Pick time: </b>
-                      {userDrafts[draftIndex].pick_time_seconds} Seconds
+                      {filteredUserDrafts[draftIndex].pick_time_seconds} Seconds
                     </p>
                     <p>
                       <b>Status: </b>
-                      <b className={userDrafts[draftIndex].is_started ? "is-started" : "started"}>
-                        {userDrafts[draftIndex].is_started ? "In Progress" : "Not Started"}
+                      <b className={filteredUserDrafts[draftIndex].is_started ? "is-started" : "started"}>
+                        {!(filteredUserDrafts[draftIndex].is_started) && ("Not Started")}
+                        {(filteredUserDrafts[draftIndex].is_started && filteredUserDrafts[draftIndex].order_count > 0) && 
+                        ("In Progress")}
+                        {(filteredUserDrafts[draftIndex].is_started && filteredUserDrafts[draftIndex].order_count == 0) && 
+                        ("Complete")}
                       </b>
                     </p>
                   </div>
@@ -157,7 +190,7 @@ const DraftsPage = () => {
                 <div className="join-btn">
                   <TranslucentButton
                     handleOnClick={() => {
-                      navigate("/modules/drafts/draftroom/"+userDrafts[draftIndex].draft_id);
+                      navigate("/modules/drafts/draftroom/"+filteredUserDrafts[draftIndex].draft_id);
                     }}
                   >
                     Join Draft

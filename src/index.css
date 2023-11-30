@@ -28,7 +28,9 @@
   --lightOrange: rgb(225, 115, 0);
   --orange: rgb(175, 90, 0);
   --darkOrange: rgb(100, 50, 0);
+  --violet: rgb(100, 100, 200);
   --transparentOrange: rgba(255, 111, 0, 0.2);
+  --test: rgb(40, 45, 45);
 }
 
 *{
