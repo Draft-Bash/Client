@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../authentication/AuthContext';
 import { useLocation } from 'react-router-dom';
 import Invites from './Invites';
-import HelpPage from './HelpPage';
+import HelpModal from './HelpModal';
 
 const Navbar = () => {
     const location = useLocation();
@@ -15,7 +15,7 @@ const Navbar = () => {
 
     return (
         <nav className="main-navbar">
-            <HelpPage />
+            <HelpModal />
             <Link className={location.pathname.includes("drafts") ? "option active" : "option"} 
             to="/modules/drafts" 
             >
