@@ -11,7 +11,7 @@ interface Invite {
     scoring_type: string;
 }
 
-const HelpPage = () => {
+const HelpModal = () => {
 	const modalRef = useRef(null);
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -103,4 +103,4 @@ const HelpPage = () => {
 	);
 };
 
-export default HelpPage ;
+export default HelpModal ;

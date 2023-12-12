@@ -60,7 +60,7 @@ const PlayerInfoPopup = (props: Props) => {
     const day = date.getDate();
     const year = date.getFullYear();
   
-    return `${months[monthIndex]} ${day}, ${year}`;
+    return `${months[monthIndex]} ${day+1}, ${year}`;
   };
 
   useEffect(() => {
