@@ -4,6 +4,8 @@ import TextInput from "./TextInput";
 import { User } from "../utils/users";
 import {RxCross1} from 'react-icons/rx';
 import { useAuth } from "../authentication/AuthContext";
+import TranslucentButton from "./buttons/TranslucentButton";
+import CloseButton from "./buttons/CloseButton";
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface Props {
@@ -43,7 +45,7 @@ const UserInviter = (props: Props) => {
 	const search = async (searchInput: string) => {
         if (searchInput.length > 3) {
             try {
-                const response = await fetch(API_URL + "/drafts/invite", {
+                const response = await fetch(API_URL + "/draft-invites", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -99,40 +101,39 @@ const UserInviter = (props: Props) => {
 
 	return (
 		<>
-			<button className="open-user-inviter" onClick={() => setIsOpen(true)}>
-				Invite Users
-			</button>
-			<dialog
-				open={isOpen}
-				ref={modalRef}
-				onClick={(e) => {
-					if (e.target == modalRef.current) {
-						setIsOpen(false);
-					}
-				}}
-				className="modal"
-			>
-				<div className="user-inviter">
-					<div className="invite-user">
-						<TextInput
-							value={searchValue}
-							placeholder="Invite user by username"
-							onChange={setSearchValue}
-						/>
-						<button onClick={() => search(searchValue)}>Invite</button>
-					</div>
-					<ul>
-						{users?.map((user, index) => (
-							<li key={index}>
-                                {user.username}
-                                <RxCross1 className="remove"
-                                onClick={() => removeUser(user.username)}
-                                />
-                            </li>
-						))}
-					</ul>
-				</div>
-			</dialog>
+        <TranslucentButton handleOnClick={() => setIsOpen(true)}>Invite Users</TranslucentButton>
+        <dialog
+            open={isOpen}
+            ref={modalRef}
+            onClick={(e) => {
+                if (e.target == modalRef.current) {
+                    setIsOpen(false);
+                }
+            }}
+            className="modal"
+        >
+            <div className="user-inviter">
+                <div className="invite-user">
+                    <CloseButton handleOnClick={() => {setIsOpen(false)}} />
+                    <TextInput
+                        value={searchValue}
+                        placeholder="Invite user by username"
+                        onChange={setSearchValue}
+                    />
+                    <TranslucentButton handleOnClick={() => search(searchValue)}>Invite</TranslucentButton>
+                </div>
+                <ul>
+                    {users?.map((user, index) => (
+                        <li key={index}>
+                            {user.username}
+                            <RxCross1 className="remove"
+                            onClick={() => removeUser(user.username)}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </dialog>
 		</>
 	);
 };

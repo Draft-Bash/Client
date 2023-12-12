@@ -1,0 +1,93 @@
+.draft-grade-area {
+    background-color: var(--black);
+    min-height: 485px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 350px;
+    height: 485px;
+    min-width: 350px;
+    overflow: auto;
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    margin-top: 50px;
+    padding-bottom: 50px;
+    border: solid 1px var(--mediumDarkGrey);
+}
+
+.draft-grade-area h4 {
+    color: var(--coolWhite);
+    background-color: var(--veryDarkGrey);
+    font-size: 20px;
+    font-weight: 500;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    border-bottom: 1px solid var(--mediumDarkGrey);
+    position: relative;
+    padding-top: 3px;
+}
+
+.draft-grade-area .close {
+    position: absolute;
+    left: 10px;
+    cursor: pointer;
+    top: 10px;
+    height: 20px;
+    width: 20px;
+    padding: 2px;
+}
+
+.draft-grade-area .close:hover {
+    background-color: rgba(200,200,200,.5);
+    border-radius: 10px;
+}
+
+.draft-grade-area h5 {
+    color: var(--coolWhite);
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.draft-grade-area .summary {
+    color: var(--coolWhite);
+    margin-left: 20px;
+}
+
+.draft-grade-area .summary {
+    color: var(--lightOrange);
+    font-weight: 500;
+}
+
+.draft-grade-area .summary .A {
+    color: var(--green);
+}
+
+.draft-grade-area .summary .B {
+    color: rgb(200, 255, 0);
+}
+
+.draft-grade-area .summary .C {
+    color: var(--yellow);
+}
+
+.draft-grade-area .summary .D {
+    color: var(--orange);
+}
+
+.draft-grade-area .summary .F {
+    color: var(--red);
+}
+
+.draft-grade-area .send-email-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.draft-grade-area .send-email-summary p {
+    color: var(--coolWhite);
+}

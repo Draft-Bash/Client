@@ -5,7 +5,7 @@
 }
 
 .mock-draft-menu {
-    background-color: var(--white);
+    background-color: var(--veryDarkGrey);
     height: 100%;
     border-radius: 10px;
     padding: 25px;
@@ -13,6 +13,8 @@
     min-width: 400px;
     min-height: 350px;
     overflow: auto;
+    border: 1px solid var(--mediumDarkGrey);
+    position: 'realtive';
 }
 
 .mock-draft-menu .panel {
@@ -26,6 +28,7 @@
     height: 75px;
     width: 75px;
     cursor: pointer;
+    color: var(--lightBlueGrey);
     transition: 0.3s;
 }
 
@@ -45,14 +48,14 @@
     margin-top: 25px;
     font-size: 35px;
     font-weight: 600;
-    color: var(--yellow);
+    color: var(--lightBlueGrey);
 }
 
 .mock-draft-menu .mock-drafts {
-    border: 3px solid var(--blue);
+    border: 1px solid var(--mediumDarkGrey);
     height: 50%;
     width: 60%;
-    background-color: var(--coolWhite);
+    background-color: var(--darkGrey);
     border-radius: 10px;
     margin-bottom: 20px;
     padding: 10px;
@@ -60,7 +63,6 @@
     position: relative;
     overflow: hidden;
 }
-
 
 .draft-content-container.slide-left {
     transform: translateX(-100%);
@@ -76,8 +78,11 @@
     text-align: center;
     font-size: 20px;
     width: 100%;
+    font-weight: 600;
     display: flex;
+    color: var(--coolWhite);
     justify-content: space-between;
+    height: 35px;
 }
 
 .mock-draft-menu .mock-drafts .draft-info {
@@ -88,44 +93,80 @@
     padding: 10px;
 }
 
+.mock-draft-menu .mock-drafts .draft-info p {
+    color: var(--coolWhite);
+}
+
 .mock-draft-menu .mock-drafts .draft-info .started {
     color: var(--green);
+    font-weight: 500;
 }
 
 .mock-draft-menu .mock-drafts .draft-info .is-started {
     color: var(--red);
+    font-weight: 500;
 }
 
 .mock-draft-menu .mock-drafts .draft-info b {
-    color: var(--darkBlue);
+    color: var(--lightBlueGrey);
     font-size: 18px;
+    font-weight: 600;
 }
 
-.mock-draft-menu .mock-drafts .join-button {
+.mock-draft-menu .mock-drafts .join-btn {
     display: flex;
+    margin-top: 10px;
     justify-content: center;
+
 }
 
 .mock-draft-menu .mock-drafts .delete {
-    color: var(--red);
+    color: rgb(180, 140, 135);
+    background-color: rgba(125, 100, 100, 0.5);
     font-size: 30px;
     margin-left: 7px;
-    cursor: pointer
+    padding: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    min-height: 35px;
+    min-width: 35px;
 }
 
 .mock-draft-menu .mock-drafts .delete:hover {
-    color: red;
+    background-color: rgba(125, 100, 100, 1);
 }
 
 .mock-draft-menu .mock-drafts .update:hover {
-    transform: rotate(-60deg);
-
+    background-color: rgba(100, 100, 125, 1);
 }
 
 .mock-draft-menu .mock-drafts .update {
-    color: var(-darkGrey);
+    color: var(--lightBlueGrey);
     font-size: 30px;
     margin-right: 7px;
+    min-height: 35px;
+    padding: 5px;
+    border-radius: 8px;
+    min-width: 35px;
     cursor: pointer;
+    background-color: rgba(100, 100, 125, 0.5);
     transition: 0.3s;
+}
+
+.mock-draft-menu .mock-drafts h4 {
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    gap: 25%;
+}
+
+.recommend-draft-creation {
+    color: var(--coolWhite);
+}
+
+.mock-draft-menu .draft-filters {
+    position: absolute
 }

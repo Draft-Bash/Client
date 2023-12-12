@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../authentication/AuthContext';
 import { useLocation } from 'react-router-dom';
 import Invites from './Invites';
+import HelpModal from './HelpModal';
 
 const Navbar = () => {
     const location = useLocation();
@@ -14,13 +15,14 @@ const Navbar = () => {
 
     return (
         <nav className="main-navbar">
+            <HelpModal />
             <Link className={location.pathname.includes("drafts") ? "option active" : "option"} 
             to="/modules/drafts" 
             >
                 Mock Drafts
             </ Link>
             <Invites />
-            <div className="user option">
+            <div className="user">
                 <BiUserCircle className="nav-icon" />
                 <ul>
                     <li onClick={() => {

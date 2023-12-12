@@ -17,7 +17,7 @@
     text-align: center;
 }
 
-.user-pick-queue tbody tr:hover {
+.user-pick-queue tbody tr:not(:only-child):hover {
     background-color: var(--lightGrey);
 }
 

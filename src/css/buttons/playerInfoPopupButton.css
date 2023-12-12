@@ -1,0 +1,26 @@
+.player-popup-btn {
+    color: var(--blue);
+    cursor: pointer;
+    position: relative;
+    padding-right: 30px;
+}
+
+.player-popup-btn img {
+    max-width: 20px;
+    max-height: 20px;
+    position: absolute;
+    right: 5px;
+    top: 0px;
+}
+
+.player-popup-btn b {
+    position: absolute;
+    right: 0px;
+    font-size: 10px;
+    bottom: -15px;
+    color: var(--red);
+}
+
+.player-popup-btn:hover {
+    color: var(--darkBlue);
+}

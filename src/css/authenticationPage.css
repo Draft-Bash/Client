@@ -111,16 +111,17 @@
     padding: 1px;
     display: flex;
     align-items: center;
-    height: 50px;
+    min-height: 50px;
     width: 250px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
     margin-left: auto;
     margin-right: auto;
 }
 
-.authentication-page .google-auth a {
+.authentication-page .google-auth {
     color: white;
-    margin: auto;
+    background-color: var(--blue);
+    margin-top: 25px;
 }
 
 .authentication-page .google-auth img {
@@ -128,8 +129,13 @@
     width: 42px;
     padding: 1px;
     margin: 0px;
+    margin-left: 3px;
     outline: 2px solid var(--coolWhite);
     background-color: var(--coolWhite);
+}
+
+.authentication-page .google-auth p {
+    margin-left: 20px;
 }
 
 .authentication-page .google-auth:hover {
