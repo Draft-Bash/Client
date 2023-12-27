@@ -1,13 +1,14 @@
 import { Route, Navigate, Routes} from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
-import PageLayout from './components/PageLayout';
+import { useLocation } from 'react-router-dom';
+import { useAuth } from './contexts/AuthContext';
+import PageLayout from './components/pages/PageLayout';
+import React from 'react';
+import DraftsPage from './pages/DraftsPage';
+import { DraftProvider } from './contexts/DraftContext';
+import DraftRoomPage from './pages/DraftRoomPage';
 import CreateMockDraft from './pages/CreateMockDraft';
 import UpdateMockDraft from './pages/UpdateMockDraft';
-import DraftsPage from './pages/DraftsPage';
-import DraftRoomWithContext from './pages/DraftRoom';
-import { useLocation } from 'react-router-dom';
-import { useAuth } from './authentication/AuthContext';
-import React from 'react';
 
 function ProtectedRoutes() {
     const { isAuthenticated } = useAuth();
@@ -24,8 +25,8 @@ function ProtectedRoutes() {
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="drafts" element={<DraftsPage />} />
                 <Route path="mock-drafts/configure" element={<CreateMockDraft />} />
-                <Route path="mock-drafts/update/:draftId" element={<UpdateMockDraft />} />
-                <Route path="drafts/draftroom/:draftId" element={<DraftRoomWithContext />} />
+                <Route path="mock-drafts/update/:draft_id" element={<UpdateMockDraft />} />
+                <Route path="drafts/draftroom/:draft_id" element={(<DraftProvider><DraftRoomPage /></DraftProvider>)} />
             </Route>
         </Routes>
     );

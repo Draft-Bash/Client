@@ -1,10 +1,11 @@
-import '../css/authenticationPage.css'
 import React, { useState, useEffect } from 'react';
-import TextInput from "../components/TextInput";
-import { useAuth } from '../authentication/AuthContext';
+import styled from 'styled-components';
+import TextInput from "../components/inputs/TextInput";
+import { useAuth } from '../contexts/AuthContext';
 import { IoMdCheckmark } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
-import LoadingScreen from '../components/LoadingScreen';
+import LoadingScreen from '../components/pages/LoadingScreen';
+import RoundedButton from '../components/buttons/RoundedButton';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const SignupPage = () => {
@@ -18,19 +19,18 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [passwordValidationMessage, setInvalidPasswordMessage] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const { setIsAuthenticated } = useAuth();
+  const [showPasswordRules, setShowPasswordRules] = useState(false);
+  const { setIsAuthenticated, setUser } = useAuth();
 
   useEffect(() => {
     try {
-      if (username.length == 0) {
+      if (username.length === 0) {
         setInvalidUsernameMessage("");
         setUsernameValidity(true);
-      }
-      else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+      } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
         setInvalidUsernameMessage("Username can only contain numbers or letters");
         setUsernameValidity(false);
-      }
-      else {
+      } else {
         setInvalidUsernameMessage("");
         setUsernameValidity(true);
       }
@@ -39,42 +39,38 @@ const SignupPage = () => {
     }
   }, [username]);
 
-  const onSubmit = async (e: any) => {
+  const handleSignup = async (e: any) => {
     e.preventDefault();
     let isUsernameValid = true;
     let isEmailValid = true;
     let isPasswordValid = true;
+
     if (username.length < 3 || username.length > 15) {
       setInvalidUsernameMessage("Username must be between 3 and 15 characters");
-      isUsernameValid =false
-    }
-    else if (username.length > 3 && username.length < 15) {
+      isUsernameValid = false;
+    } else {
       setInvalidUsernameMessage("");
       isUsernameValid = true;
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setInvalidEmailMessage("Invalid email");
-      isEmailValid = true;
-    }
-    else if (email.length == 0) {
+      isEmailValid = false;
+    } else if (email.length === 0) {
       setInvalidEmailMessage("Email is required");
       isEmailValid = false;
-    }
-    else {
+    } else {
       setInvalidEmailMessage("");
       isEmailValid = true;
     }
 
-    if (password != passwordConfirm) {
+    if (password !== passwordConfirm) {
       setInvalidPasswordMessage("Passwords do not match");
       isPasswordValid = false;
-    }
-    else if (password.length == 0) {
+    } else if (password.length === 0) {
       setInvalidPasswordMessage("Password is required");
       isPasswordValid = false;
-    }
-    else {
+    } else {
       setInvalidPasswordMessage("");
       isPasswordValid = true;
     }
@@ -92,36 +88,43 @@ const SignupPage = () => {
             email: email,
             password: password
           })
-        })
-        
-        const signupResponse = await response.json();
-        if (!signupResponse.uniqueColumns.isUsernameUnique) {
+        });
+
+        const result = await response.json();
+
+        if (result.jwt_token) {
+          const userDataResponse = await fetch(`${API_URL}/users/login?jwt_token=${result.jwt_token}`);
+          const userData = await userDataResponse.json();
+          setUser(userData);
+          localStorage.setItem('jwt_token', result.jwt_token);
+          setIsAuthenticated(true);
+          localStorage.setItem('previousPagePath', '/modules/login');
+          navigate('/modules/drafts');
+        }
+
+        if (result.isUsernameUnique === false) {
           setInvalidUsernameMessage("Username must be unique");
           setIsLoadingScreen(false);
         }
-        if (!signupResponse.uniqueColumns.isEmailUnique) {
+
+        if (result.isUsernameUnique === false) {
           setInvalidEmailMessage("Email must be unique");
           setIsLoadingScreen(false);
         }
-
-        if (signupResponse.uniqueColumns.isEmailUnique && signupResponse.uniqueColumns.isUsernameUnique) {
-            localStorage.setItem('jwtToken', signupResponse.jwtToken);
-            setIsAuthenticated(true);
-            localStorage.setItem("previousPagePath", "/modules/dashboard");
-            navigate('/modules/dashboard');
-        }
-
       } catch (error) {
-        console.log(error);
+        console.log(error.isUsernameUnique);
+        setInvalidUsernameMessage("Username must be unique");
+        setInvalidEmailMessage("Email must be unique");
+        setIsLoadingScreen(false);
+      }
     }
-  }
-}
+  };
 
   return (
     <>
-    {isLoadingScreen && <LoadingScreen />}
-    <div className="authentication-page">
-        <h3>Draftbash</h3>
+      {isLoadingScreen && <LoadingScreen />}
+      <StyledAuthenticationPage>
+      <h3>Draftbash</h3>
         <form className="authentication-form">
           <h1>Signup<a href="/login">Login</a></h1>
           <TextInput placeholder="Username" onChange={setUsername} />
@@ -136,11 +139,64 @@ const SignupPage = () => {
             <p className={/[A-Z]/.test(password) ? "valid" : "invalid" }><IoMdCheckmark /> At least one capital letter</p>
             <p className={/\d/.test(password) ? "valid" : "invalid" }><IoMdCheckmark /> At least one number</p>
           </div>
-          <button onClick={onSubmit}>Sign up</button>
+          <RoundedButton color="blue" handleOnClick={handleSignup}>Login</RoundedButton>
         </form>
-    </div>
+      </StyledAuthenticationPage>
     </>
   );
 };
-  
+
+const StyledAuthenticationPage = styled.div`
+  background-color: var(--black);
+  display: flex;
+  height: 100vh;
+
+  h3 {
+    width: 40%;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 15%;
+  }
+
+  form {
+    box-shadow: -10px 0px 10px rgba(0, 0, 0, 0.5);
+    width: 60%;
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+    background-color: var(--coolWhite);
+    flex-direction: column;
+    padding: 50px 60px 50px 60px;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  h1 {
+    padding-bottom: 10px;
+    font-size: 35px;
+    border-bottom: 1px solid var(--grey);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  h1 a {
+    align-self: flex-end;
+  }
+
+  .invalid {
+    color: var(--red);
+  }
+
+  .password-rules {
+    flex-direction: column;
+  }
+  .password-rules p.valid {
+    color: var(--green);
+  }
+  .password-rules p.invalid {
+    color: var(--red);
+  }
+`;
+
 export default SignupPage;

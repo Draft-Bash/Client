@@ -1,24 +1,22 @@
-import '../css/pickList.css';
+import '../../css/PickList.css';
 import React, { useState, useRef, useEffect, MouseEvent } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 
 interface Props {
   itemList: (string | number)[];
-  defaultValue?: string | number;
+  value?: string | number;
   width?: number;
   setValue: (item: string | number) => void;
+  key?: string | number; // Add a key prop to force re-render
 }
 
-const PickList: React.FC<Props> = ({ itemList, defaultValue, width = 500, setValue }) => {
+const PickList: React.FC<Props> = ({ itemList, value, width = 500, setValue, key }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<string | number | null>(
-    defaultValue !== undefined ? defaultValue : null
-  );
+  const [selectedItem, setSelectedItem] = useState<string | number | null>(value !== undefined ? value : null);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const arrowRef = useRef<HTMLDivElement>(null);
 
-  // Specify the MouseEvent type for the event parameter
   const handleClickOutside = (event) => {
     if (
       listRef.current &&
@@ -40,13 +38,19 @@ const PickList: React.FC<Props> = ({ itemList, defaultValue, width = 500, setVal
     };
   }, []);
 
+  useEffect(() => {
+    setSelectedItem(value !== undefined ? value : null);
+  }, [value]);
+
   return (
-    <div ref={listRef} className="pick-list">
+    <div key={key} ref={listRef} className="pick-list">
       <div onClick={() => setIsOpen(!isOpen)} className="input">
-        <input readOnly 
-        style={{ width: `${width}px` }} 
-        type="text" value={selectedItem as string} 
-        ref={inputRef}
+        <input
+          readOnly
+          style={{ width: `${width}px` }}
+          type="text"
+          value={selectedItem as string}
+          ref={inputRef}
         />
         <div ref={arrowRef}>
           <FaChevronDown className="chevron-down" />

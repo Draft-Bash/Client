@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
-import "../css/userInviter.css";
-import TextInput from "./TextInput";
-import { User } from "../utils/users";
+import "../../../css/userInviter.css";
+import { User } from "../../../dataTypes/User";
+import TextInput from "../../inputs/TextInput";
 import {RxCross1} from 'react-icons/rx';
-import { useAuth } from "../authentication/AuthContext";
-import TranslucentButton from "./buttons/TranslucentButton";
-import CloseButton from "./buttons/CloseButton";
+import { useAuth } from "../../../contexts/AuthContext";
+import TranslucentButton from "../../buttons/TranslucentButton";
+import CloseButton from "../../buttons/CloseButton";
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface Props {
@@ -14,9 +14,9 @@ interface Props {
     invitedUsers?: User[];
 }
 
-const UserInviter = (props: Props) => {
+const DraftInviter = (props: Props) => {
 	const modalRef = useRef(null);
-    const {userId} = useAuth();
+    const { user } = useAuth();
 	const [isOpen, setIsOpen] = useState(false);
 	const [searchValue, setSearchValue] = useState("");
 	const [users, setUsers] = useState<User[]>([]);
@@ -42,10 +42,11 @@ const UserInviter = (props: Props) => {
         setUsers(userList);
     }
 
-	const search = async (searchInput: string) => {
+	const search = async (searchInput: string, e) => {
+        e.preventDefault();
         if (searchInput.length > 3) {
             try {
-                const response = await fetch(API_URL + "/draft-invites", {
+                const response = await fetch(API_URL + "/users/search", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -55,32 +56,29 @@ const UserInviter = (props: Props) => {
                     }),
                 });
     
-                const responseData= await response.json();
-                const responseUsers: User[] = responseData.users;
+                const result = await response.json();
+                console.log(result);
+                const matchingUser: User | null = result.matching_user
+                const similarUsernames: User[] = result.similar_users;
                 const currentUsernames: string[] = users.map(user => user.username);
 
-                if (responseData.isMatch && users.length < props.teamsCount-1
-                && !currentUsernames.includes(responseUsers[0].username) && responseUsers[0].user_id!=userId) {
-                    const userList = [...users, responseUsers[0]];
+                if (matchingUser && users.length < props.teamsCount-1
+                && !currentUsernames.includes(matchingUser.username) && matchingUser.user_id!=user?.user_id) {
+                    const userList = [...users, matchingUser];
                     const userIds: number[] = userList.map(user => user.user_id);
                     props.setInvitedUserIds(userIds);
                     setUsers(userList);
                 }
-                else if (!responseData.isMatch) {
-                    let similarNames = "";
-                    responseUsers.forEach(user => {
-                        similarNames+=user.username+", "
-                    })
-                    if (similarNames) {
-                        similarNames.slice(0, similarNames.length-3);
+                else if (!matchingUser) {
+                    if (similarUsernames.length > 0) {
                         window.alert(`There is no '${searchInput}'. Did you mean any of the following?
-                        ${similarNames.slice(0, similarNames.length-2)}`)
+                        ${similarUsernames.slice(0, similarUsernames.length-2)}`)
                     }
                     else {
                         window.alert(`There is no '${searchInput}'.`);
                     }
                 }
-                else if (currentUsernames.includes(responseUsers[0].username)) {
+                else if (currentUsernames.includes(searchInput)) {
                     window.alert(`'${searchInput}' has already been invited`);
                 }
                 else if (users.length > props.teamsCount-2) {
@@ -89,7 +87,7 @@ const UserInviter = (props: Props) => {
                         Remove some or change the number of teams in the draft`
                     );
                 }
-                else if (responseUsers[0].user_id==userId) {
+                else if (matchingUser?.user_id==user?.user_id) {
                     window.alert(`You cannot invite yourself`);
                 }
                 setSearchValue("");
@@ -113,15 +111,17 @@ const UserInviter = (props: Props) => {
             className="modal"
         >
             <div className="user-inviter">
-                <div className="invite-user">
+                <form className="invite-user">
                     <CloseButton handleOnClick={() => {setIsOpen(false)}} />
                     <TextInput
                         value={searchValue}
                         placeholder="Invite user by username"
                         onChange={setSearchValue}
                     />
-                    <TranslucentButton handleOnClick={() => search(searchValue)}>Invite</TranslucentButton>
-                </div>
+                    <TranslucentButton handleOnClick={(e) => search(searchValue, e)}>
+                        Invite
+                        </TranslucentButton>
+                </form>
                 <ul>
                     {users?.map((user, index) => (
                         <li key={index}>
@@ -138,4 +138,4 @@ const UserInviter = (props: Props) => {
 	);
 };
 
-export default UserInviter;
+export default DraftInviter;
