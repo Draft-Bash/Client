@@ -1,0 +1,34 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "airbnb",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended", // Include this line for Prettier integration
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript"
+    ],
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+        "no-unused-vars": "warn",
+        "import/extensions": "off",
+        "class-methods-use-this": "off",
+        "object-shorthand": "off",
+        "no-useless-catch": "off",
+        "no-plusplus": "off",
+        "no-await-in-loop": "off",
+        "import/no-extraneous-dependencies": "off",
+        "import/prefer-default-export": "off",
+        "prettier/prettier": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "paths": ["src"],
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    }
+}

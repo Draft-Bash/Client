@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "declaration": true,
+        "outDir": "dist",
+        "jsx": "react-jsx"
+    },
+    "include": ["packages/**/src/**/*.ts", "packages/business/index.ts", 
+    "packages/contracts/index.ts", "packages/web-client/index.ts", 
+    "packages/server/index.ts", "node_modules/@draftbash/**/*.ts"],
+    "exclude": ["node_modules", "dist"]
+}

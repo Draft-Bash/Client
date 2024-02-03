@@ -1,0 +1,28 @@
+{
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "build": "npx tsc",
+        "dev": "docker-compose up --remove-orphans",
+        "start": "npx prisma migrate dev --name migration && node dist/server/src/app.js",
+        "database": "docker exec -it draftbash-postgres-1 psql -U postgres -d draftbash"
+    },
+    "dependencies": {
+        "@prisma/client": "^5.8.1",
+        "@typescript-eslint/eslint-plugin": "^6.19.1",
+        "@typescript-eslint/parser": "^6.19.1",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.1",
+        "eslint": "^8.56.0",
+        "eslint-plugin-react": "^7.33.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.5",
+        "prisma": "^5.8.1",
+        "typescript": "^5.3.3"
+    },
+    "prisma": {
+        "schema": "packages/infrastructure/src/persistence/schema.prisma"
+    }
+}
